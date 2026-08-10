@@ -2126,6 +2126,87 @@ html[data-theme="dark"] .btn-primary{
 .execution-body::-webkit-scrollbar{display:none}
 </style>
 
+
+<style id="devede-v4-viewport-fix">
+/* V4 — viewport-first: every primary tab is composed to fit the visible app viewport. */
+:root{--v4-top:62px;--v4-safe-top:env(safe-area-inset-top,0px);--v4-safe-bottom:env(safe-area-inset-bottom,0px)}
+html,body{width:100%;height:100%;overflow:hidden!important}
+body{min-height:100dvh!important}
+#v3App{height:100dvh!important;min-height:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+.v3-topbar{position:relative!important;flex:0 0 calc(var(--v4-top) + var(--v4-safe-top))!important;height:calc(var(--v4-top) + var(--v4-safe-top))!important}
+.v3-topbar-inner{height:var(--v4-top)!important}
+.v3-main{flex:1 1 auto!important;height:auto!important;min-height:0!important;width:min(100%,760px)!important;padding:18px 18px calc(10px + var(--v4-safe-bottom))!important;overflow:hidden!important}
+.v3-view{height:100%!important;min-height:0!important;overflow:hidden!important}
+
+/* HOME: fixed visual hierarchy, no vertical scrolling and no content falling below Safari's visible area. */
+#view-home{display:grid!important;grid-template-rows:auto minmax(0,1fr) auto auto;gap:0!important}
+#view-home .v3-screen-head{margin:0 0 14px!important}
+#view-home .v3-kicker{font-size:11px!important;margin-bottom:3px!important}
+#view-home .v3-title{font-size:clamp(38px,8vw,48px)!important;line-height:.9!important}
+#view-home .v3-date{margin-top:6px!important;font-size:14px!important}
+#view-home .v3-today{min-height:0!important;height:100%!important;padding:18px!important}
+#view-home .v3-today-title{font-size:clamp(30px,7vw,42px)!important;margin:5px 0 9px!important}
+#view-home .v3-today-meta{font-size:13px!important}
+#view-home .v3-today-actions{gap:7px!important;margin-top:14px!important}
+#view-home .v3-today-actions button{min-height:44px!important}
+#view-home .v3-stat-grid{margin:12px 0 14px!important;min-height:72px!important}
+#view-home .v3-stat{padding:10px 4px!important}
+#view-home .v3-stat span{font-size:11px!important}
+#view-home .v3-stat strong{font-size:25px!important;margin-top:2px!important}
+#view-home .v3-section-head{margin:0 0 3px!important}
+#view-home .v3-section-head h2{font-size:17px!important}
+#view-home .v3-text-btn{font-size:12px!important}
+#view-home #recentWorkouts{min-height:0!important;max-height:70px!important;overflow:hidden!important;border-top:1px solid var(--v3-border)!important}
+#view-home .v3-recent{min-height:56px!important;height:56px!important}
+#view-home .v3-empty{padding:10px 0!important;text-align:left!important;font-size:12px!important}
+
+/* Other primary tabs: consume the exact remaining viewport; lists do not become page scroll containers. */
+#view-library,#view-settings,#view-history,#view-progress{height:100%!important;display:none!important}
+#view-library.active,#view-settings.active,#view-history.active,#view-progress.active{display:flex!important;flex-direction:column!important}
+#view-library .v3-screen-head,#view-settings .v3-screen-head,#view-history .v3-screen-head,#view-progress .v3-screen-head{flex:0 0 auto!important;margin-bottom:12px!important}
+#view-library .v3-title,#view-settings .v3-title,#view-history .v3-title,#view-progress .v3-title{font-size:clamp(34px,7vw,46px)!important}
+#view-library .v3-search-wrap{flex:0 0 auto!important;margin-bottom:8px!important}
+#view-library .v3-search{height:46px!important}
+#view-library .v3-filter-strip{flex:0 0 auto!important;margin-bottom:10px!important}
+#view-library .v3-workout-list{flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+#view-library .v3-workout-item{min-height:62px!important;height:62px!important}
+#view-library .v3-workout-marker{height:38px!important}
+#view-library .v3-workout-name{font-size:16px!important}
+#view-library .v3-workout-desc{font-size:11px!important;margin-top:2px!important}
+#view-library .v3-workout-meta{font-size:10px!important;margin-top:4px!important}
+#view-library .v3-secondary-tools{flex:0 0 auto!important;margin-top:10px!important;gap:6px!important}
+#view-library .v3-secondary-tools button{min-height:40px!important}
+
+#view-settings{overflow:hidden!important}
+#view-settings .v3-settings-group{margin-top:10px!important}
+#view-settings .v3-settings-label{padding:8px 0 4px!important;font-size:10px!important}
+#view-settings .v3-setting-row,#view-settings .v3-setting-action{min-height:55px!important;height:55px!important}
+#view-settings .v3-setting-row strong,#view-settings .v3-setting-action strong{font-size:14px!important}
+#view-settings .v3-setting-row span,#view-settings .v3-setting-action span{font-size:11px!important;margin-top:2px!important}
+#view-settings .v3-note{padding:8px 0!important;font-size:11px!important}
+#view-settings .v3-inline-control input{height:36px!important}
+#view-settings .v3-segment button{height:34px!important}
+
+#view-history .v3-metrics{flex:0 0 auto!important;margin-bottom:10px!important}
+#view-history #historyContent{flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+#view-progress .v3-progress-card{flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+#view-progress #progressChart{max-height:calc(100% - 60px)!important}
+
+/* Keep the Safari-visible area clean on compact iPhones. */
+@media(max-height:740px){
+  .v3-main{padding-top:12px!important}
+  #view-home .v3-screen-head{margin-bottom:10px!important}
+  #view-home .v3-stat-grid{margin:8px 0 10px!important}
+  #view-home #recentWorkouts{max-height:58px!important}
+  #view-home .v3-today{padding:14px!important}
+}
+@media(max-width:430px){
+  .v3-topbar-inner{padding:0 13px!important}
+  .v3-main{padding-left:14px!important;padding-right:14px!important}
+  .v3-nav-btn{padding:0 10px!important}
+}
+</style>
+
 </head>
 
 	<body>
@@ -6748,7 +6829,7 @@ button,input,select,textarea{font-family:-apple-system,BlinkMacSystemFont,"SF Pr
     const mc=new Date();mc.setDate(1);const month=state.history.filter(h=>new Date(h.startedAt)>=mc);document.getElementById('homeWorkoutCount').textContent=month.length;
     const ds=state.history.map(h=>Number(h.durationSeconds)||0).filter(Boolean);document.getElementById('homeAverageTime').textContent=ds.length?formatMinutes(ds.reduce((a,b)=>a+b,0)/ds.length):'—';
     const r=document.getElementById('recentWorkouts');if(!r)return;const hist=[...state.history].sort((a,b)=>new Date(b.startedAt)-new Date(a.startedAt)).slice(0,6);
-    r.innerHTML=hist.length?hist.map(h=>{const d=new Date(h.startedAt),day=d.getDate(),mon=d.toLocaleDateString('pt-BR',{month:'short'}).replace('.','');return `<div class="v3-recent" onclick="showHistoryDetailsV3('${h.id||''}')"><div class="v3-recent-date"><strong>${day}</strong>${esc3(mon)}</div><div class="v3-item-main"><div class="v3-item-title">${esc3(h.workoutName||'Treino')}</div><div class="v3-item-sub">${h.exercises?.length||0} exercícios · ${formatMinutes(h.durationSeconds||0)}</div></div><span class="v3-more">›</span></div>`}).join(''):`<div class="v3-empty">Seu histórico aparecerá aqui depois do primeiro treino.</div>`;
+    r.innerHTML=hist.length?hist.map(h=>{const d=new Date(h.startedAt),day=d.getDate(),mon=d.toLocaleDateString('pt-BR',{month:'short'}).replace('.','');return `<div class="v3-recent" onclick="showHistoryDetailsV3('${h.id||''}')"><div class="v3-recent-date"><strong>${day}</strong>${esc3(mon)}</div><div class="v3-item-main"><div class="v3-item-title">${esc3(h.workoutName||'Treino')}</div><div class="v3-item-sub">${h.exercises?.length||0} exercícios · ${formatMinutes(h.durationSeconds||0)}</div></div><span class="v3-more">›</span></div>`}).join(''):`<div class="v3-empty">Nenhum treino concluído ainda.</div>`;
   }
   window.renderHome=renderHomeV3;
 
@@ -6803,4 +6884,3 @@ button,input,select,textarea{font-family:-apple-system,BlinkMacSystemFont,"SF Pr
 </script>
 
 </body>
-</html>
