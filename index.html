@@ -6764,6 +6764,475 @@ button,input,select,textarea{font-family:-apple-system,BlinkMacSystemFont,"SF Pr
 .toast-container{z-index:1200!important;padding-bottom:calc(15px + var(--v3-safe-bottom))!important}.toast{border-radius:0!important;background:var(--v3-text)!important;color:var(--v3-bg)!important;box-shadow:none!important}
 @media(max-width:680px){.v3-topbar-inner{padding:0 13px}.v3-brand-word{font-size:13px}.v3-nav-btn{padding:0 9px!important}.v3-main{padding-left:14px;padding-right:14px}.v3-screen-head-row{align-items:flex-start}.v3-screen-head-row .v3-primary{min-height:42px;padding:0 12px}.v3-editor-layout{grid-template-columns:1fr}.v3-editor-selected{min-height:0}.v3-editor-results{max-height:38dvh}.v3-secondary-tools{flex-direction:column}.v3-setting-row{align-items:flex-start;padding:15px 0}.v3-theme-row{align-items:center}.execution-top{padding-left:12px!important;padding-right:12px!important}.execution-body{padding-left:13px!important;padding-right:13px!important}.execution-bottom{grid-template-columns:1fr 124px 1fr!important;padding-left:8px!important;padding-right:8px!important}.execution-nav-btn{font-size:13px!important}.timer-time{font-size:18px!important;min-width:55px!important}}
 @media(min-width:681px){.v3-editor-library{min-height:420px}.v3-editor-selected{min-height:420px}}
+
+@media (max-width: 680px){
+  /* =========================================================
+     V5 VIEWPORT SYSTEM — iPhone/Safari first
+     One screen = one viewport. No page scroll.
+     Safari's small viewport is used so the browser chrome cannot
+     make the app taller than the visible area.
+     ========================================================= */
+  :root{
+    --app-vh: 100svh;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  html,
+  body{
+    width:100%;
+    height:var(--app-vh);
+    min-height:0!important;
+    max-height:var(--app-vh);
+    overflow:hidden!important;
+  }
+
+  body{
+    padding:0;
+  }
+
+  .app-shell{
+    width:100%;
+    height:var(--app-vh);
+    min-height:0!important;
+    max-height:var(--app-vh);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    box-sizing:border-box;
+  }
+
+  /* Exactly 20% of the usable viewport. */
+  .v3-topbar{
+    position:relative!important;
+    inset:auto!important;
+    flex:0 0 20%!important;
+    width:100%!important;
+    height:20%!important;
+    min-height:0!important;
+    max-height:20%!important;
+    padding-top:var(--safe-top)!important;
+    box-sizing:border-box!important;
+    background:var(--v3-bg)!important;
+  }
+
+  .v3-topbar-inner{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    padding:0 4%!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:3%!important;
+    box-sizing:border-box!important;
+  }
+
+  .v3-brand-word{
+    flex:0 0 24%!important;
+    width:24%!important;
+    font-size:clamp(11px,3.2vw,15px)!important;
+    line-height:1!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  .v3-nav{
+    flex:0 0 72%!important;
+    width:72%!important;
+    height:46%!important;
+    min-height:0!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,1fr)!important;
+    align-items:stretch!important;
+    gap:0!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  .v3-nav-btn{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    font-size:clamp(12px,3.8vw,16px)!important;
+    line-height:1!important;
+  }
+
+  /* Exactly 80% of the usable viewport. */
+  .v3-main{
+    flex:0 0 80%!important;
+    width:100%!important;
+    height:80%!important;
+    min-height:0!important;
+    max-height:80%!important;
+    margin:0!important;
+    padding:2.5% 4% var(--safe-bottom)!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+
+  .v3-view{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+
+  .v3-view.active{
+    display:grid!important;
+    animation:none!important;
+  }
+
+  /* Typography never contributes accidental outside spacing. */
+  .v3-view h1,
+  .v3-view h2,
+  .v3-view p,
+  .v3-view ul,
+  .v3-view ol{
+    margin:0!important;
+  }
+
+  /* ---------------- HOME ---------------- */
+  #view-home{
+    grid-template-rows:15% 48% 14% 23%;
+    gap:0!important;
+  }
+
+  #view-home .v3-screen-head{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:0 1%;
+    display:flex;
+    align-items:flex-start;
+    justify-content:flex-start;
+    box-sizing:border-box;
+  }
+
+  #view-home .v3-kicker{margin:0 0 2%!important}
+  #view-home .v3-date{margin:2% 0 0!important}
+
+  #view-home .v3-today{
+    width:100%;
+    height:100%;
+    min-height:0!important;
+    max-height:100%;
+    margin:0!important;
+    padding:5%!important;
+    display:grid!important;
+    grid-template-rows:18% 32% 18% 32%;
+    gap:0!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+
+  #view-home .v3-today-kicker{
+    align-self:start;
+  }
+
+  #view-home .v3-today-title{
+    align-self:center;
+    margin:0!important;
+    font-size:clamp(27px,8vw,43px)!important;
+  }
+
+  #view-home .v3-today-meta{
+    align-self:center;
+  }
+
+  #view-home .v3-today-actions{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    display:grid!important;
+    grid-template-columns:2fr 1fr;
+    gap:3%;
+    align-items:end;
+  }
+
+  #view-home .v3-today-actions button{
+    width:100%;
+    height:62%;
+    min-height:0!important;
+    padding:0!important;
+  }
+
+  #view-home .v3-stat-grid{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:0!important;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    border-top:1px solid var(--v3-border);
+    border-bottom:1px solid var(--v3-border);
+    box-sizing:border-box;
+  }
+
+  #view-home .v3-stat{
+    width:100%;
+    height:100%;
+    padding:8% 4%!important;
+    box-sizing:border-box;
+  }
+
+  #view-home .v3-stat strong{margin:2% 0 0!important}
+
+  #view-home .v3-section-head{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:4% 0 2%;
+    box-sizing:border-box;
+  }
+
+  #view-home .v3-list{
+    display:none!important;
+  }
+
+  /* ---------------- LIBRARY ---------------- */
+  #view-library{
+    grid-template-rows:12% 10% 10% 53% 15%;
+  }
+
+  #view-library .v3-screen-head{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:0;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    box-sizing:border-box;
+  }
+
+  #view-library .v3-screen-head-row .v3-primary{
+    height:70%;
+    min-height:0!important;
+    padding:0 4%!important;
+  }
+
+  .v3-search-wrap{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:0;
+    box-sizing:border-box;
+  }
+
+  .v3-search{
+    width:100%;
+    height:100%!important;
+    min-height:0!important;
+    padding-left:11%!important;
+    box-sizing:border-box;
+  }
+
+  .v3-filter-strip{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:2% 0!important;
+    display:flex;
+    align-items:center;
+    overflow:hidden!important;
+    box-sizing:border-box;
+  }
+
+  .v3-filter{
+    height:70%!important;
+    min-height:0!important;
+  }
+
+  .v3-workout-list{
+    width:100%;
+    height:100%;
+    min-height:0!important;
+    overflow:hidden!important;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .v3-workout-item{
+    flex:0 0 25%;
+    min-height:0!important;
+    height:25%!important;
+    overflow:hidden;
+  }
+
+  .v3-workout-marker{height:62%!important}
+
+  .v3-secondary-tools{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:4% 0 0;
+    display:grid!important;
+    grid-template-columns:2fr 1fr;
+    gap:3%;
+    box-sizing:border-box;
+  }
+
+  .v3-secondary-tools button{
+    width:100%;
+    height:70%;
+    min-height:0!important;
+  }
+
+  /* ---------------- SETTINGS ---------------- */
+  #view-settings{
+    grid-template-rows:13% 22% 35% 22% 8%;
+  }
+
+  #view-settings .v3-screen-head{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:0;
+  }
+
+  .v3-settings-group{
+    width:100%;
+    height:100%;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden;
+    border-top:1px solid var(--v3-border);
+    box-sizing:border-box;
+  }
+
+  .v3-settings-label{
+    height:24%;
+    min-height:0!important;
+    padding:3% 0!important;
+    box-sizing:border-box;
+  }
+
+  .v3-setting-row,
+  .v3-setting-action{
+    height:calc(76% / 3);
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box;
+  }
+
+  #view-settings .v3-settings-group:first-of-type .v3-setting-row{
+    height:76%;
+  }
+
+  #view-settings .v3-settings-group:nth-of-type(3) .v3-setting-action{
+    height:calc(76% / 3);
+  }
+
+  .v3-setting-row strong,
+  .v3-setting-action strong{
+    margin:0!important;
+  }
+
+  .v3-setting-row span,
+  .v3-setting-action span{
+    margin:2% 0 0!important;
+  }
+
+  .v3-inline-control input{
+    width:20vw!important;
+    height:65%!important;
+    min-height:0!important;
+  }
+
+  .v3-note{
+    width:100%;
+    height:76%;
+    padding:2% 0!important;
+    box-sizing:border-box;
+    overflow:hidden;
+  }
+
+  /* ---------------- HISTORY / PROGRESS ---------------- */
+  #view-history,
+  #view-progress{
+    grid-template-rows:16% 18% 66%;
+  }
+
+  #view-history .v3-screen-head,
+  #view-progress .v3-screen-head{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:0;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+  }
+
+  .v3-metrics{
+    width:100%;
+    height:100%;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box;
+  }
+
+  .v3-metrics>div{
+    height:100%;
+    padding:7% 3%!important;
+    box-sizing:border-box;
+  }
+
+  #historyContent{
+    width:100%;
+    height:100%;
+    min-height:0;
+    overflow:hidden!important;
+  }
+
+  #view-progress .v3-progress-card{
+    width:100%;
+    height:100%;
+    min-height:0!important;
+    margin:0!important;
+    padding:4%!important;
+    display:grid;
+    grid-template-rows:14% 18% 68%;
+    gap:0!important;
+    box-sizing:border-box;
+    overflow:hidden;
+  }
+
+  #view-progress .v3-progress-card label{
+    height:100%;
+    margin:0!important;
+  }
+
+  #progressExerciseSelect{
+    width:100%;
+    height:100%;
+    min-height:0!important;
+  }
+
+  #progressChart{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    display:block;
+  }
+}
+
+/* iPhone 15 portrait: 393 × 852 CSS points. */
+@media (min-width: 390px) and (max-width: 430px) and (orientation: portrait){
+  .v3-title{font-size:clamp(34px,8.8vw,45px)!important}
+  #view-home .v3-today-title{font-size:clamp(28px,7.8vw,40px)!important}
+}
+
 </style>
 
 <script id="devede-v3-engine">
@@ -6883,4 +7352,5 @@ button,input,select,textarea{font-family:-apple-system,BlinkMacSystemFont,"SF Pr
 })();
 </script>
 
+</body>
 </body>
