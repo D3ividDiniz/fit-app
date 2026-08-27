@@ -1667,7 +1667,7 @@ html.header-brand-visible .brand {
 .spotify-dashboard {
   display: grid;
   gap: 12px;
-  max-width: 760px;
+  max-width: 900px;
 }
 
 .spotify-card input[type="checkbox"] {
@@ -1692,6 +1692,233 @@ html.header-brand-visible .brand {
 
 .spotify-playlist-row[hidden] {
   display: none;
+}
+
+.spotify-now-playing {
+  position: relative;
+  overflow: hidden;
+  min-height: 330px;
+  padding: 34px;
+  background:
+    radial-gradient(circle at 78% 22%, rgba(29, 185, 84, .34), transparent 34%),
+    linear-gradient(135deg, rgba(20, 30, 25, .98), rgba(8, 12, 10, .96));
+  border: 1px solid rgba(29, 185, 84, .38);
+  border-radius: 28px;
+  box-shadow: 0 24px 70px rgba(29, 185, 84, .12), var(--shadow);
+  color: #f4fff6;
+}
+
+.spotify-now-playing[hidden] {
+  display: none;
+}
+
+.spotify-now-playing-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: center;
+  gap: 32px;
+}
+
+.spotify-now-playing-cover {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
+}
+
+.spotify-now-playing-label {
+  margin-bottom: 12px;
+  color: #1ed760;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.spotify-now-playing-title {
+  font-size: clamp(28px, 5vw, 54px);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: .98;
+}
+
+.spotify-now-playing-artist {
+  margin-top: 12px;
+  color: rgba(244, 255, 246, .72);
+  font-size: 16px;
+}
+
+.spotify-now-playing-progress {
+  height: 5px;
+  margin-top: 28px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, .18);
+  border-radius: 999px;
+}
+
+.spotify-now-playing-progress span {
+  display: block;
+  height: 100%;
+  background: #1ed760;
+  border-radius: inherit;
+}
+
+.spotify-now-playing-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.spotify-now-playing-controls button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+  font-size: 17px;
+}
+
+.spotify-now-playing-controls button:nth-child(2) {
+  background: #1ed760;
+  color: #07140b;
+}
+
+.spotify-playlists-panel {
+  margin-top: 22px;
+}
+
+.spotify-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.spotify-playlist-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.spotify-playlist-card {
+  overflow: hidden;
+  padding-bottom: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.spotify-playlist-card img,
+.spotify-playlist-placeholder {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: linear-gradient(135deg, #1ed760, #101810);
+}
+
+.spotify-playlist-placeholder {
+  display: grid;
+  place-items: center;
+  color: #07140b;
+  font-size: 34px;
+  font-weight: 900;
+}
+
+.spotify-playlist-card-name {
+  min-height: 34px;
+  padding: 10px 10px 6px;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spotify-playlist-card button {
+  width: calc(100% - 20px);
+  margin: 0 10px;
+}
+
+.spotify-account-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.spotify-disclaimer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(3, 8, 5, .66);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.spotify-disclaimer-backdrop[hidden] {
+  display: none;
+}
+
+.spotify-disclaimer {
+  width: min(520px, 100%);
+  padding: 26px;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  border: 1px solid rgba(29, 185, 84, .34);
+  border-radius: 24px;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .3), 0 0 40px rgba(29, 185, 84, .1);
+}
+
+.spotify-disclaimer-mark {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  background: #1ed760;
+  color: #07140b;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.spotify-disclaimer h2 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: -.03em;
+}
+
+.spotify-disclaimer p {
+  margin: 12px 0 0;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.spotify-disclaimer ul {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding-left: 18px;
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.spotify-disclaimer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 22px;
 }
 
 .spotify-player-bar {
@@ -1765,6 +1992,22 @@ html.header-brand-visible .brand {
     bottom: 10px;
     left: 10px;
     width: calc(100% - 20px);
+  }
+
+  .spotify-now-playing {
+    min-height: 0;
+    padding: 18px;
+  }
+
+  .spotify-now-playing-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .spotify-now-playing-cover {
+    width: min(100%, 260px);
+    height: auto;
+    margin: 0 auto;
   }
 }
 
@@ -3106,10 +3349,12 @@ html.header-brand-visible .brand {
       </div>
 
       <div class="spotify-dashboard">
-        <div class="setting-card spotify-card">
+        <div id="spotify-now-playing" class="spotify-now-playing" hidden></div>
+
+        <div class="setting-card spotify-card spotify-account-card">
           <div class="setting-row">
             <div>
-              <div class="setting-title">Sua música</div>
+              <div class="setting-title">Spotify conectado</div>
               <div class="setting-description">
                 A reprodução acontece no seu dispositivo Spotify ativo.
               </div>
@@ -3125,24 +3370,15 @@ html.header-brand-visible .brand {
               >
                 Conectar
               </button>
-              <button
-                id="spotify-disconnect-btn"
-                class="btn btn-ghost btn-small"
-                onclick="disconnectSpotify(true)"
-                hidden
-              >
-                Desconectar
-              </button>
             </div>
           </div>
 
-          <div id="spotify-playlist-row" class="spotify-playlist-row" hidden>
-            <select id="spotify-playlist-select" onchange="selectSpotifyPlaylist(this.value)">
-              <option value="">Escolha uma playlist</option>
-            </select>
-            <button class="btn btn-primary btn-small" onclick="playSelectedSpotifyPlaylist()">
-              Tocar playlist
-            </button>
+          <div id="spotify-playlist-row" class="spotify-playlists-panel" hidden>
+            <div class="spotify-section-heading">
+              <div class="setting-title">Suas playlists</div>
+              <button class="btn btn-ghost btn-small" onclick="loadSpotifyData()">Atualizar</button>
+            </div>
+            <div id="spotify-playlist-list" class="spotify-playlist-list"></div>
           </div>
 
           <div id="spotify-device-row" class="spotify-playlist-row" hidden>
@@ -3153,12 +3389,16 @@ html.header-brand-visible .brand {
               Atualizar status
             </button>
           </div>
-        </div>
 
-        <div class="setting-card">
-          <div class="setting-title">Como funciona</div>
-          <div class="setting-description">
-            Abra o Spotify no celular, escolha a playlist aqui e use os controles abaixo para voltar, pausar ou avançar.
+          <div class="spotify-account-footer">
+            <button
+              id="spotify-logout-btn"
+              class="btn btn-ghost btn-small"
+              onclick="disconnectSpotify(true)"
+              hidden
+            >
+              Sair do Spotify
+            </button>
           </div>
         </div>
       </div>
@@ -3223,6 +3463,27 @@ html.header-brand-visible .brand {
 
   <div id="spotify-player-bar" class="spotify-player-bar" hidden></div>
 
+  <div id="spotify-disclaimer-backdrop" class="spotify-disclaimer-backdrop" hidden>
+    <section class="spotify-disclaimer" role="dialog" aria-modal="true" aria-labelledby="spotify-disclaimer-title">
+      <div class="spotify-disclaimer-mark" aria-hidden="true">♪</div>
+      <h2 id="spotify-disclaimer-title">Conectar ao Spotify</h2>
+      <p>
+        O Devede usa a API oficial do Spotify para mostrar suas playlists e controlar a reprodução no seu celular.
+        Você será redirecionado ao Spotify para autorizar o acesso.
+      </p>
+      <ul>
+        <li>O áudio continua sendo reproduzido pelo aplicativo Spotify.</li>
+        <li>O controle de reprodução exige uma conta Premium e um dispositivo ativo.</li>
+        <li>Este recurso está sujeito aos limites e às políticas do Spotify.</li>
+        <li>O acesso da integração fica salvo somente neste navegador e pode ser removido ao sair.</li>
+      </ul>
+      <div class="spotify-disclaimer-actions">
+        <button class="btn btn-ghost btn-small" type="button" onclick="closeSpotifyDisclaimer()">Agora não</button>
+        <button class="btn btn-primary btn-small" type="button" onclick="confirmSpotifyDisclaimer()">Continuar para o Spotify</button>
+      </div>
+    </section>
+  </div>
+
 </div>
 
 
@@ -3284,11 +3545,12 @@ const STORAGE_KEY = "devede-v2-state";
 const ONBOARDING_SEEN_KEY = "devede-onboarding-seen";
 const CLOUD_STATE_RESOLVED_KEY = "devede-cloud-state-resolved:";
 const HEADER_BRAND_HIDDEN_KEY = "devede-header-brand-hidden";
-const SPOTIFY_CLIENT_ID = "4b6521e7b5134a40be9f93cd154cee59";
+const SPOTIFY_CLIENT_ID = "191c4219cd274c838cfa094ca7b0cc8d";
 const SPOTIFY_TOKEN_KEY = "devede-spotify-token";
 const SPOTIFY_PKCE_KEY = "devede-spotify-pkce";
 const SPOTIFY_PLAYLIST_KEY = "devede-spotify-playlist";
 const SPOTIFY_DEVICE_KEY = "devede-spotify-device";
+const SPOTIFY_DISCLAIMER_KEY = "devede-spotify-disclaimer-seen";
 let spotifyPlaybackRefreshTimer = null;
 const SPOTIFY_SCOPES = [
   "user-read-playback-state",
@@ -13255,7 +13517,27 @@ function saveSpotifyToken(token) {
   localStorage.setItem(SPOTIFY_TOKEN_KEY, JSON.stringify(token));
 }
 
-async function connectSpotify() {
+function connectSpotify() {
+  if (localStorage.getItem(SPOTIFY_DISCLAIMER_KEY) !== "1") {
+    const backdrop = document.getElementById("spotify-disclaimer-backdrop");
+    if (backdrop) backdrop.hidden = false;
+    return;
+  }
+  startSpotifyAuthorization();
+}
+
+function closeSpotifyDisclaimer() {
+  const backdrop = document.getElementById("spotify-disclaimer-backdrop");
+  if (backdrop) backdrop.hidden = true;
+}
+
+function confirmSpotifyDisclaimer() {
+  localStorage.setItem(SPOTIFY_DISCLAIMER_KEY, "1");
+  closeSpotifyDisclaimer();
+  startSpotifyAuthorization();
+}
+
+async function startSpotifyAuthorization() {
   const verifier = spotifyRandomString();
   const challenge = await spotifyCodeChallenge(verifier);
   const stateValue = spotifyRandomString(24);
@@ -13362,7 +13644,7 @@ async function spotifyRequest(path, options = {}, retry = true) {
   if (!response.ok) {
     let payload = null;
     try {
-      payload = await response.json();
+      payload = JSON.parse(await response.text());
     } catch (error) {
       payload = null;
     }
@@ -13370,11 +13652,21 @@ async function spotifyRequest(path, options = {}, retry = true) {
     const error = new Error(message);
     error.status = response.status;
     error.reason = payload?.error?.reason || "";
+    error.path = path;
     throw error;
   }
 
   if (response.status === 204) return null;
-  return response.json();
+  const responseText = await response.text();
+  if (!responseText.trim()) return null;
+  try {
+    return JSON.parse(responseText);
+  } catch (error) {
+    const parseError = new Error("O Spotify retornou uma resposta inválida");
+    parseError.status = response.status;
+    parseError.path = path;
+    throw parseError;
+  }
 }
 
 async function loadSpotifyData() {
@@ -13408,10 +13700,12 @@ async function loadSpotifyData() {
       window.spotifyApiIssue = spotifyErrorMessage(firstError);
     }
     renderSpotifyUI();
+    scheduleSpotifyPlaybackRefresh();
   } catch (error) {
     if (error.status === 401) disconnectSpotify(false);
     window.spotifyApiIssue = spotifyErrorMessage(error);
     setSpotifyStatus(window.spotifyApiIssue, true);
+    scheduleSpotifyPlaybackRefresh();
   }
 }
 
@@ -13429,15 +13723,39 @@ async function refreshSpotifyPlayback() {
       setSpotifyStatus(window.spotifyApiIssue, true);
     }
   }
+  scheduleSpotifyPlaybackRefresh();
+}
+
+function scheduleSpotifyPlaybackRefresh() {
+  if (spotifyPlaybackRefreshTimer) clearTimeout(spotifyPlaybackRefreshTimer);
+  if (!getSpotifyToken()?.refresh_token) return;
+
+  const playback = window.spotifyPlayback;
+  const progress = Number(playback?.progress_ms || 0);
+  const duration = Number(playback?.item?.duration_ms || 0);
+  const isPlaying = Boolean(playback?.is_playing);
+  const remaining = duration - progress;
+  const delay = isPlaying && remaining > 0
+    ? Math.max(1000, remaining + 1000)
+    : 30000;
+
+  spotifyPlaybackRefreshTimer = setTimeout(refreshSpotifyPlayback, delay);
 }
 
 function startSpotifyPlaybackRefresh() {
-  if (spotifyPlaybackRefreshTimer) clearInterval(spotifyPlaybackRefreshTimer);
-  spotifyPlaybackRefreshTimer = setInterval(refreshSpotifyPlayback, 30000);
+  scheduleSpotifyPlaybackRefresh();
 }
 
 function spotifyErrorMessage(error) {
   if (error?.status === 403) {
+    if (error.path?.includes("/me/playlists")) {
+      const detail = error.reason || error.message;
+      return `O Spotify recusou as playlists (${detail}). Confira o usuário autorizado e reconecte a conta.`;
+    }
+    if (error.path?.includes("/me/player")) {
+      const detail = error.reason || error.message;
+      return `Login confirmado, mas o Spotify recusou o controle (${detail}). Abra o Spotify no celular e deixe uma música tocando.`;
+    }
     return "Spotify bloqueou o acesso. Adicione este e-mail em Users Management e use uma conta Premium para controlar músicas.";
   }
   if (error?.status === 404) {
@@ -13459,15 +13777,15 @@ function setSpotifyStatus(message, isError = false) {
 function renderSpotifyUI() {
   const token = getSpotifyToken();
   const button = document.getElementById("spotify-connect-btn");
-  const disconnectButton = document.getElementById("spotify-disconnect-btn");
+  const logoutButton = document.getElementById("spotify-logout-btn");
   const row = document.getElementById("spotify-playlist-row");
-  const select = document.getElementById("spotify-playlist-select");
+  const playlistList = document.getElementById("spotify-playlist-list");
   const deviceRow = document.getElementById("spotify-device-row");
   const deviceSelect = document.getElementById("spotify-device-select");
   const miniPlayerToggle = document.getElementById("spotify-miniplayer-toggle");
   const playlists = window.spotifyPlaylists || [];
 
-  if (!button || !row || !select) return;
+  if (!button || !row || !playlistList) return;
 
   if (miniPlayerToggle) {
     miniPlayerToggle.checked = localStorage.getItem("devede-spotify-miniplayer") !== "0";
@@ -13476,34 +13794,38 @@ function renderSpotifyUI() {
   if (!token?.refresh_token) {
     button.textContent = "Conectar";
     button.onclick = connectSpotify;
-    if (disconnectButton) disconnectButton.hidden = true;
+    button.hidden = false;
+    if (logoutButton) logoutButton.hidden = true;
     row.hidden = true;
     if (deviceRow) deviceRow.hidden = true;
     setSpotifyStatus("Não conectado");
     renderSpotifyPlayer();
+    renderSpotifyNowPlaying();
     return;
   }
 
-  button.textContent = "Trocar conta";
-  button.onclick = connectSpotify;
-  if (disconnectButton) disconnectButton.hidden = false;
+  button.hidden = true;
+  if (logoutButton) logoutButton.hidden = false;
   row.hidden = false;
   if (deviceRow) deviceRow.hidden = false;
-  select.innerHTML = "";
-
-  const emptyOption = document.createElement("option");
-  emptyOption.value = "";
-  emptyOption.textContent = playlists.length ? "Escolha uma playlist" : "Nenhuma playlist encontrada";
-  select.appendChild(emptyOption);
 
   const selectedId = localStorage.getItem(SPOTIFY_PLAYLIST_KEY) || "";
-  playlists.forEach(playlist => {
-    const option = document.createElement("option");
-    option.value = playlist.id;
-    option.textContent = playlist.name;
-    option.selected = playlist.id === selectedId;
-    select.appendChild(option);
-  });
+  playlistList.innerHTML = playlists.length
+    ? playlists.map(playlist => {
+      const imageUrl = playlist.images?.[0]?.url;
+      return `
+        <article class="spotify-playlist-card">
+          ${imageUrl
+            ? `<img src="${escapeHTML(imageUrl)}" alt="Capa da playlist ${escapeHTML(playlist.name)}">`
+            : `<div class="spotify-playlist-placeholder" aria-hidden="true">♪</div>`}
+          <div class="spotify-playlist-card-name" title="${escapeHTML(playlist.name)}">${escapeHTML(playlist.name)}</div>
+          <button class="btn btn-primary btn-small" type="button" onclick="playSpotifyPlaylist('${escapeHTML(playlist.id)}')">
+            ${playlist.id === selectedId ? "Tocar novamente" : "Tocar playlist"}
+          </button>
+        </article>
+      `;
+    }).join("")
+    : `<div class="setting-description">Nenhuma playlist encontrada.</div>`;
 
   if (deviceSelect) {
     const devices = window.spotifyDevices || [];
@@ -13526,6 +13848,43 @@ function renderSpotifyUI() {
     ? "Conectado ao Spotify"
     : "Conectado. Nenhuma música está tocando agora."), Boolean(window.spotifyApiIssue));
   renderSpotifyPlayer();
+  renderSpotifyNowPlaying();
+}
+
+function renderSpotifyNowPlaying() {
+  const container = document.getElementById("spotify-now-playing");
+  const track = window.spotifyPlayback?.item;
+  if (!container || !track) {
+    if (container) container.hidden = true;
+    return;
+  }
+
+  const imageUrl = track.album?.images?.[0]?.url;
+  const progress = Number(window.spotifyPlayback?.progress_ms || 0);
+  const duration = Number(track.duration_ms || 0);
+  const progressPercent = duration ? Math.min(100, Math.round(progress / duration * 100)) : 0;
+  const isPlaying = Boolean(window.spotifyPlayback?.is_playing);
+  const artistName = track.artists?.map(artist => artist.name).join(", ") || "Artista desconhecido";
+
+  container.hidden = false;
+  container.innerHTML = `
+    <div class="spotify-now-playing-inner">
+      ${imageUrl
+        ? `<img class="spotify-now-playing-cover" src="${escapeHTML(imageUrl)}" alt="Capa de ${escapeHTML(track.name)}">`
+        : `<div class="spotify-now-playing-cover spotify-playlist-placeholder" aria-hidden="true">♪</div>`}
+      <div>
+        <div class="spotify-now-playing-label">Tocando agora</div>
+        <div class="spotify-now-playing-title">${escapeHTML(track.name)}</div>
+        <div class="spotify-now-playing-artist">${escapeHTML(artistName)}</div>
+        <div class="spotify-now-playing-progress" aria-label="Progresso da música"><span style="width:${progressPercent}%"></span></div>
+        <div class="spotify-now-playing-controls">
+          <button type="button" onclick="previousSpotifyTrack()" aria-label="Música anterior">‹‹</button>
+          <button type="button" onclick="toggleSpotifyPlayback()" aria-label="${isPlaying ? "Pausar" : "Continuar"}">${isPlaying ? "Ⅱ" : "▶"}</button>
+          <button type="button" onclick="nextSpotifyTrack()" aria-label="Próxima música">››</button>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function renderSpotifyPlayer() {
@@ -13598,7 +13957,7 @@ function spotifyPlaybackPath(path) {
 }
 
 async function playSelectedSpotifyPlaylist() {
-  const playlistId = document.getElementById("spotify-playlist-select")?.value;
+  const playlistId = localStorage.getItem(SPOTIFY_PLAYLIST_KEY) || "";
   if (!playlistId) {
     setSpotifyStatus("Escolha uma playlist primeiro", true);
     return;
@@ -13614,6 +13973,11 @@ async function playSelectedSpotifyPlaylist() {
   } catch (error) {
     setSpotifyStatus(spotifyErrorMessage(error), true);
   }
+}
+
+async function playSpotifyPlaylist(playlistId) {
+  await selectSpotifyPlaylist(playlistId);
+  await playSelectedSpotifyPlaylist();
 }
 
 async function controlSpotifyPlayback(path) {
