@@ -3144,6 +3144,15 @@ html.header-brand-visible .brand {
               Tocar playlist
             </button>
           </div>
+
+          <div id="spotify-device-row" class="spotify-playlist-row" hidden>
+            <select id="spotify-device-select" onchange="selectSpotifyDevice(this.value)">
+              <option value="">Dispositivo Spotify</option>
+            </select>
+            <button class="btn btn-secondary btn-small" onclick="loadSpotifyData()">
+              Atualizar status
+            </button>
+          </div>
         </div>
 
         <div class="setting-card">
@@ -3279,6 +3288,8 @@ const SPOTIFY_CLIENT_ID = "4b6521e7b5134a40be9f93cd154cee59";
 const SPOTIFY_TOKEN_KEY = "devede-spotify-token";
 const SPOTIFY_PKCE_KEY = "devede-spotify-pkce";
 const SPOTIFY_PLAYLIST_KEY = "devede-spotify-playlist";
+const SPOTIFY_DEVICE_KEY = "devede-spotify-device";
+let spotifyPlaybackRefreshTimer = null;
 const SPOTIFY_SCOPES = [
   "user-read-playback-state",
   "user-read-currently-playing",
@@ -13349,8 +13360,16 @@ async function spotifyRequest(path, options = {}, retry = true) {
   }
 
   if (!response.ok) {
-    const error = new Error(`Spotify respondeu ${response.status}`);
+    let payload = null;
+    try {
+      payload = await response.json();
+    } catch (error) {
+      payload = null;
+    }
+    const message = payload?.error?.message || `Spotify respondeu ${response.status}`;
+    const error = new Error(message);
     error.status = response.status;
+    error.reason = payload?.error?.reason || "";
     throw error;
   }
 
@@ -13360,20 +13379,74 @@ async function spotifyRequest(path, options = {}, retry = true) {
 
 async function loadSpotifyData() {
   renderSpotifyUI();
+  window.spotifyApiIssue = "";
 
   try {
-    const [playlists, playback] = await Promise.all([
+    const results = await Promise.allSettled([
       spotifyRequest("/me/playlists?limit=50"),
-      spotifyRequest("/me/player")
+      spotifyRequest("/me/player"),
+      spotifyRequest("/me/player/devices")
     ]);
 
-    window.spotifyPlaylists = playlists?.items || [];
-    window.spotifyPlayback = playback;
+    const [playlistsResult, playbackResult, devicesResult] = results;
+    const errors = results
+      .filter(result => result.status === "rejected")
+      .map(result => result.reason);
+
+    if (playlistsResult.status === "fulfilled") {
+      window.spotifyPlaylists = playlistsResult.value?.items || [];
+    }
+    if (playbackResult.status === "fulfilled") {
+      window.spotifyPlayback = playbackResult.value;
+    }
+    if (devicesResult.status === "fulfilled") {
+      window.spotifyDevices = devicesResult.value?.devices || [];
+    }
+
+    const firstError = errors[0];
+    if (firstError) {
+      window.spotifyApiIssue = spotifyErrorMessage(firstError);
+    }
     renderSpotifyUI();
   } catch (error) {
     if (error.status === 401) disconnectSpotify(false);
-    setSpotifyStatus(error.message || "Não foi possível carregar o Spotify", true);
+    window.spotifyApiIssue = spotifyErrorMessage(error);
+    setSpotifyStatus(window.spotifyApiIssue, true);
   }
+}
+
+async function refreshSpotifyPlayback() {
+  if (!getSpotifyToken()?.refresh_token) return;
+
+  try {
+    window.spotifyPlayback = await spotifyRequest("/me/player");
+    window.spotifyApiIssue = "";
+    renderSpotifyUI();
+  } catch (error) {
+    if (error.status === 401) disconnectSpotify(false);
+    else {
+      window.spotifyApiIssue = spotifyErrorMessage(error);
+      setSpotifyStatus(window.spotifyApiIssue, true);
+    }
+  }
+}
+
+function startSpotifyPlaybackRefresh() {
+  if (spotifyPlaybackRefreshTimer) clearInterval(spotifyPlaybackRefreshTimer);
+  spotifyPlaybackRefreshTimer = setInterval(refreshSpotifyPlayback, 30000);
+}
+
+function spotifyErrorMessage(error) {
+  if (error?.status === 403) {
+    return "Spotify bloqueou o acesso. Adicione este e-mail em Users Management e use uma conta Premium para controlar músicas.";
+  }
+  if (error?.status === 404) {
+    return "Nenhum dispositivo Spotify ativo. Abra o Spotify no celular e reproduza uma música.";
+  }
+  if (error?.status === 429) {
+    return "Spotify limitou as requisições. Aguarde alguns segundos e atualize o status.";
+  }
+  return error?.message || "Não foi possível carregar os dados do Spotify";
 }
 
 function setSpotifyStatus(message, isError = false) {
@@ -13389,6 +13462,8 @@ function renderSpotifyUI() {
   const disconnectButton = document.getElementById("spotify-disconnect-btn");
   const row = document.getElementById("spotify-playlist-row");
   const select = document.getElementById("spotify-playlist-select");
+  const deviceRow = document.getElementById("spotify-device-row");
+  const deviceSelect = document.getElementById("spotify-device-select");
   const miniPlayerToggle = document.getElementById("spotify-miniplayer-toggle");
   const playlists = window.spotifyPlaylists || [];
 
@@ -13403,6 +13478,7 @@ function renderSpotifyUI() {
     button.onclick = connectSpotify;
     if (disconnectButton) disconnectButton.hidden = true;
     row.hidden = true;
+    if (deviceRow) deviceRow.hidden = true;
     setSpotifyStatus("Não conectado");
     renderSpotifyPlayer();
     return;
@@ -13412,6 +13488,7 @@ function renderSpotifyUI() {
   button.onclick = connectSpotify;
   if (disconnectButton) disconnectButton.hidden = false;
   row.hidden = false;
+  if (deviceRow) deviceRow.hidden = false;
   select.innerHTML = "";
 
   const emptyOption = document.createElement("option");
@@ -13428,7 +13505,26 @@ function renderSpotifyUI() {
     select.appendChild(option);
   });
 
-  setSpotifyStatus("Conectado ao Spotify");
+  if (deviceSelect) {
+    const devices = window.spotifyDevices || [];
+    deviceSelect.innerHTML = "";
+    const noDeviceOption = document.createElement("option");
+    noDeviceOption.value = "";
+    noDeviceOption.textContent = devices.length ? "Dispositivo automático" : "Nenhum dispositivo encontrado";
+    deviceSelect.appendChild(noDeviceOption);
+    const selectedDevice = localStorage.getItem(SPOTIFY_DEVICE_KEY) || "";
+    devices.forEach(device => {
+      const option = document.createElement("option");
+      option.value = device.id;
+      option.textContent = `${device.name}${device.is_active ? " (ativo)" : ""}`;
+      option.selected = device.id === selectedDevice;
+      deviceSelect.appendChild(option);
+    });
+  }
+
+  setSpotifyStatus(window.spotifyApiIssue || (window.spotifyPlayback?.item
+    ? "Conectado ao Spotify"
+    : "Conectado. Nenhuma música está tocando agora."), Boolean(window.spotifyApiIssue));
   renderSpotifyPlayer();
 }
 
@@ -13484,6 +13580,23 @@ async function selectSpotifyPlaylist(playlistId) {
   else localStorage.removeItem(SPOTIFY_PLAYLIST_KEY);
 }
 
+function selectSpotifyDevice(deviceId) {
+  if (deviceId) localStorage.setItem(SPOTIFY_DEVICE_KEY, deviceId);
+  else localStorage.removeItem(SPOTIFY_DEVICE_KEY);
+}
+
+function spotifyDeviceId() {
+  const selectedDevice = localStorage.getItem(SPOTIFY_DEVICE_KEY);
+  const devices = window.spotifyDevices || [];
+  if (selectedDevice && devices.some(device => device.id === selectedDevice)) return selectedDevice;
+  return devices.find(device => device.is_active)?.id || "";
+}
+
+function spotifyPlaybackPath(path) {
+  const deviceId = spotifyDeviceId();
+  return deviceId ? `${path}${path.includes("?") ? "&" : "?"}device_id=${encodeURIComponent(deviceId)}` : path;
+}
+
 async function playSelectedSpotifyPlaylist() {
   const playlistId = document.getElementById("spotify-playlist-select")?.value;
   if (!playlistId) {
@@ -13492,14 +13605,14 @@ async function playSelectedSpotifyPlaylist() {
   }
 
   try {
-    await spotifyRequest("/me/player/play", {
+    await spotifyRequest(spotifyPlaybackPath("/me/player/play"), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ context_uri: `spotify:playlist:${playlistId}` })
     });
     await loadSpotifyData();
   } catch (error) {
-    setSpotifyStatus("Abra o Spotify no celular e tente novamente", true);
+    setSpotifyStatus(spotifyErrorMessage(error), true);
   }
 }
 
@@ -13508,10 +13621,10 @@ async function controlSpotifyPlayback(path) {
     const method = path.endsWith("/play") || path.endsWith("/pause")
       ? "PUT"
       : "POST";
-    await spotifyRequest(path, { method });
+    await spotifyRequest(spotifyPlaybackPath(path), { method });
     await loadSpotifyData();
   } catch (error) {
-    setSpotifyStatus("Abra o Spotify no celular e tente novamente", true);
+    setSpotifyStatus(spotifyErrorMessage(error), true);
   }
 }
 
@@ -13534,6 +13647,8 @@ function disconnectSpotify(showMessage) {
   localStorage.removeItem(SPOTIFY_PKCE_KEY);
   window.spotifyPlaylists = [];
   window.spotifyPlayback = null;
+  window.spotifyDevices = [];
+  window.spotifyApiIssue = "";
   renderSpotifyUI();
   if (showMessage) showToast("Spotify desconectado");
 }
@@ -13555,6 +13670,7 @@ async function initializeSpotify() {
 
   if (getSpotifyToken()?.refresh_token) await loadSpotifyData();
   else renderSpotifyUI();
+  startSpotifyPlaybackRefresh();
 }
 
 document.addEventListener("DOMContentLoaded", initializeSpotify);
