@@ -12,6 +12,7 @@
 
 <script>
   document.documentElement.classList.add("auth-pending");
+  document.documentElement.classList.add("header-brand-hidden");
 </script>
 
 <title>Dabliu.fit — Seu treino, sem complicação</title>
@@ -425,6 +426,21 @@ a {
 
 .account-menu-logout:hover {
   background: var(--red-soft);
+}
+
+.account-menu-switch {
+  width: 100%;
+  padding: 10px;
+  color: var(--text);
+  background: transparent;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: left;
+}
+
+.account-menu-switch:hover {
+  background: var(--surface-2);
 }
 
 .account-card:active {
@@ -1573,11 +1589,40 @@ a {
   gap: 10px;
 }
 
+.settings-group-title {
+  margin: 18px 2px 2px;
+  color: var(--text-3);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.settings-group-title:first-child {
+  margin-top: 0;
+}
+
 .setting-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 18px;
+}
+
+html.header-brand-hidden .brand {
+  display: none;
+}
+
+html.header-brand-hidden .topbar-inner {
+  justify-content: flex-start;
+}
+
+html.header-brand-hidden .topnav {
+  margin-right: auto;
+}
+
+html.header-brand-visible .brand {
+  display: flex;
 }
 
 .setting-row {
@@ -1610,6 +1655,26 @@ a {
 
 .spotify-card .setting-row {
   align-items: flex-start;
+}
+
+.spotify-connect-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.spotify-dashboard {
+  display: grid;
+  gap: 12px;
+  max-width: 760px;
+}
+
+.spotify-card input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  accent-color: var(--text);
 }
 
 .spotify-status {
@@ -1700,6 +1765,25 @@ a {
     bottom: 10px;
     left: 10px;
     width: calc(100% - 20px);
+  }
+}
+
+@media (max-width: 820px) {
+  html.header-brand-hidden .topbar-inner {
+    flex-wrap: nowrap;
+  }
+
+  html.header-brand-hidden .topnav {
+    order: 0;
+    width: auto;
+    min-width: 0;
+    padding-top: 0;
+  }
+
+  html.header-brand-hidden .nav-btn {
+    padding-right: 9px;
+    padding-left: 9px;
+    font-size: 12px;
   }
 }
 
@@ -2255,6 +2339,14 @@ a {
         </button>
 
         <button
+          id="nav-spotify"
+          class="nav-btn"
+          onclick="navigate('spotify')"
+        >
+          Spotify
+        </button>
+
+        <button
           id="nav-settings"
           class="nav-btn"
           onclick="navigate('settings')"
@@ -2747,6 +2839,8 @@ a {
 
       <div class="settings-list">
 
+        <div class="settings-group-title">Treino</div>
+
         <div class="setting-card">
 
           <div class="setting-row">
@@ -2834,6 +2928,8 @@ a {
         </div>
 
 
+        <div class="settings-group-title">Aparência</div>
+
         <div class="setting-card">
 
           <div class="setting-row">
@@ -2860,6 +2956,7 @@ a {
 
         </div>
 
+        <div class="settings-group-title">Agenda</div>
 
         <div class="setting-card">
           <div class="setting-title">Agenda semanal</div>
@@ -2867,41 +2964,13 @@ a {
           <div id="weekly-schedule" class="schedule-grid"></div>
       </div>
 
-      <div class="setting-card spotify-card">
-        <div class="setting-row">
-          <div>
-            <div class="setting-title">Spotify</div>
-            <div class="setting-description">
-              Controle a música do seu celular enquanto treina.
-            </div>
-            <div id="spotify-connection-status" class="spotify-status">
-              Não conectado
-            </div>
-          </div>
-          <button
-            id="spotify-connect-btn"
-            class="btn btn-secondary btn-small"
-            onclick="connectSpotify()"
-          >
-            Conectar
-          </button>
-        </div>
-
-        <div id="spotify-playlist-row" class="spotify-playlist-row" hidden>
-          <select id="spotify-playlist-select" onchange="selectSpotifyPlaylist(this.value)">
-            <option value="">Escolha uma playlist</option>
-          </select>
-          <button class="btn btn-primary btn-small" onclick="playSelectedSpotifyPlaylist()">
-            Tocar playlist
-          </button>
-        </div>
-      </div>
-
       <div class="setting-card">
           <div class="setting-title">Cor de destaque</div>
           <div class="setting-description">A interface continua majoritariamente preto e branco; a cor serve apenas para estados e destaques.</div>
           <div id="accent-picker" class="accent-picker"></div>
         </div>
+
+        <div class="settings-group-title">Dados</div>
 
         <div class="setting-card">
 
@@ -2963,8 +3032,46 @@ a {
 
         </div>
 
+      <div class="settings-group-title">Preferências</div>
+
+      <div class="setting-card">
+        <div class="setting-row">
+          <div>
+            <div class="setting-title">Mini-player Spotify</div>
+            <div class="setting-description">
+              Mostra os controles de música enquanto você navega pelo app.
+            </div>
+          </div>
+          <input
+            id="spotify-miniplayer-toggle"
+            type="checkbox"
+            checked
+            onchange="setSpotifyMiniPlayer(this.checked)"
+          >
+        </div>
       </div>
 
+      <div class="setting-card">
+        <div class="setting-row">
+          <div>
+            <div class="setting-title">Ocultar marca do cabeçalho</div>
+            <div class="setting-description">
+              Mantém no topo apenas as abas, sua conta e o modo de tela.
+            </div>
+          </div>
+          <input
+            id="hide-header-toggle"
+            type="checkbox"
+            checked
+            onchange="setHeaderBrandHidden(this.checked)"
+          >
+        </div>
+      </div>
+
+      </div>
+
+
+      <div class="settings-group-title">Zona de perigo</div>
 
       <div class="danger-zone">
 
@@ -2986,6 +3093,66 @@ a {
 
       </div>
 
+    </section>
+
+    <section id="page-spotify" class="page">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Spotify</h1>
+          <p class="page-description">
+            Escolha sua trilha e controle a música do celular sem sair do treino.
+          </p>
+        </div>
+      </div>
+
+      <div class="spotify-dashboard">
+        <div class="setting-card spotify-card">
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">Sua música</div>
+              <div class="setting-description">
+                A reprodução acontece no seu dispositivo Spotify ativo.
+              </div>
+              <div id="spotify-connection-status" class="spotify-status">
+                Não conectado
+              </div>
+            </div>
+            <div class="spotify-connect-actions">
+              <button
+                id="spotify-connect-btn"
+                class="btn btn-secondary btn-small"
+                onclick="connectSpotify()"
+              >
+                Conectar
+              </button>
+              <button
+                id="spotify-disconnect-btn"
+                class="btn btn-ghost btn-small"
+                onclick="disconnectSpotify(true)"
+                hidden
+              >
+                Desconectar
+              </button>
+            </div>
+          </div>
+
+          <div id="spotify-playlist-row" class="spotify-playlist-row" hidden>
+            <select id="spotify-playlist-select" onchange="selectSpotifyPlaylist(this.value)">
+              <option value="">Escolha uma playlist</option>
+            </select>
+            <button class="btn btn-primary btn-small" onclick="playSelectedSpotifyPlaylist()">
+              Tocar playlist
+            </button>
+          </div>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-title">Como funciona</div>
+          <div class="setting-description">
+            Abra o Spotify no celular, escolha a playlist aqui e use os controles abaixo para voltar, pausar ou avançar.
+          </div>
+        </div>
+      </div>
     </section>
 
 
@@ -3107,6 +3274,7 @@ a {
 const STORAGE_KEY = "devede-v2-state";
 const ONBOARDING_SEEN_KEY = "devede-onboarding-seen";
 const CLOUD_STATE_RESOLVED_KEY = "devede-cloud-state-resolved:";
+const HEADER_BRAND_HIDDEN_KEY = "devede-header-brand-hidden";
 const SPOTIFY_CLIENT_ID = "4b6521e7b5134a40be9f93cd154cee59";
 const SPOTIFY_TOKEN_KEY = "devede-spotify-token";
 const SPOTIFY_PKCE_KEY = "devede-spotify-pkce";
@@ -3678,6 +3846,7 @@ function navigate(page) {
   const navMap = {
     home: "nav-home",
     workouts: "nav-workouts",
+    spotify: "nav-spotify",
     settings: "nav-settings"
   };
 
@@ -3695,6 +3864,10 @@ function navigate(page) {
 
   if (page === "settings") {
     populateSettings();
+  }
+
+  if (page === "spotify") {
+    loadSpotifyData();
   }
 
   window.scrollTo({
@@ -10195,6 +10368,8 @@ function populateSettings() {
     limit.value =
       state.settings.workoutLimitMinutes;
   }
+
+  applyHeaderBrandPreference();
 }
 
 function saveSettingsFromUI() {
@@ -11834,6 +12009,7 @@ navigate = function(
     const navMap = {
       home: "nav-home",
       workouts: "nav-workouts",
+      spotify: "nav-spotify",
       settings: "nav-settings"
     };
 
@@ -11857,6 +12033,12 @@ navigate = function(
       setWorkoutTab(
         currentWorkoutTab
       );
+    }
+
+    if (
+      page === "spotify"
+    ) {
+      loadSpotifyData();
     }
 
     renderAll();
@@ -12714,7 +12896,16 @@ function renderAccountMenu() {
     handleAuthAction();
   };
 
-  menu.append(email, status, logout);
+  const switchAccount = document.createElement("button");
+  switchAccount.className = "account-menu-switch";
+  switchAccount.type = "button";
+  switchAccount.textContent = "Trocar conta Google";
+  switchAccount.onclick = () => {
+    menu.hidden = true;
+    switchGoogleAccount();
+  };
+
+  menu.append(email, status, switchAccount, logout);
 }
 
 function handleAccountButtonClick() {
@@ -12739,6 +12930,30 @@ document.addEventListener("click", event => {
     if (menu) menu.hidden = true;
   }
 });
+
+async function switchGoogleAccount() {
+  if (!supabaseClient) return;
+
+  await syncCloudState(true);
+
+  const { error: signOutError } = await supabaseClient.auth.signOut();
+  if (signOutError) {
+    showToast("Não foi possível trocar de conta agora");
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${window.location.origin}/`,
+      queryParams: {
+        prompt: "select_account"
+      }
+    }
+  });
+
+  if (error) showToast("Não foi possível iniciar a troca de conta");
+}
 
 async function handleAuthAction() {
   if (!supabaseClient) {
@@ -12775,7 +12990,10 @@ async function handleAuthAction() {
   const { error } = await supabaseClient.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${window.location.origin}/`
+      redirectTo: `${window.location.origin}/`,
+      queryParams: {
+        prompt: "select_account"
+      }
     }
   });
 
@@ -13027,12 +13245,6 @@ function saveSpotifyToken(token) {
 }
 
 async function connectSpotify() {
-  const currentToken = getSpotifyToken();
-  if (currentToken?.refresh_token) {
-    await loadSpotifyData();
-    return;
-  }
-
   const verifier = spotifyRandomString();
   const challenge = await spotifyCodeChallenge(verifier);
   const stateValue = spotifyRandomString(24);
@@ -13049,7 +13261,8 @@ async function connectSpotify() {
     redirect_uri: spotifyRedirectUri(),
     state: stateValue,
     code_challenge_method: "S256",
-    code_challenge: challenge
+    code_challenge: challenge,
+    show_dialog: "true"
   });
 
   window.location.assign(`https://accounts.spotify.com/authorize?${params}`);
@@ -13173,23 +13386,31 @@ function setSpotifyStatus(message, isError = false) {
 function renderSpotifyUI() {
   const token = getSpotifyToken();
   const button = document.getElementById("spotify-connect-btn");
+  const disconnectButton = document.getElementById("spotify-disconnect-btn");
   const row = document.getElementById("spotify-playlist-row");
   const select = document.getElementById("spotify-playlist-select");
+  const miniPlayerToggle = document.getElementById("spotify-miniplayer-toggle");
   const playlists = window.spotifyPlaylists || [];
 
   if (!button || !row || !select) return;
 
+  if (miniPlayerToggle) {
+    miniPlayerToggle.checked = localStorage.getItem("devede-spotify-miniplayer") !== "0";
+  }
+
   if (!token?.refresh_token) {
     button.textContent = "Conectar";
     button.onclick = connectSpotify;
+    if (disconnectButton) disconnectButton.hidden = true;
     row.hidden = true;
     setSpotifyStatus("Não conectado");
     renderSpotifyPlayer();
     return;
   }
 
-  button.textContent = "Desconectar";
-  button.onclick = () => disconnectSpotify(true);
+  button.textContent = "Trocar conta";
+  button.onclick = connectSpotify;
+  if (disconnectButton) disconnectButton.hidden = false;
   row.hidden = false;
   select.innerHTML = "";
 
@@ -13214,7 +13435,8 @@ function renderSpotifyUI() {
 function renderSpotifyPlayer() {
   const bar = document.getElementById("spotify-player-bar");
   const token = getSpotifyToken();
-  if (!bar || !token?.refresh_token) {
+  const miniPlayerEnabled = localStorage.getItem("devede-spotify-miniplayer") !== "0";
+  if (!bar || !token?.refresh_token || !miniPlayerEnabled) {
     if (bar) bar.hidden = true;
     return;
   }
@@ -13236,6 +13458,25 @@ function renderSpotifyPlayer() {
       <button type="button" onclick="nextSpotifyTrack()" aria-label="Próxima música">››</button>
     </div>
   `;
+}
+
+function setSpotifyMiniPlayer(enabled) {
+  localStorage.setItem("devede-spotify-miniplayer", enabled ? "1" : "0");
+  renderSpotifyPlayer();
+}
+
+function applyHeaderBrandPreference() {
+  const hidden = localStorage.getItem(HEADER_BRAND_HIDDEN_KEY) !== "0";
+  document.documentElement.classList.toggle("header-brand-hidden", hidden);
+  document.documentElement.classList.toggle("header-brand-visible", !hidden);
+
+  const toggle = document.getElementById("hide-header-toggle");
+  if (toggle) toggle.checked = hidden;
+}
+
+function setHeaderBrandHidden(hidden) {
+  localStorage.setItem(HEADER_BRAND_HIDDEN_KEY, hidden ? "1" : "0");
+  applyHeaderBrandPreference();
 }
 
 async function selectSpotifyPlaylist(playlistId) {
@@ -13317,6 +13558,7 @@ async function initializeSpotify() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeSpotify);
+document.addEventListener("DOMContentLoaded", applyHeaderBrandPreference);
 
 
 /* =========================================================
