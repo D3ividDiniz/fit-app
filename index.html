@@ -277,10 +277,29 @@ html.accent-led .app::after {
   pointer-events: none;
 }
 
+@keyframes led-strip-drift {
+  from {
+    margin-left: -3vw;
+  }
+  to {
+    margin-left: 8vw;
+  }
+}
+
+@keyframes led-strip-drift-reverse {
+  from {
+    margin-left: 8vw;
+  }
+  to {
+    margin-left: -3vw;
+  }
+}
+
 html.accent-led .app::before {
   top: 19vh;
   left: -28vw;
   transform: rotate(-12deg);
+  animation: led-strip-drift 16s ease-in-out infinite alternate;
 }
 
 html.accent-led .app::after {
@@ -288,6 +307,7 @@ html.accent-led .app::after {
   left: 20vw;
   transform: rotate(18deg);
   opacity: .34;
+  animation: led-strip-drift-reverse 21s ease-in-out infinite alternate;
 }
 
 html.accent-led .topbar {
@@ -323,7 +343,7 @@ html.accent-led .btn-primary,
 html.accent-led .nav-btn.active {
   background: var(--accent-user);
   border-color: var(--accent-user);
-  color: #fff;
+  color: var(--accent-contrast);
   box-shadow: 0 0 22px color-mix(in srgb, var(--accent-user) 28%, transparent);
 }
 
@@ -483,6 +503,14 @@ html.accent-led .suggestion-label {
   display: block;
   width: 18px;
   height: 18px;
+  color: #fff;
+}
+
+.nav-btn:hover .nav-settings-icon {
+  color: var(--text);
+}
+
+.nav-btn.active .nav-settings-icon {
   color: #fff;
 }
 
@@ -2592,6 +2620,7 @@ html.header-brand-visible .brand {
 
 :root {
   --accent-user: #4f7cff;
+  --accent-contrast: #fff;
 }
 
 .workout-elapsed {
@@ -2875,7 +2904,7 @@ html.header-brand-visible .brand {
           class="nav-btn"
           onclick="navigate('progression')"
         >
-          Progressão
+          PRs
         </button>
 
         <button
@@ -3313,7 +3342,7 @@ html.header-brand-visible .brand {
     <section id="page-progression" class="page">
       <div class="progression-header">
         <div>
-          <div class="progression-kicker">Evolução</div>
+          <div class="progression-kicker">Progressão</div>
           <h1 class="page-title">Seus PRs</h1>
           <p class="page-description">Acompanhe seus melhores resultados e corrija o ponto de partida quando necessário.</p>
         </div>
@@ -11728,7 +11757,24 @@ const DABLIU_ACCENTS = [
   { name:"Amarelo", value:"#d1b34f" },
   { name:"Verde", value:"#25c76f" },
   { name:"Roxo", value:"#8b6cff" },
-  { name:"Rosa neon", value:"#ff4fd8" }
+  { name:"Rosa neon", value:"#ff4fd8" },
+  { name:"Azul elétrico", value:"#00a8ff" },
+  { name:"Ciano", value:"#00d9ff" },
+  { name:"Turquesa", value:"#00bfa6" },
+  { name:"Esmeralda", value:"#00a86b" },
+  { name:"Lima", value:"#a8e637" },
+  { name:"Verde neon", value:"#57ff66" },
+  { name:"Âmbar", value:"#ffb000" },
+  { name:"Coral", value:"#ff725c" },
+  { name:"Vermelho neon", value:"#ff4567" },
+  { name:"Magenta", value:"#d946ef" },
+  { name:"Fúcsia", value:"#ff2eaa" },
+  { name:"Lavanda", value:"#a78bfa" },
+  { name:"Índigo", value:"#6366f1" },
+  { name:"Azul céu", value:"#38bdf8" },
+  { name:"Bronze", value:"#c47f36" },
+  { name:"Branco", value:"#f5f5f5" },
+  { name:"Preto", value:"#111111" }
 ];
 
 const DABLIU_DAYS = [
@@ -11822,6 +11868,10 @@ function applyUserAccent() {
   document.documentElement.style.setProperty(
     "--accent-user",
     accent
+  );
+  document.documentElement.style.setProperty(
+    "--accent-contrast",
+    accent === "#f5f5f5" ? "#111" : "#fff"
   );
   document.documentElement.classList.add("accent-led");
 }
@@ -14397,6 +14447,7 @@ async function playSelectedSpotifyPlaylist() {
     window.spotifyPlayback = { ...(window.spotifyPlayback || {}), is_playing: true };
     renderSpotifyUI();
     await waitForSpotifyPlaybackUpdate();
+    await loadSpotifyData();
   } catch (error) {
     setSpotifyStatus(spotifyErrorMessage(error), true);
   }
@@ -14420,6 +14471,7 @@ async function controlSpotifyPlayback(path) {
     };
     renderSpotifyUI();
     await waitForSpotifyPlaybackUpdate();
+    await loadSpotifyData();
   } catch (error) {
     setSpotifyStatus(spotifyErrorMessage(error), true);
   }
