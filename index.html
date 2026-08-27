@@ -270,7 +270,7 @@ html.accent-led .app::after {
   height: 9px;
   border-radius: 999px;
   background: var(--accent-user);
-  box-shadow: 0 0 10px 3px var(--accent-glow), 0 0 46px 12px color-mix(in srgb, var(--accent-user) 42%, transparent);
+  box-shadow: 0 0 16px 5px var(--accent-glow), 0 0 70px 18px color-mix(in srgb, var(--accent-user) 52%, transparent);
   content: "";
   filter: blur(2px);
   opacity: .52;
@@ -280,18 +280,22 @@ html.accent-led .app::after {
 @keyframes led-strip-drift {
   from {
     margin-left: -3vw;
+    opacity: .28;
   }
   to {
     margin-left: 8vw;
+    opacity: .88;
   }
 }
 
 @keyframes led-strip-drift-reverse {
   from {
     margin-left: 8vw;
+    opacity: .18;
   }
   to {
     margin-left: -3vw;
+    opacity: .62;
   }
 }
 
@@ -299,15 +303,14 @@ html.accent-led .app::before {
   top: 19vh;
   left: -28vw;
   transform: rotate(-12deg);
-  animation: led-strip-drift 16s ease-in-out infinite alternate;
+  animation: led-strip-drift 8s ease-in-out infinite alternate;
 }
 
 html.accent-led .app::after {
   top: 67vh;
   left: 20vw;
   transform: rotate(18deg);
-  opacity: .34;
-  animation: led-strip-drift-reverse 21s ease-in-out infinite alternate;
+  animation: led-strip-drift-reverse 11s ease-in-out infinite alternate;
 }
 
 html.accent-led .topbar {
@@ -8617,6 +8620,30 @@ function confirmLeaveWorkout() {
   }
 }
 
+function discardActiveWorkout() {
+  if (!currentExecution) {
+    navigate("home");
+    return;
+  }
+
+  if (!confirm("Sair e descartar este treino? Nenhuma série será salva.")) return;
+
+  stopWorkoutTimer();
+  resetRestTimer();
+  currentExecution = null;
+  state.activeSession = null;
+  saveState();
+  releaseWakeLock();
+  currentPage = "home";
+
+  document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+  document.getElementById("page-home")?.classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(button => button.classList.remove("active"));
+  document.getElementById("nav-home")?.classList.add("active");
+  renderAll();
+  showToast("Treino descartado");
+}
+
 function openExecutionMenu() {
 
   openModal(
@@ -8643,6 +8670,13 @@ function openExecutionMenu() {
           onclick="closeModal();confirmLeaveWorkout();"
         >
           Sair e continuar depois
+        </button>
+
+        <button
+          class="btn btn-ghost btn-large btn-block"
+          onclick="closeModal();discardActiveWorkout();"
+        >
+          Sair e descartar treino
         </button>
 
       </div>
@@ -14482,7 +14516,7 @@ function waitForSpotifyPlaybackUpdate() {
     setTimeout(async () => {
       await refreshSpotifyPlayback();
       resolve();
-    }, 900);
+    }, 1200);
   });
 }
 
