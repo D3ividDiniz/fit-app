@@ -1917,6 +1917,15 @@ a {
       <div class="nav-right">
 
         <button
+          id="auth-btn"
+          class="btn btn-secondary btn-small"
+          onclick="handleAuthAction()"
+          aria-label="Entrar com Google"
+        >
+          Entrar
+        </button>
+
+        <button
           class="icon-btn"
           onclick="toggleTheme()"
           title="Alternar tema"
@@ -2692,6 +2701,7 @@ a {
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* =========================================================
    DEVEDE — APPLICATION
@@ -2704,6 +2714,8 @@ a {
    ========================================================= */
 
 const STORAGE_KEY = "devede-v2-state";
+const ONBOARDING_SEEN_KEY = "devede-onboarding-seen";
+const CLOUD_STATE_RESOLVED_KEY = "devede-cloud-state-resolved:";
 
 const DEFAULT_SETTINGS = {
   executionSeconds: 120,
@@ -10511,6 +10523,7 @@ saveState = function() {
     state.ui = { ...(state.ui || {}), page: currentPage, workoutTab: currentWorkoutTab };
 
     __devedeSaveState();
+    scheduleCloudSync();
   } catch (error) {
     console.error("Falha ao persistir Dabliu.fit", error);
 
@@ -11936,6 +11949,8 @@ function finishOnboarding() {
   state.onboardingStep =
     0;
 
+  localStorage.setItem(ONBOARDING_SEEN_KEY, "1");
+
   saveState();
 
   document
@@ -11955,9 +11970,7 @@ function finishOnboarding() {
 }
 
 function initOnboarding() {
-  if (
-    state.onboardingComplete
-  ) {
+  if (state.onboardingComplete || localStorage.getItem(ONBOARDING_SEEN_KEY) === "1") {
     return;
   }
 
@@ -12051,8 +12064,8 @@ document.addEventListener(
           state.activeSession
         ) {
           restoreActiveSession();
-        } else {
-          initOnboarding();
+        } else if (cloudAuthReady) {
+          finishAuthOnboarding();
         }
 
         __devedeStartupHydration =
@@ -12168,6 +12181,312 @@ function seedDemoHistoryIfEmpty() {
   */
 
 }
+
+
+/* =========================================================
+   SUPABASE — GOOGLE AUTH + PRIVATE CLOUD STATE
+   ========================================================= */
+
+/*
+  These values identify the public Supabase project. They are
+  intentionally safe to ship to a browser; authorization is enforced
+  by the RLS policies in supabase-schema.sql.
+*/
+const SUPABASE_URL = "https://elnrmnseyvqqexpnkdws.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_EwRNGBlnqZ1cv5uFLs7uEw_rawj1XKP";
+
+const supabaseClient = window.supabase?.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    }
+  }
+);
+
+let cloudUser = null;
+let cloudAuthReady = false;
+let cloudHydrating = false;
+let cloudSyncTimer = null;
+let cloudSyncInFlight = false;
+
+function cloudStateResolvedKey(userId) {
+  return `${CLOUD_STATE_RESOLVED_KEY}${userId}`;
+}
+
+function finishAuthOnboarding() {
+  if (!cloudAuthReady || state.activeSession) return;
+
+  const onboarding = document.getElementById("onboarding");
+
+  if (cloudUser) {
+    onboarding?.classList.remove("open");
+    return;
+  }
+
+  initOnboarding();
+}
+
+function renderAuthButton() {
+  const button = document.getElementById("auth-btn");
+  if (!button) return;
+
+  button.textContent = cloudUser ? "Sair" : "Entrar";
+  button.setAttribute(
+    "aria-label",
+    cloudUser ? "Sair da conta" : "Entrar com Google"
+  );
+}
+
+async function handleAuthAction() {
+  if (!supabaseClient) {
+    showToast("Não foi possível carregar a conexão segura");
+    return;
+  }
+
+  if (cloudUser) {
+    await syncCloudState(true);
+
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) {
+      console.error("Falha ao sair", error);
+      showToast("Não foi possível sair agora");
+      return;
+    }
+
+    cloudUser = null;
+    currentExecution = null;
+    stopWorkoutTimer();
+    resetRestTimer();
+    state = buildDefaultState();
+    ensurePresetRoutines();
+    ensureTodayWorkout();
+    __devedeStartupHydration = false;
+    __devedeSaveState();
+    renderAll();
+    renderAuthButton();
+    finishAuthOnboarding();
+    showToast("Você saiu da conta");
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${window.location.origin}/`
+    }
+  });
+
+  if (error) {
+    console.error("Falha ao iniciar Google", error);
+    showToast("Não foi possível iniciar o login com Google");
+  }
+}
+
+function hasMeaningfulLocalData() {
+  return Boolean(
+    state.workouts?.length ||
+    state.routines?.some(routine => !routine.isPreset) ||
+    state.schedule && Object.keys(state.schedule).length ||
+    state.todayOverrides && Object.keys(state.todayOverrides).length ||
+    state.profile?.goal ||
+    state.profile?.trainingDays
+  );
+}
+
+function cloudStateSnapshot() {
+  const snapshot = JSON.parse(JSON.stringify(state));
+
+  /* UI position is device-specific, not account data. */
+  delete snapshot.ui;
+  delete snapshot.lastOpened;
+
+  return snapshot;
+}
+
+function hydrateCloudState(snapshot) {
+  if (!snapshot || typeof snapshot !== "object") return false;
+
+  const defaults = buildDefaultState();
+  state = {
+    ...defaults,
+    ...snapshot,
+    settings: {
+      ...defaults.settings,
+      ...(snapshot.settings || {})
+    },
+    ui: state.ui || {}
+  };
+
+  currentExecution = null;
+  restTimer = {
+    running: false,
+    seconds: Number(state.settings.restSeconds) || 0,
+    interval: null
+  };
+
+  migrateDabliuState();
+  ensurePresetRoutines();
+  ensureTodayWorkout();
+  applyTheme();
+  applyUserAccent();
+  renderAll();
+
+  if (state.activeSession) {
+    restoreActiveSession();
+  }
+
+  __devedeSaveState();
+  return true;
+}
+
+function scheduleCloudSync() {
+  if (!cloudUser || cloudHydrating || !supabaseClient) return;
+
+  window.clearTimeout(cloudSyncTimer);
+  cloudSyncTimer = window.setTimeout(
+    () => syncCloudState(),
+    600
+  );
+}
+
+async function syncCloudState(force = false) {
+  if (!cloudUser || !supabaseClient || cloudHydrating) return;
+  if (cloudSyncInFlight && !force) return;
+
+  cloudSyncInFlight = true;
+
+  try {
+    const profile = state.profile || {};
+
+    const { error: profileError } = await supabaseClient
+      .from("user_profiles")
+      .upsert({
+        user_id: cloudUser.id,
+        goal: profile.goal || "",
+        training_days: Number(profile.trainingDays) || 0,
+        updated_at: new Date().toISOString()
+      });
+
+    if (profileError) throw profileError;
+
+    const { error: stateError } = await supabaseClient
+      .from("user_app_state")
+      .upsert({
+        user_id: cloudUser.id,
+        state: cloudStateSnapshot(),
+        schema_version: 1,
+        updated_at: new Date().toISOString()
+      });
+
+    if (stateError) throw stateError;
+  } catch (error) {
+    console.error("Falha ao sincronizar com Supabase", error);
+    if (force) showToast("Não foi possível sincronizar agora");
+  } finally {
+    cloudSyncInFlight = false;
+  }
+}
+
+async function loadCloudState(user) {
+  cloudHydrating = true;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("user_app_state")
+      .select("state")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    const resolvedKey = cloudStateResolvedKey(user.id);
+    const alreadyResolved = localStorage.getItem(resolvedKey) === "1";
+    const hasLocalData = hasMeaningfulLocalData();
+    let shouldUseCloud = true;
+
+    if (data?.state && hasLocalData && !alreadyResolved) {
+      shouldUseCloud = confirm(
+        "Há dados locais neste navegador.\n\nOK = usar os dados salvos na sua conta.\nCancelar = importar os dados locais para sua conta."
+      );
+      localStorage.setItem(resolvedKey, "1");
+    }
+
+    if (data?.state) {
+      if (shouldUseCloud) {
+        hydrateCloudState(data.state);
+        showToast("Dados da conta carregados");
+      } else {
+        cloudHydrating = false;
+        await syncCloudState(true);
+        showToast("Dados locais importados para sua conta");
+        return;
+      }
+    } else {
+      localStorage.setItem(resolvedKey, "1");
+      cloudHydrating = false;
+      await syncCloudState(true);
+      showToast(
+        hasMeaningfulLocalData()
+          ? "Dados locais importados para sua conta"
+          : "Sua conta está pronta para sincronizar"
+      );
+    }
+  } catch (error) {
+    console.error("Falha ao carregar dados da conta", error);
+    showToast("Conectado, mas a sincronização ainda não está pronta");
+  } finally {
+    cloudHydrating = false;
+  }
+}
+
+async function initializeCloudConnection() {
+  if (!supabaseClient) {
+    console.error("Biblioteca Supabase não foi carregada");
+    return;
+  }
+
+  const { data, error } = await supabaseClient.auth.getSession();
+  if (error) {
+    console.error("Falha ao recuperar sessão", error);
+    return;
+  }
+
+  cloudUser = data.session?.user || null;
+  cloudAuthReady = true;
+  renderAuthButton();
+
+  if (cloudUser) {
+    await loadCloudState(cloudUser);
+  }
+
+  finishAuthOnboarding();
+
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    window.setTimeout(async () => {
+      cloudUser = session?.user || null;
+      cloudAuthReady = true;
+      renderAuthButton();
+
+      if (event === "SIGNED_IN" && cloudUser) {
+        await loadCloudState(cloudUser);
+      }
+
+      finishAuthOnboarding();
+    }, 0);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initializeCloudConnection);
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") {
+    syncCloudState();
+  }
+});
 
 
 /* =========================================================
