@@ -242,6 +242,86 @@ a {
   display: none !important;
 }
 
+html.accent-led {
+  --accent-glow: color-mix(in srgb, var(--accent-user) 78%, transparent);
+  --accent-wash: color-mix(in srgb, var(--accent-user) 12%, transparent);
+  --glass-surface: color-mix(in srgb, var(--surface) 78%, transparent);
+}
+
+html.accent-led body {
+  background:
+    radial-gradient(circle at 8% 8%, color-mix(in srgb, var(--accent-user) 13%, transparent), transparent 29%),
+    radial-gradient(circle at 92% 36%, color-mix(in srgb, var(--accent-user) 9%, transparent), transparent 32%),
+    var(--bg);
+}
+
+html.accent-led .topbar {
+  background: color-mix(in srgb, var(--surface) 68%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--accent-user) 24%, var(--border));
+}
+
+html.accent-led .setting-card,
+html.accent-led .card,
+html.accent-led .hero-card,
+html.accent-led .history-item,
+html.accent-led .account-card,
+html.accent-led .icon-btn,
+html.accent-led .login-card,
+html.accent-led .modal {
+  background: var(--glass-surface);
+  border-color: color-mix(in srgb, var(--accent-user) 20%, var(--border));
+  box-shadow: 0 14px 40px color-mix(in srgb, var(--accent-user) 7%, transparent), var(--shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.accent-led .setting-card:hover,
+html.accent-led .card:hover,
+html.accent-led .account-card:hover {
+  border-color: color-mix(in srgb, var(--accent-user) 48%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-user) 20%, transparent), 0 18px 45px color-mix(in srgb, var(--accent-user) 10%, transparent);
+}
+
+html.accent-led .btn-primary,
+html.accent-led .nav-btn.active {
+  background: var(--accent-user);
+  border-color: var(--accent-user);
+  color: #fff;
+  box-shadow: 0 0 22px color-mix(in srgb, var(--accent-user) 28%, transparent);
+}
+
+html.accent-led .btn-secondary,
+html.accent-led .btn-ghost,
+html.accent-led input,
+html.accent-led textarea,
+html.accent-led select,
+html.accent-led .account-menu-status,
+html.accent-led .badge {
+  background: color-mix(in srgb, var(--accent-user) 8%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent-user) 24%, var(--border));
+}
+
+html.accent-led input:focus,
+html.accent-led textarea:focus,
+html.accent-led select:focus {
+  border-color: var(--accent-user);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-user) 18%, transparent), 0 0 18px color-mix(in srgb, var(--accent-user) 12%, transparent);
+}
+
+html.accent-led .page-description,
+html.accent-led .setting-description,
+html.accent-led .card-subtitle,
+html.accent-led .login-copy,
+html.accent-led .account-status {
+  font-weight: 450;
+}
+
+html.accent-led .section-title,
+html.accent-led .setting-title,
+html.accent-led .card-title {
+  letter-spacing: -.025em;
+}
+
 .app {
   min-height: 100vh;
 }
@@ -336,6 +416,13 @@ a {
 
 .nav-settings-icon {
   display: none;
+}
+
+.nav-settings-icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  color: #fff;
 }
 
 .nav-right {
@@ -1632,6 +1719,11 @@ html.header-brand-visible .brand {
   gap: 20px;
 }
 
+.settings-list .setting-row > div:first-child {
+  min-width: 0;
+  flex: 1;
+}
+
 .setting-title {
   font-size: 16px;
   font-weight: 760;
@@ -1647,6 +1739,92 @@ html.header-brand-visible .brand {
 .setting-control {
   width: 150px;
   flex: 0 0 150px;
+}
+
+.progression-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.progression-kicker {
+  margin-bottom: 9px;
+  color: var(--text-3);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.progression-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.progression-stat,
+.progression-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.progression-stat {
+  padding: 16px;
+}
+
+.progression-stat-value {
+  font-size: 25px;
+  font-weight: 850;
+  letter-spacing: -.04em;
+}
+
+.progression-stat-label {
+  margin-top: 4px;
+  color: var(--text-3);
+  font-size: 11px;
+}
+
+.progression-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.progression-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+}
+
+.progression-card-name {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.progression-card-meta {
+  margin-top: 5px;
+  color: var(--text-3);
+  font-size: 11px;
+}
+
+.progression-card-value {
+  font-size: 17px;
+  font-weight: 850;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.progression-card-action {
+  margin-top: 7px;
+  color: var(--text-3);
+  font-size: 11px;
+  text-align: right;
 }
 
 .spotify-card {
@@ -1678,9 +1856,7 @@ html.header-brand-visible .brand {
 }
 
 .spotify-status {
-  margin-top: 4px;
-  color: var(--text-3);
-  font-size: 12px;
+  display: none;
 }
 
 .spotify-playlist-row {
@@ -1801,7 +1977,7 @@ html.header-brand-visible .brand {
 
 .spotify-playlist-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -1810,7 +1986,7 @@ html.header-brand-visible .brand {
   padding-bottom: 12px;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 13px;
 }
 
 .spotify-playlist-card img,
@@ -1832,17 +2008,20 @@ html.header-brand-visible .brand {
 
 .spotify-playlist-card-name {
   min-height: 34px;
-  padding: 10px 10px 6px;
+  padding: 8px 8px 5px;
   overflow: hidden;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .spotify-playlist-card button {
-  width: calc(100% - 20px);
-  margin: 0 10px;
+  width: calc(100% - 16px);
+  min-height: 34px;
+  margin: 0 8px;
+  padding: 0 8px;
+  font-size: 11px;
 }
 
 .spotify-account-footer {
@@ -1950,6 +2129,14 @@ html.header-brand-visible .brand {
   flex: 1;
 }
 
+.spotify-player-cover {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 .spotify-track,
 .spotify-artist {
   overflow: hidden;
@@ -1983,8 +2170,21 @@ html.header-brand-visible .brand {
 }
 
 @media (max-width: 580px) {
+  .settings-list .setting-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .settings-list .setting-row > input[type="checkbox"] {
+    margin-left: auto;
+  }
+
   .spotify-playlist-row {
     grid-template-columns: 1fr;
+  }
+
+  .spotify-playlist-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .spotify-player-bar {
@@ -2243,6 +2443,20 @@ html.header-brand-visible .brand {
     width: 100%;
   }
 
+  .progression-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .progression-header .btn {
+    width: 100%;
+  }
+
+  .progression-summary,
+  .progression-list {
+    grid-template-columns: 1fr;
+  }
+
   .hero-card {
     padding: 21px;
   }
@@ -2302,7 +2516,7 @@ html.header-brand-visible .brand {
    ========================================================= */
 
 :root {
-  --accent-user: #b8b8b2;
+  --accent-user: #4f7cff;
 }
 
 .workout-elapsed {
@@ -2582,6 +2796,14 @@ html.header-brand-visible .brand {
         </button>
 
         <button
+          id="nav-progression"
+          class="nav-btn"
+          onclick="navigate('progression')"
+        >
+          Progressão
+        </button>
+
+        <button
           id="nav-spotify"
           class="nav-btn"
           onclick="navigate('spotify')"
@@ -2595,7 +2817,11 @@ html.header-brand-visible .brand {
           onclick="navigate('settings')"
           aria-label="Configurações"
         >
-          <span class="nav-settings-icon" aria-hidden="true">⚙</span>
+          <span class="nav-settings-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M19.43 12.98c.04-.32.07-.65.07-.98s-.02-.66-.07-.98l2.11-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1a7.2 7.2 0 0 0-1.69-.98L14.5 2.42A.49.49 0 0 0 14 2h-4a.49.49 0 0 0-.49.42L9.13 5.07c-.6.25-1.16.58-1.69.98l-2.49-1a.49.49 0 0 0-.61.22l-2 3.46a.5.5 0 0 0 .12.64l2.11 1.65c-.04.32-.08.65-.08.98s.03.66.08.98l-2.11 1.65a.5.5 0 0 0-.12.64l2 3.46c.12.21.37.3.61.22l2.49-1c.53.4 1.09.73 1.69.98l.38 2.65c.04.24.25.42.49.42h4c.24 0 .45-.18.49-.42l.38-2.65c.6-.25 1.16-.58 1.69-.98l2.49 1c.23.08.49-.01.61-.22l2-3.46a.5.5 0 0 0-.12-.64l-2.11-1.65ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z" fill="currentColor"/>
+            </svg>
+          </span>
           <span class="nav-settings-label">Config.</span>
         </button>
 
@@ -3061,6 +3287,19 @@ html.header-brand-visible .brand {
 
     </section>
 
+    <section id="page-progression" class="page">
+      <div class="progression-header">
+        <div>
+          <div class="progression-kicker">Evolução</div>
+          <h1 class="page-title">Seus PRs</h1>
+          <p class="page-description">Acompanhe seus melhores resultados e corrija o ponto de partida quando necessário.</p>
+        </div>
+        <button class="btn btn-primary" onclick="openPRModal()">+ Adicionar PR</button>
+      </div>
+      <div id="progression-summary" class="progression-summary"></div>
+      <div id="progression-list" class="progression-list"></div>
+    </section>
+
 
     <!-- ===================================================
          SETTINGS
@@ -3339,15 +3578,6 @@ html.header-brand-visible .brand {
     </section>
 
     <section id="page-spotify" class="page">
-      <div class="page-header">
-        <div>
-          <h1 class="page-title">Spotify</h1>
-          <p class="page-description">
-            Escolha sua trilha e controle a música do celular sem sair do treino.
-          </p>
-        </div>
-      </div>
-
       <div class="spotify-dashboard">
         <div id="spotify-now-playing" class="spotify-now-playing" hidden></div>
 
@@ -3357,9 +3587,6 @@ html.header-brand-visible .brand {
               <div class="setting-title">Spotify conectado</div>
               <div class="setting-description">
                 A reprodução acontece no seu dispositivo Spotify ativo.
-              </div>
-              <div id="spotify-connection-status" class="spotify-status">
-                Não conectado
               </div>
             </div>
             <div class="spotify-connect-actions">
@@ -3565,7 +3792,7 @@ const DEFAULT_SETTINGS = {
   restSeconds: 90,
   workoutLimitMinutes: 45,
   theme: "light",
-  accent: "#b8b8b2"
+  accent: "#4f7cff"
 };
 
 
@@ -4119,6 +4346,7 @@ function navigate(page) {
   const navMap = {
     home: "nav-home",
     workouts: "nav-workouts",
+    progression: "nav-progression",
     spotify: "nav-spotify",
     settings: "nav-settings"
   };
@@ -4137,6 +4365,10 @@ function navigate(page) {
 
   if (page === "settings") {
     populateSettings();
+  }
+
+  if (page === "progression") {
+    renderProgression();
   }
 
   if (page === "spotify") {
@@ -4570,6 +4802,8 @@ function renderAll() {
   renderHistory();
 
   renderEvolution();
+
+  renderProgression();
 
   populateSettings();
 
@@ -8697,6 +8931,152 @@ function getExercisePerformances(
     );
 }
 
+function getExercisePR(exercise) {
+  const manual = exercise?.personalRecord;
+  if (manual?.value != null) {
+    return {
+      value: Number(manual.value),
+      reps: manual.reps != null ? Number(manual.reps) : null,
+      manual: true
+    };
+  }
+
+  const performances = getExercisePerformances(exercise.id);
+  if (!performances.length) return null;
+
+  const valid = performances.filter(item => {
+    if (exercise.type === "weight") return item.weight != null;
+    if (exercise.type === "reps") return item.reps != null;
+    return item.time != null;
+  });
+  if (!valid.length) return null;
+
+  const best = valid.reduce((current, item) => {
+    const currentValue = exercise.type === "weight" ? current.weight : exercise.type === "reps" ? current.reps : current.time;
+    const itemValue = exercise.type === "weight" ? item.weight : exercise.type === "reps" ? item.reps : item.time;
+    return Number(itemValue) > Number(currentValue) ? item : current;
+  });
+
+  return {
+    value: Number(exercise.type === "weight" ? best.weight : exercise.type === "reps" ? best.reps : best.time),
+    reps: exercise.type === "weight" && best.reps != null ? Number(best.reps) : null,
+    manual: false
+  };
+}
+
+function formatExercisePR(exercise, record) {
+  if (!record) return "Sem PR registrado";
+  if (exercise.type === "weight") return `${record.value} kg${record.reps ? ` × ${record.reps} reps` : ""}`;
+  if (exercise.type === "reps") return `${record.value} reps`;
+  return `${record.value} segundos`;
+}
+
+function renderProgression() {
+  const summary = document.getElementById("progression-summary");
+  const list = document.getElementById("progression-list");
+  if (!summary || !list) return;
+
+  const records = state.exercises
+    .map(exercise => ({ exercise, record: getExercisePR(exercise) }))
+    .filter(item => item.record)
+    .sort((first, second) => second.record.value - first.record.value);
+
+  summary.innerHTML = `
+    <div class="progression-stat">
+      <div class="progression-stat-value">${records.length}</div>
+      <div class="progression-stat-label">Exercícios com PR</div>
+    </div>
+    <div class="progression-stat">
+      <div class="progression-stat-value">${state.workoutHistory.length}</div>
+      <div class="progression-stat-label">Registros no histórico</div>
+    </div>
+    <div class="progression-stat">
+      <div class="progression-stat-value">${records.filter(item => item.record.manual).length}</div>
+      <div class="progression-stat-label">PRs informados manualmente</div>
+    </div>
+  `;
+
+  list.innerHTML = records.length
+    ? records.map(({ exercise, record }) => `
+      <article class="progression-card">
+        <div>
+          <div class="progression-card-name">${escapeHTML(exercise.name)}</div>
+          <div class="progression-card-meta">${record.manual ? "Informado por você" : "Melhor marca do histórico"}</div>
+        </div>
+        <div>
+          <div class="progression-card-value">${escapeHTML(formatExercisePR(exercise, record))}</div>
+          <button class="progression-card-action" type="button" onclick="openPRModal('${escapeHTML(exercise.id)}')">Editar PR</button>
+        </div>
+      </article>
+    `).join("")
+    : `<div class="empty"><div class="empty-title">Sua progressão começa aqui</div>Adicione seu primeiro PR ou finalize um treino para criar um registro.</div>`;
+}
+
+function openPRModal(exerciseId = "") {
+  const options = state.exercises
+    .map(exercise => `<option value="${escapeHTML(exercise.id)}" ${exercise.id === exerciseId ? "selected" : ""}>${escapeHTML(exercise.name)}</option>`)
+    .join("");
+
+  openModal(
+    "Editar PR",
+    `
+      <div class="form-group">
+        <label class="form-label">Exercício</label>
+        <select id="pr-exercise" onchange="updatePRForm()">${options}</select>
+      </div>
+      <div class="form-group">
+        <label id="pr-value-label" class="form-label">Valor</label>
+        <input id="pr-value" type="number" min="0" step="0.5">
+      </div>
+      <div id="pr-reps-field" class="form-group">
+        <label class="form-label">Repetições</label>
+        <input id="pr-reps" type="number" min="1" step="1">
+      </div>
+      <div id="pr-value-hint" class="setting-description">Você pode corrigir esse número mesmo sem histórico.</div>
+    `,
+    `
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="savePersonalRecord()">Salvar PR</button>
+    `
+  );
+  updatePRForm();
+}
+
+function updatePRForm() {
+  const exercise = state.exercises.find(item => item.id === document.getElementById("pr-exercise")?.value);
+  const valueInput = document.getElementById("pr-value");
+  const repsField = document.getElementById("pr-reps-field");
+  const repsInput = document.getElementById("pr-reps");
+  const label = document.getElementById("pr-value-label");
+  if (!exercise || !valueInput || !repsField || !repsInput || !label) return;
+
+  const record = getExercisePR(exercise);
+  const labels = { weight: "Peso máximo (kg)", reps: "Repetições máximas", timed: "Tempo máximo (segundos)" };
+  label.textContent = labels[exercise.type] || "Valor";
+  valueInput.value = record?.value ?? "";
+  repsInput.value = record?.reps ?? "";
+  repsField.hidden = exercise.type !== "weight";
+}
+
+function savePersonalRecord() {
+  const exercise = state.exercises.find(item => item.id === document.getElementById("pr-exercise")?.value);
+  const value = Number(document.getElementById("pr-value")?.value);
+  const repsValue = Number(document.getElementById("pr-reps")?.value);
+  if (!exercise || !Number.isFinite(value) || value <= 0) {
+    showToast("Informe um PR válido");
+    return;
+  }
+  exercise.personalRecord = {
+    value,
+    reps: exercise.type === "weight" && Number.isFinite(repsValue) && repsValue > 0 ? repsValue : null,
+    updatedAt: new Date().toISOString()
+  };
+  saveState();
+  closeModal();
+  renderAll();
+  showToast("PR atualizado");
+}
+
 function getWeightSuggestion(
   exercise
 ) {
@@ -11318,14 +11698,12 @@ moveBuilderItem =
    ========================================================= */
 
 const DABLIU_ACCENTS = [
-  { name:"Cinza claro", value:"#b8b8b2" },
   { name:"Azul", value:"#4f7cff" },
-  { name:"Roxo", value:"#8b6cff" },
-  { name:"Rosa", value:"#d85a9f" },
   { name:"Laranja", value:"#d98b45" },
-  { name:"Vermelho", value:"#d85b62" },
   { name:"Amarelo", value:"#d1b34f" },
-  { name:"Ciano", value:"#55aeb7" }
+  { name:"Verde", value:"#25c76f" },
+  { name:"Roxo", value:"#8b6cff" },
+  { name:"Rosa neon", value:"#ff4fd8" }
 ];
 
 const DABLIU_DAYS = [
@@ -11411,9 +11789,10 @@ saveState = function() {
 /* ---------- accent ---------- */
 
 function applyUserAccent() {
-  const accent =
-    state.settings?.accent ||
-    "#b8b8b2";
+  const savedAccent = state.settings?.accent;
+  const accent = DABLIU_ACCENTS.some(item => item.value === savedAccent)
+    ? savedAccent
+    : "#4f7cff";
 
   document.documentElement.style.setProperty(
     "--accent-user",
@@ -11447,9 +11826,10 @@ function renderAccentPicker() {
 
   if (!container) return;
 
-  const current =
-    state.settings?.accent ||
-    "#b8b8b2";
+  const savedAccent = state.settings?.accent;
+  const current = DABLIU_ACCENTS.some(item => item.value === savedAccent)
+    ? savedAccent
+    : "#4f7cff";
 
   container.innerHTML =
     DABLIU_ACCENTS
@@ -12282,6 +12662,7 @@ navigate = function(
     const navMap = {
       home: "nav-home",
       workouts: "nav-workouts",
+      progression: "nav-progression",
       spotify: "nav-spotify",
       settings: "nav-settings"
     };
@@ -12306,6 +12687,12 @@ navigate = function(
       setWorkoutTab(
         currentWorkoutTab
       );
+    }
+
+    if (
+      page === "progression"
+    ) {
+      renderProgression();
     }
 
     if (
@@ -12616,7 +13003,7 @@ function renderOnboarding() {
   ) {
     const current =
       state.settings?.accent ||
-      "#b8b8b2";
+      "#4f7cff";
 
     extra = `
       <div class="onboarding-color-grid">
@@ -12852,7 +13239,7 @@ function migrateDabliuState() {
     !state.settings.accent
   ) {
     state.settings.accent =
-      "#b8b8b2";
+      "#4f7cff";
   }
 
   if (
@@ -13783,7 +14170,10 @@ function renderSpotifyUI() {
   const deviceRow = document.getElementById("spotify-device-row");
   const deviceSelect = document.getElementById("spotify-device-select");
   const miniPlayerToggle = document.getElementById("spotify-miniplayer-toggle");
-  const playlists = window.spotifyPlaylists || [];
+  const playlists = (window.spotifyPlaylists || [])
+    .slice()
+    .sort((first, second) => spotifyPlaylistSize(second) - spotifyPlaylistSize(first))
+    .slice(0, 5);
 
   if (!button || !row || !playlistList) return;
 
@@ -13851,6 +14241,10 @@ function renderSpotifyUI() {
   renderSpotifyNowPlaying();
 }
 
+function spotifyPlaylistSize(playlist) {
+  return Number(playlist?.items?.total ?? playlist?.tracks?.total ?? 0);
+}
+
 function renderSpotifyNowPlaying() {
   const container = document.getElementById("spotify-now-playing");
   const track = window.spotifyPlayback?.item;
@@ -13899,10 +14293,14 @@ function renderSpotifyPlayer() {
   const track = window.spotifyPlayback?.item;
   const trackName = track?.name || "Spotify conectado";
   const artistName = track?.artists?.map(artist => artist.name).join(", ") || "Escolha uma playlist para começar";
+  const imageUrl = track?.album?.images?.[0]?.url;
   const isPlaying = Boolean(window.spotifyPlayback?.is_playing);
 
   bar.hidden = false;
   bar.innerHTML = `
+    ${imageUrl
+      ? `<img class="spotify-player-cover" src="${escapeHTML(imageUrl)}" alt="Capa de ${escapeHTML(trackName)}">`
+      : `<div class="spotify-player-cover spotify-playlist-placeholder" aria-hidden="true">♪</div>`}
     <div class="spotify-player-info">
       <div class="spotify-track">${escapeHTML(trackName)}</div>
       <div class="spotify-artist">${escapeHTML(artistName)}</div>
