@@ -249,10 +249,45 @@ html.accent-led {
 }
 
 html.accent-led body {
+  overflow-x: hidden;
   background:
-    radial-gradient(circle at 8% 8%, color-mix(in srgb, var(--accent-user) 13%, transparent), transparent 29%),
-    radial-gradient(circle at 92% 36%, color-mix(in srgb, var(--accent-user) 9%, transparent), transparent 32%),
+    radial-gradient(circle at 8% 8%, color-mix(in srgb, var(--accent-user) 24%, transparent), transparent 32%),
+    radial-gradient(circle at 92% 36%, color-mix(in srgb, var(--accent-user) 17%, transparent), transparent 35%),
     var(--bg);
+}
+
+html.accent-led .app {
+  position: relative;
+  isolation: isolate;
+}
+
+html.accent-led .app::before,
+html.accent-led .app::after {
+  position: fixed;
+  z-index: -1;
+  display: block;
+  width: 145vw;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--accent-user);
+  box-shadow: 0 0 10px 3px var(--accent-glow), 0 0 46px 12px color-mix(in srgb, var(--accent-user) 42%, transparent);
+  content: "";
+  filter: blur(2px);
+  opacity: .52;
+  pointer-events: none;
+}
+
+html.accent-led .app::before {
+  top: 19vh;
+  left: -28vw;
+  transform: rotate(-12deg);
+}
+
+html.accent-led .app::after {
+  top: 67vh;
+  left: 20vw;
+  transform: rotate(18deg);
+  opacity: .34;
 }
 
 html.accent-led .topbar {
@@ -264,11 +299,13 @@ html.accent-led .setting-card,
 html.accent-led .card,
 html.accent-led .hero-card,
 html.accent-led .history-item,
+html.accent-led .progression-stat,
+html.accent-led .spotify-playlist-card,
 html.accent-led .account-card,
 html.accent-led .icon-btn,
 html.accent-led .login-card,
 html.accent-led .modal {
-  background: var(--glass-surface);
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
   border-color: color-mix(in srgb, var(--accent-user) 20%, var(--border));
   box-shadow: 0 14px 40px color-mix(in srgb, var(--accent-user) 7%, transparent), var(--shadow);
   backdrop-filter: blur(16px);
@@ -318,8 +355,28 @@ html.accent-led .account-status {
 
 html.accent-led .section-title,
 html.accent-led .setting-title,
-html.accent-led .card-title {
+html.accent-led .card-title,
+html.accent-led .eyebrow,
+html.accent-led .today-label,
+html.accent-led .progression-kicker,
+html.accent-led .stat-value {
   letter-spacing: -.025em;
+  color: var(--accent-user);
+}
+
+html.accent-led .execution-progress-bar,
+html.accent-led .complete-btn.done {
+  background: var(--accent-user);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent-user) 34%, transparent);
+}
+
+html.accent-led .suggestion {
+  border-color: var(--accent-user);
+  background: color-mix(in srgb, var(--accent-user) 10%, var(--surface));
+}
+
+html.accent-led .suggestion-label {
+  color: var(--accent-user);
 }
 
 .app {
@@ -392,6 +449,9 @@ html.accent-led .card-title {
   display: flex;
   align-items: center;
   gap: 3px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .nav-btn {
@@ -402,6 +462,7 @@ html.accent-led .card-title {
   border-radius: 10px;
   font-weight: 650;
   font-size: 14px;
+  white-space: nowrap;
 }
 
 .nav-btn:hover {
@@ -1942,6 +2003,20 @@ html.header-brand-visible .brand {
   border-radius: inherit;
 }
 
+.spotify-now-playing-progress.is-playing span {
+  animation: spotify-progress linear forwards;
+  animation-duration: var(--spotify-progress-duration);
+}
+
+@keyframes spotify-progress {
+  from {
+    width: var(--spotify-progress-start);
+  }
+  to {
+    width: 100%;
+  }
+}
+
 .spotify-now-playing-controls {
   display: flex;
   gap: 8px;
@@ -2845,33 +2920,6 @@ html.header-brand-visible .brand {
 
         <div id="account-menu" class="account-menu" hidden></div>
 
-        <button
-          class="icon-btn"
-          onclick="toggleTheme()"
-          title="Alternar tema"
-          aria-label="Alternar tema"
-        >
-          <svg
-            id="theme-icon"
-            class="icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-          >
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="m4.93 4.93 1.41 1.41"></path>
-            <path d="m17.66 17.66 1.41 1.41"></path>
-            <path d="M2 12h2"></path>
-            <path d="M20 12h2"></path>
-            <path d="m6.34 17.66-1.41 1.41"></path>
-            <path d="m19.07 4.93-1.41 1.41"></path>
-          </svg>
-        </button>
-
       </div>
 
     </div>
@@ -2990,31 +3038,6 @@ html.header-brand-visible .brand {
         </div>
 
       </div>
-
-
-      <section class="section">
-
-        <div class="section-head">
-
-          <h2 class="section-title">
-            Acesso rápido
-          </h2>
-
-          <button
-            class="btn btn-secondary btn-small"
-            onclick="navigate('workouts')"
-          >
-            Ver treinos
-          </button>
-
-        </div>
-
-        <div
-          id="quick-workouts"
-          class="grid grid-3"
-        ></div>
-
-      </section>
 
 
       <section class="section">
@@ -4950,6 +4973,8 @@ function renderQuickWorkouts() {
     document.getElementById(
       "quick-workouts"
     );
+
+  if (!container) return;
 
   const routines =
     state.routines
@@ -11798,6 +11823,7 @@ function applyUserAccent() {
     "--accent-user",
     accent
   );
+  document.documentElement.classList.add("accent-led");
 }
 
 function setUserAccent(value) {
@@ -14257,7 +14283,8 @@ function renderSpotifyNowPlaying() {
   const progress = Number(window.spotifyPlayback?.progress_ms || 0);
   const duration = Number(track.duration_ms || 0);
   const progressPercent = duration ? Math.min(100, Math.round(progress / duration * 100)) : 0;
-  const isPlaying = Boolean(window.spotifyPlayback?.is_playing);
+  const isPlaying = Boolean(track) && window.spotifyPlayback?.is_playing !== false;
+  const remainingSeconds = Math.max(1, (duration - progress) / 1000);
   const artistName = track.artists?.map(artist => artist.name).join(", ") || "Artista desconhecido";
 
   container.hidden = false;
@@ -14270,7 +14297,7 @@ function renderSpotifyNowPlaying() {
         <div class="spotify-now-playing-label">Tocando agora</div>
         <div class="spotify-now-playing-title">${escapeHTML(track.name)}</div>
         <div class="spotify-now-playing-artist">${escapeHTML(artistName)}</div>
-        <div class="spotify-now-playing-progress" aria-label="Progresso da música"><span style="width:${progressPercent}%"></span></div>
+        <div class="spotify-now-playing-progress${isPlaying ? " is-playing" : ""}" style="--spotify-progress-start:${progressPercent}%;--spotify-progress-duration:${remainingSeconds}s" aria-label="Progresso da música"><span style="width:${progressPercent}%"></span></div>
         <div class="spotify-now-playing-controls">
           <button type="button" onclick="previousSpotifyTrack()" aria-label="Música anterior">‹‹</button>
           <button type="button" onclick="toggleSpotifyPlayback()" aria-label="${isPlaying ? "Pausar" : "Continuar"}">${isPlaying ? "Ⅱ" : "▶"}</button>
@@ -14294,7 +14321,7 @@ function renderSpotifyPlayer() {
   const trackName = track?.name || "Spotify conectado";
   const artistName = track?.artists?.map(artist => artist.name).join(", ") || "Escolha uma playlist para começar";
   const imageUrl = track?.album?.images?.[0]?.url;
-  const isPlaying = Boolean(window.spotifyPlayback?.is_playing);
+  const isPlaying = Boolean(track) && window.spotifyPlayback?.is_playing !== false;
 
   bar.hidden = false;
   bar.innerHTML = `
@@ -14367,7 +14394,9 @@ async function playSelectedSpotifyPlaylist() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ context_uri: `spotify:playlist:${playlistId}` })
     });
-    await loadSpotifyData();
+    window.spotifyPlayback = { ...(window.spotifyPlayback || {}), is_playing: true };
+    renderSpotifyUI();
+    await waitForSpotifyPlaybackUpdate();
   } catch (error) {
     setSpotifyStatus(spotifyErrorMessage(error), true);
   }
@@ -14384,10 +14413,25 @@ async function controlSpotifyPlayback(path) {
       ? "PUT"
       : "POST";
     await spotifyRequest(spotifyPlaybackPath(path), { method });
-    await loadSpotifyData();
+    const isPause = path.endsWith("/pause");
+    window.spotifyPlayback = {
+      ...(window.spotifyPlayback || {}),
+      is_playing: !isPause
+    };
+    renderSpotifyUI();
+    await waitForSpotifyPlaybackUpdate();
   } catch (error) {
     setSpotifyStatus(spotifyErrorMessage(error), true);
   }
+}
+
+function waitForSpotifyPlaybackUpdate() {
+  return new Promise(resolve => {
+    setTimeout(async () => {
+      await refreshSpotifyPlayback();
+      resolve();
+    }, 900);
+  });
 }
 
 function previousSpotifyTrack() {
