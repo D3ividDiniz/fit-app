@@ -3641,6 +3641,16 @@ html.header-brand-visible .brand {
             <div id="spotify-playlist-list" class="spotify-playlist-list"></div>
           </div>
 
+          <div class="spotify-playlists-panel">
+            <div class="spotify-section-heading">
+              <div>
+                <div class="setting-title">Playlists para treinar</div>
+                <div class="setting-description">Seleções públicas para começar rápido.</div>
+              </div>
+            </div>
+            <div id="spotify-public-playlist-list" class="spotify-playlist-list"></div>
+          </div>
+
           <div id="spotify-device-row" class="spotify-playlist-row" hidden>
             <select id="spotify-device-select" onchange="selectSpotifyDevice(this.value)">
               <option value="">Dispositivo Spotify</option>
@@ -3830,6 +3840,12 @@ const DEFAULT_SETTINGS = {
 
 const SPOTIFY_PLAYBACK_REFRESH_ACTIVE_MS = 1000;
 const SPOTIFY_PLAYBACK_REFRESH_INACTIVE_MS = 3000;
+const PUBLIC_SPOTIFY_PLAYLISTS = [
+  { id: "37i9dQZF1DX0Ttyf3kTt4Q", name: "Beast Mode", description: "Treino intenso" },
+  { id: "37i9dQZF1DXcBWIGoYBM5M", name: "Today's Top Hits", description: "Hits do momento" },
+  { id: "37i9dQZF1DX10zKzsJ2jva", name: "Viva Latino", description: "Energia latina" },
+  { id: "37i9dQZF1DX4sWSpwq3LiO", name: "Peaceful Piano", description: "Foco e calma" }
+];
 
 
 /* =========================================================
@@ -14247,6 +14263,7 @@ function renderSpotifyUI() {
   const deviceRow = document.getElementById("spotify-device-row");
   const deviceSelect = document.getElementById("spotify-device-select");
   const miniPlayerToggle = document.getElementById("spotify-miniplayer-toggle");
+  renderSpotifyPublicPlaylists();
   const playlists = (window.spotifyPlaylists || [])
     .slice()
     .sort((first, second) => spotifyPlaylistSize(second) - spotifyPlaylistSize(first))
@@ -14316,6 +14333,24 @@ function renderSpotifyUI() {
     : "Conectado. Nenhuma música está tocando agora."), Boolean(window.spotifyApiIssue));
   renderSpotifyPlayer();
   renderSpotifyNowPlaying();
+}
+
+function renderSpotifyPublicPlaylists() {
+  const container = document.getElementById("spotify-public-playlist-list");
+  if (!container) return;
+
+  const token = getSpotifyToken();
+  const selectedId = localStorage.getItem(SPOTIFY_PLAYLIST_KEY) || "";
+  container.innerHTML = PUBLIC_SPOTIFY_PLAYLISTS.map(playlist => `
+    <article class="spotify-playlist-card">
+      <div class="spotify-playlist-placeholder" aria-hidden="true">♪</div>
+      <div class="spotify-playlist-card-name" title="${escapeHTML(playlist.name)}">${escapeHTML(playlist.name)}</div>
+      <div class="setting-description" style="padding:0 8px 8px;font-size:11px;">${escapeHTML(playlist.description)}</div>
+      <button class="btn btn-primary btn-small" type="button" onclick="${token ? `playSpotifyPlaylist('${playlist.id}')` : "connectSpotify()"}">
+        ${token ? (playlist.id === selectedId ? "Tocar novamente" : "Tocar playlist") : "Conectar para tocar"}
+      </button>
+    </article>
+  `).join("");
 }
 
 function spotifyPlaylistSize(playlist) {
