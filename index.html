@@ -1448,6 +1448,300 @@ html.accent-led .suggestion-label {
   flex: 1;
 }
 
+/* Keep the active exercise visible as a compact, scroll-free screen. */
+html.workout-execution-active,
+html.workout-execution-active body,
+html.workout-execution-active .app {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+html.workout-execution-active .topbar,
+html.workout-execution-active .spotify-player-bar {
+  display: none !important;
+}
+
+html.workout-execution-active .main {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0;
+  padding: max(8px, env(safe-area-inset-top)) 12px max(8px, env(safe-area-inset-bottom));
+  overflow: hidden;
+}
+
+html.workout-execution-active #page-execution.active {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+html.workout-execution-active .execution-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  width: min(100%, 760px);
+  max-width: 760px;
+  height: 100%;
+  min-height: 0;
+  margin: 0 auto;
+}
+
+html.workout-execution-active .execution-header {
+  flex: 0 0 auto;
+  gap: 8px;
+  margin: 0;
+}
+
+html.workout-execution-active .execution-header .execution-menu-button {
+  display: none;
+}
+
+html.workout-execution-active .execution-header .execution-exit-button,
+html.workout-execution-active .execution-header .execution-spotify-link {
+  min-height: 38px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+html.workout-execution-active .execution-header .execution-spotify-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  background: var(--surface);
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+html.workout-execution-active .workout-elapsed {
+  flex: 1;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+html.workout-execution-active .execution-progress {
+  flex: 0 0 4px;
+  margin: 0;
+}
+
+html.workout-execution-active #execution-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+html.workout-execution-active .exercise-hero {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-height: 0;
+  padding: clamp(12px, 2vh, 20px);
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+html.workout-execution-active .execution-title {
+  margin-top: 4px;
+  font-size: clamp(26px, 5vh, 44px);
+}
+
+html.workout-execution-active .execution-group {
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+html.workout-execution-active .suggestion {
+  flex: 0 0 auto;
+  margin-top: 10px;
+  padding: 9px 12px;
+}
+
+html.workout-execution-active .suggestion-label,
+html.workout-execution-active .suggestion-copy,
+html.workout-execution-active .suggestion .btn,
+html.workout-execution-active .execution-last {
+  display: none;
+}
+
+html.workout-execution-active .suggestion-main {
+  margin: 0;
+  font-size: 17px;
+}
+
+html.workout-execution-active .input-grid {
+  flex: 0 0 auto;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+html.workout-execution-active #execution-content [style*="margin-top:22px"] {
+  flex: 0 0 auto;
+  margin-top: 10px !important;
+}
+
+html.workout-execution-active .input-label {
+  margin-bottom: 4px;
+}
+
+html.workout-execution-active .input-big {
+  height: 50px;
+  padding: 7px;
+  font-size: 23px;
+}
+
+html.workout-execution-active .complete-btn {
+  flex: 0 0 auto;
+  min-height: 48px;
+  margin-top: 9px;
+  font-size: 16px;
+}
+
+html.workout-execution-active .series-list {
+  flex: 1 1 auto;
+  min-height: 38px;
+  margin-top: 10px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+html.workout-execution-active .series-row {
+  grid-template-columns: 28px 1fr 1fr 32px 32px;
+  gap: 4px;
+  min-height: 40px;
+  font-size: 13px;
+}
+
+html.workout-execution-active .series-row .btn {
+  min-height: 32px;
+  padding: 0;
+}
+
+html.workout-execution-active .rest-panel {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 14px;
+}
+
+html.workout-execution-active .rest-top > div:first-child {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+html.workout-execution-active .rest-label {
+  margin: 0;
+}
+
+html.workout-execution-active .rest-panel .rest-top .btn,
+html.workout-execution-active .rest-panel .timer-controls,
+html.workout-execution-active .execution-bottom {
+  display: none;
+}
+
+html.workout-execution-active .timer {
+  font-size: 22px;
+  line-height: 1;
+}
+
+html.workout-execution-active .execution-controls {
+  flex: 0 0 auto;
+  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr);
+  gap: 8px;
+  margin: 0;
+}
+
+html.workout-execution-active .execution-controls .btn {
+  min-height: 48px;
+  padding: 0 8px;
+  font-size: 14px;
+}
+
+html.workout-execution-active .execution-controls .execution-pause-button {
+  padding: 0;
+  font-size: 19px;
+}
+
+@media (max-height: 640px) {
+  html.workout-execution-active .main {
+    padding-top: max(4px, env(safe-area-inset-top));
+    padding-bottom: max(4px, env(safe-area-inset-bottom));
+  }
+
+  html.workout-execution-active .execution-page,
+  html.workout-execution-active #execution-content {
+    gap: 5px;
+  }
+
+  html.workout-execution-active .execution-header .execution-exit-button,
+  html.workout-execution-active .execution-header .execution-spotify-link {
+    min-height: 32px;
+  }
+
+  html.workout-execution-active .exercise-hero {
+    padding: 9px 12px;
+  }
+
+  html.workout-execution-active .execution-title {
+    font-size: clamp(22px, 4vh, 32px);
+  }
+
+  html.workout-execution-active .suggestion {
+    margin-top: 6px;
+    padding: 6px 9px;
+  }
+
+  html.workout-execution-active .input-grid,
+  html.workout-execution-active #execution-content [style*="margin-top:22px"] {
+    margin-top: 6px !important;
+  }
+
+  html.workout-execution-active .input-big {
+    height: 42px;
+    font-size: 20px;
+  }
+
+  html.workout-execution-active .complete-btn,
+  html.workout-execution-active .execution-controls .btn {
+    min-height: 42px;
+  }
+
+  html.workout-execution-active .series-list {
+    min-height: 24px;
+    margin-top: 5px;
+  }
+
+  html.workout-execution-active .rest-panel {
+    padding: 5px 9px;
+  }
+}
+
+@media (max-height: 500px) {
+  html.workout-execution-active .execution-group,
+  html.workout-execution-active .suggestion,
+  html.workout-execution-active .series-list {
+    display: none;
+  }
+
+  html.workout-execution-active .exercise-hero {
+    flex: 0 1 auto;
+  }
+}
+
 /* =========================================================
    TIMER
    ========================================================= */
@@ -3689,7 +3983,7 @@ html.header-brand-visible .brand {
         <div class="execution-header">
 
           <button
-            class="btn btn-ghost"
+            class="btn btn-ghost execution-exit-button"
             onclick="confirmLeaveWorkout()"
           >
             ← Sair
@@ -3703,8 +3997,18 @@ html.header-brand-visible .brand {
             00:00
           </div>
 
+          <a
+            class="execution-spotify-link"
+            href="https://open.spotify.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Abrir Spotify"
+          >
+            ♪ Spotify
+          </a>
+
           <button
-            class="btn btn-secondary btn-small"
+            class="btn btn-secondary btn-small execution-menu-button"
             onclick="openExecutionMenu()"
           >
             Opções
@@ -7609,6 +7913,7 @@ function renderExecution() {
         last
           ? `
             <div
+              class="execution-last"
               style="
                 margin-top:16px;
                 color:var(--text-2);
@@ -7883,6 +8188,7 @@ function renderExecution() {
 
       <button
         class="btn btn-secondary btn-large"
+        type="button"
         onclick="previousExercise()"
         ${
           current === 0
@@ -7894,7 +8200,18 @@ function renderExecution() {
       </button>
 
       <button
+        class="btn btn-secondary btn-large execution-pause-button"
+        type="button"
+        onclick="toggleRestTimer()"
+        aria-label="${restTimer.running ? "Pausar descanso" : "Iniciar ou retomar descanso"}"
+        title="${restTimer.running ? "Pausar descanso" : "Iniciar ou retomar descanso"}"
+      >
+        ${restTimer.running ? "⏸" : "▶"}
+      </button>
+
+      <button
         class="btn btn-primary btn-large"
+        type="button"
         onclick="nextExercise()"
         ${
           current === total - 1
@@ -14578,6 +14895,21 @@ document.addEventListener("DOMContentLoaded", applyHeaderBrandPreference);
 /* =========================================================
    START
    ========================================================= */
+
+const workoutExecutionPage = document.getElementById("page-execution");
+if (workoutExecutionPage) {
+  const syncWorkoutExecutionMode = () => {
+    document.documentElement.classList.toggle(
+      "workout-execution-active",
+      workoutExecutionPage.classList.contains("active")
+    );
+  };
+  new MutationObserver(syncWorkoutExecutionMode).observe(workoutExecutionPage, {
+    attributes: true,
+    attributeFilter: ["class"]
+  });
+  syncWorkoutExecutionMode();
+}
 
 seedDemoHistoryIfEmpty();
 
