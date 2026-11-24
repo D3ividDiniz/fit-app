@@ -245,170 +245,6 @@ a {
   display: none !important;
 }
 
-html.accent-led {
-  --accent-glow: color-mix(in srgb, var(--accent-user) 78%, transparent);
-  --accent-wash: color-mix(in srgb, var(--accent-user) 12%, transparent);
-  --glass-surface: color-mix(in srgb, var(--surface) 78%, transparent);
-}
-
-html.accent-led body {
-  overflow-x: hidden;
-  background:
-    radial-gradient(circle at 8% 8%, color-mix(in srgb, var(--accent-user) 24%, transparent), transparent 32%),
-    radial-gradient(circle at 92% 36%, color-mix(in srgb, var(--accent-user) 17%, transparent), transparent 35%),
-    var(--bg);
-}
-
-html.accent-led .app {
-  position: relative;
-  isolation: isolate;
-}
-
-html.accent-led .app::before,
-html.accent-led .app::after {
-  position: fixed;
-  z-index: -1;
-  display: block;
-  width: 145vw;
-  height: 9px;
-  border-radius: 999px;
-  background: var(--accent-user);
-  box-shadow: 0 0 16px 5px var(--accent-glow), 0 0 70px 18px color-mix(in srgb, var(--accent-user) 52%, transparent);
-  content: "";
-  filter: blur(2px);
-  opacity: .52;
-  pointer-events: none;
-}
-
-@keyframes led-strip-drift {
-  from {
-    margin-left: -3vw;
-    opacity: .28;
-  }
-  to {
-    margin-left: 8vw;
-    opacity: .88;
-  }
-}
-
-@keyframes led-strip-drift-reverse {
-  from {
-    margin-left: 8vw;
-    opacity: .18;
-  }
-  to {
-    margin-left: -3vw;
-    opacity: .62;
-  }
-}
-
-html.accent-led .app::before {
-  top: 19vh;
-  left: -28vw;
-  transform: rotate(-12deg);
-  animation: led-strip-drift 8s ease-in-out infinite alternate;
-}
-
-html.accent-led .app::after {
-  top: 67vh;
-  left: 20vw;
-  transform: rotate(18deg);
-  animation: led-strip-drift-reverse 11s ease-in-out infinite alternate;
-}
-
-html.accent-led .topbar {
-  background: color-mix(in srgb, var(--surface) 68%, transparent);
-  border-bottom-color: color-mix(in srgb, var(--accent-user) 24%, var(--border));
-}
-
-html.accent-led .setting-card,
-html.accent-led .card,
-html.accent-led .hero-card,
-html.accent-led .history-item,
-html.accent-led .progression-stat,
-html.accent-led .spotify-playlist-card,
-html.accent-led .account-card,
-html.accent-led .icon-btn,
-html.accent-led .login-card,
-html.accent-led .modal {
-  background: color-mix(in srgb, var(--surface) 60%, transparent);
-  border-color: color-mix(in srgb, var(--accent-user) 20%, var(--border));
-  box-shadow: 0 14px 40px color-mix(in srgb, var(--accent-user) 7%, transparent), var(--shadow);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-html.accent-led .setting-card:hover,
-html.accent-led .card:hover,
-html.accent-led .account-card:hover {
-  border-color: color-mix(in srgb, var(--accent-user) 48%, var(--border));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-user) 20%, transparent), 0 18px 45px color-mix(in srgb, var(--accent-user) 10%, transparent);
-}
-
-html.accent-led .btn-primary,
-html.accent-led .nav-btn.active {
-  background: var(--accent-user);
-  border-color: var(--accent-user);
-  color: var(--accent-contrast);
-  box-shadow: 0 0 22px color-mix(in srgb, var(--accent-user) 28%, transparent);
-}
-
-html.accent-led .btn-secondary,
-html.accent-led .btn-ghost,
-html.accent-led input,
-html.accent-led textarea,
-html.accent-led select,
-html.accent-led .account-menu-status,
-html.accent-led .badge {
-  background: color-mix(in srgb, var(--accent-user) 8%, var(--surface));
-  border-color: color-mix(in srgb, var(--accent-user) 24%, var(--border));
-}
-
-html.accent-led input:focus,
-html.accent-led textarea:focus,
-html.accent-led select:focus {
-  border-color: var(--accent-user);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-user) 18%, transparent), 0 0 18px color-mix(in srgb, var(--accent-user) 12%, transparent);
-}
-
-html.accent-led .page-description,
-html.accent-led .setting-description,
-html.accent-led .card-subtitle,
-html.accent-led .login-copy,
-html.accent-led .account-status {
-  font-weight: 450;
-}
-
-html.accent-led .section-title,
-html.accent-led .setting-title,
-html.accent-led .card-title,
-html.accent-led .eyebrow,
-html.accent-led .today-label,
-html.accent-led .progression-kicker,
-html.accent-led .stat-value {
-  letter-spacing: -.025em;
-  color: var(--accent-user);
-}
-
-html.accent-led .execution-progress-bar,
-html.accent-led .complete-btn.done {
-  background: var(--accent-user);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--accent-user) 34%, transparent);
-}
-
-html.accent-led .suggestion {
-  border-color: var(--accent-user);
-  background: color-mix(in srgb, var(--accent-user) 10%, var(--surface));
-}
-
-html.accent-led .suggestion-label {
-  color: var(--accent-user);
-}
-
-.app {
-  min-height: 100vh;
-}
-
 /* =========================================================
    TOP NAV
    ========================================================= */
@@ -1449,300 +1285,6 @@ html.accent-led .suggestion-label {
 
 .execution-bottom > * {
   flex: 1;
-}
-
-/* Keep the active exercise visible as a compact, scroll-free screen. */
-html.workout-execution-active,
-html.workout-execution-active body,
-html.workout-execution-active .app {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  overflow: hidden;
-}
-
-html.workout-execution-active .topbar,
-html.workout-execution-active .spotify-player-bar {
-  display: none !important;
-}
-
-html.workout-execution-active .main {
-  display: flex;
-  width: 100%;
-  max-width: none;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
-  margin: 0;
-  padding: max(8px, env(safe-area-inset-top)) 12px max(8px, env(safe-area-inset-bottom));
-  overflow: hidden;
-}
-
-html.workout-execution-active #page-execution.active {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-}
-
-html.workout-execution-active .execution-page {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 8px;
-  width: min(100%, 760px);
-  max-width: 760px;
-  height: 100%;
-  min-height: 0;
-  margin: 0 auto;
-}
-
-html.workout-execution-active .execution-header {
-  flex: 0 0 auto;
-  gap: 8px;
-  margin: 0;
-}
-
-html.workout-execution-active .execution-header .execution-menu-button {
-  display: none;
-}
-
-html.workout-execution-active .execution-header .execution-exit-button,
-html.workout-execution-active .execution-header .execution-spotify-link {
-  min-height: 38px;
-  padding: 0 10px;
-  font-size: 13px;
-}
-
-html.workout-execution-active .execution-header .execution-spotify-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--text);
-  background: var(--surface);
-  font-weight: 750;
-  white-space: nowrap;
-}
-
-html.workout-execution-active .workout-elapsed {
-  flex: 1;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
-
-html.workout-execution-active .execution-progress {
-  flex: 0 0 4px;
-  margin: 0;
-}
-
-html.workout-execution-active #execution-content {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 8px;
-  min-height: 0;
-  overflow: hidden;
-}
-
-html.workout-execution-active .exercise-hero {
-  display: flex;
-  flex: 1 1 0;
-  flex-direction: column;
-  min-height: 0;
-  padding: clamp(12px, 2vh, 20px);
-  overflow: hidden;
-  border-radius: 18px;
-}
-
-html.workout-execution-active .execution-title {
-  margin-top: 4px;
-  font-size: clamp(26px, 5vh, 44px);
-}
-
-html.workout-execution-active .execution-group {
-  margin-top: 4px;
-  font-size: 13px;
-}
-
-html.workout-execution-active .suggestion {
-  flex: 0 0 auto;
-  margin-top: 10px;
-  padding: 9px 12px;
-}
-
-html.workout-execution-active .suggestion-label,
-html.workout-execution-active .suggestion-copy,
-html.workout-execution-active .suggestion .btn,
-html.workout-execution-active .execution-last {
-  display: none;
-}
-
-html.workout-execution-active .suggestion-main {
-  margin: 0;
-  font-size: 17px;
-}
-
-html.workout-execution-active .input-grid {
-  flex: 0 0 auto;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-html.workout-execution-active #execution-content [style*="margin-top:22px"] {
-  flex: 0 0 auto;
-  margin-top: 10px !important;
-}
-
-html.workout-execution-active .input-label {
-  margin-bottom: 4px;
-}
-
-html.workout-execution-active .input-big {
-  height: 50px;
-  padding: 7px;
-  font-size: 23px;
-}
-
-html.workout-execution-active .complete-btn {
-  flex: 0 0 auto;
-  min-height: 48px;
-  margin-top: 9px;
-  font-size: 16px;
-}
-
-html.workout-execution-active .series-list {
-  flex: 1 1 auto;
-  min-height: 38px;
-  margin-top: 10px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-html.workout-execution-active .series-row {
-  grid-template-columns: 28px 1fr 1fr 32px 32px;
-  gap: 4px;
-  min-height: 40px;
-  font-size: 13px;
-}
-
-html.workout-execution-active .series-row .btn {
-  min-height: 32px;
-  padding: 0;
-}
-
-html.workout-execution-active .rest-panel {
-  flex: 0 0 auto;
-  margin: 0;
-  padding: 8px 12px;
-  border-radius: 14px;
-}
-
-html.workout-execution-active .rest-top > div:first-child {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-
-html.workout-execution-active .rest-label {
-  margin: 0;
-}
-
-html.workout-execution-active .rest-panel .rest-top .btn,
-html.workout-execution-active .rest-panel .timer-controls,
-html.workout-execution-active .execution-bottom {
-  display: none;
-}
-
-html.workout-execution-active .timer {
-  font-size: 22px;
-  line-height: 1;
-}
-
-html.workout-execution-active .execution-controls {
-  flex: 0 0 auto;
-  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr);
-  gap: 8px;
-  margin: 0;
-}
-
-html.workout-execution-active .execution-controls .btn {
-  min-height: 48px;
-  padding: 0 8px;
-  font-size: 14px;
-}
-
-html.workout-execution-active .execution-controls .execution-pause-button {
-  padding: 0;
-  font-size: 19px;
-}
-
-@media (max-height: 640px) {
-  html.workout-execution-active .main {
-    padding-top: max(4px, env(safe-area-inset-top));
-    padding-bottom: max(4px, env(safe-area-inset-bottom));
-  }
-
-  html.workout-execution-active .execution-page,
-  html.workout-execution-active #execution-content {
-    gap: 5px;
-  }
-
-  html.workout-execution-active .execution-header .execution-exit-button,
-  html.workout-execution-active .execution-header .execution-spotify-link {
-    min-height: 32px;
-  }
-
-  html.workout-execution-active .exercise-hero {
-    padding: 9px 12px;
-  }
-
-  html.workout-execution-active .execution-title {
-    font-size: clamp(22px, 4vh, 32px);
-  }
-
-  html.workout-execution-active .suggestion {
-    margin-top: 6px;
-    padding: 6px 9px;
-  }
-
-  html.workout-execution-active .input-grid,
-  html.workout-execution-active #execution-content [style*="margin-top:22px"] {
-    margin-top: 6px !important;
-  }
-
-  html.workout-execution-active .input-big {
-    height: 42px;
-    font-size: 20px;
-  }
-
-  html.workout-execution-active .complete-btn,
-  html.workout-execution-active .execution-controls .btn {
-    min-height: 42px;
-  }
-
-  html.workout-execution-active .series-list {
-    min-height: 24px;
-    margin-top: 5px;
-  }
-
-  html.workout-execution-active .rest-panel {
-    padding: 5px 9px;
-  }
-}
-
-@media (max-height: 500px) {
-  html.workout-execution-active .execution-group,
-  html.workout-execution-active .suggestion,
-  html.workout-execution-active .series-list {
-    display: none;
-  }
-
-  html.workout-execution-active .exercise-hero {
-    flex: 0 1 auto;
-  }
 }
 
 /* =========================================================
@@ -3195,12 +2737,12 @@ html.header-brand-visible .brand {
         <button
           id="nav-workouts"
           class="nav-btn"
-          onclick="navigate('workouts'); setWorkoutTab('my')"
+          onclick="navigate('workouts')"
         >
           Treinos
         </button>
 
-        <button id="nav-progress" class="nav-btn" onclick="openHistory()">Progresso</button>
+        <button id="nav-progress" class="nav-btn" onclick="navigate('progress')">Progresso</button>
 
         <button
           id="nav-spotify"
@@ -3260,136 +2802,7 @@ html.header-brand-visible .brand {
          HOME / TREINAR
          =================================================== -->
 
-    <section id="page-home" class="page active">
-
-      <div class="page-header">
-
-        <div>
-          <h1 class="page-title">Encontre seu ritmo.</h1>
-          <p class="page-description">
-            Seu treino, no seu ritmo.
-          </p>
-        </div>
-
-      </div>
-
-
-      <div class="hero">
-
-        <div class="hero-card">
-
-          <div class="eyebrow">Seu treino de hoje</div>
-
-          <h2 class="hero-title" id="today-title">
-            Nenhum treino definido
-          </h2>
-
-          <p class="hero-copy" id="today-description">
-            Escolha um treino para começar seu dia.
-          </p>
-
-          <div class="today-workout">
-
-            <div class="today-label">
-              Treino selecionado
-            </div>
-
-            <div class="today-name" id="today-workout-name">
-              Nenhum treino
-            </div>
-
-            <div class="today-meta" id="today-workout-meta">
-              —
-            </div>
-
-            <div class="today-actions">
-              <button class="btn btn-secondary" id="today-details-btn" onclick="openRoutineDetails(state.todayWorkoutId)" hidden>Ver treino</button>
-
-              <button
-                class="btn btn-primary btn-large"
-                id="today-start-btn"
-                onclick="startTodayWorkout()"
-              >
-                Começar treino
-              </button>
-
-              <button
-                class="btn btn-secondary"
-                onclick="openTodayWorkoutPicker()"
-              >
-                Trocar treino
-              </button>
-
-              <button
-                class="btn btn-ghost"
-                onclick="skipToday()"
-              >
-                Pular hoje
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="today-week-card" id="today-week-card"></div>
-
-        <div class="quick-stats">
-
-          <div class="stat-card">
-            <div class="stat-label">Treinos</div>
-            <div class="stat-value" id="stat-workouts">0</div>
-            <div class="stat-foot">registrados</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-label">Tempo médio</div>
-            <div class="stat-value" id="stat-duration">—</div>
-            <div class="stat-foot">por treino</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-label">PRs</div>
-            <div class="stat-value" id="stat-prs">0</div>
-            <div class="stat-foot">melhores cargas</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-label">Sequência</div>
-            <div class="stat-value" id="stat-streak">0</div>
-            <div class="stat-foot">dias</div>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <section class="section">
-
-        <div class="section-head">
-
-          <h2 class="section-title">
-            Últimos treinos
-          </h2>
-
-          <button
-            class="btn btn-ghost btn-small"
-            onclick="openHistory()"
-          >
-            Histórico
-          </button>
-
-        </div>
-
-        <div id="home-history"></div>
-
-      </section>
-
-    </section>
-
+    <section id="page-home" class="page active"></section>
 
     <!-- ===================================================
          WORKOUTS / LIBRARY
@@ -3483,7 +2896,7 @@ html.header-brand-visible .brand {
         <div class="filters">
 
           <input
-            id="preset-search"
+            id="preset-search" aria-label="Buscar treino"
             class="search"
             type="search"
             placeholder="Buscar treino..."
@@ -3491,7 +2904,7 @@ html.header-brand-visible .brand {
           >
 
           <select
-            id="preset-group"
+            id="preset-group" aria-label="Filtrar treinos por grupo muscular"
             class="filter-select"
             onchange="renderPresets()"
           >
@@ -3526,7 +2939,7 @@ html.header-brand-visible .brand {
         <div class="filters">
 
           <input
-            id="exercise-search"
+            id="exercise-search" aria-label="Buscar exercício"
             class="search"
             type="search"
             placeholder="Buscar exercício..."
@@ -3534,7 +2947,7 @@ html.header-brand-visible .brand {
           >
 
           <select
-            id="exercise-group"
+            id="exercise-group" aria-label="Filtrar exercícios por grupo muscular"
             class="filter-select"
             onchange="renderExercises()"
           >
@@ -3575,7 +2988,7 @@ html.header-brand-visible .brand {
         <div class="filters">
 
           <input
-            id="history-date-filter"
+            id="history-date-filter" aria-label="Filtrar histórico por data"
             type="date"
             class="filter-select"
             onchange="renderHistory()"
@@ -3612,13 +3025,13 @@ html.header-brand-visible .brand {
         <div class="filters">
 
           <select
-            id="evolution-exercise"
+            id="evolution-exercise" aria-label="Exercício para acompanhar"
             class="filter-select"
             onchange="renderEvolution()"
           ></select>
 
           <select
-            id="evolution-period"
+            id="evolution-period" aria-label="Período de evolução"
             class="filter-select"
             onchange="renderEvolution()"
           >
@@ -3657,7 +3070,7 @@ html.header-brand-visible .brand {
 
       <div class="settings-list">
         <div class="settings-group-title">Conta</div>
-        <div class="setting-card"><div class="setting-row"><div><div class="setting-title">Sua conta</div><div class="setting-description" id="profile-account-status">Gerencie sua conta Google.</div></div><button class="btn btn-secondary btn-small" onclick="handleAuthAction()">Entrar ou sair</button></div></div>
+        <div class="setting-card"><div class="setting-row"><div><div class="setting-title">Sua conta</div><div class="setting-description" id="profile-account-status">Gerencie sua conta Google.</div></div><div class="fit-account-actions"><button id="profile-auth-action" class="btn btn-secondary btn-small" onclick="handleAuthAction()">Entrar com Google</button><button id="profile-switch-account" class="btn btn-ghost btn-small" onclick="switchGoogleAccount()" hidden>Trocar conta</button></div></div></div>
 
         <div class="settings-group-title">Treino</div>
 
@@ -3776,19 +3189,19 @@ html.header-brand-visible .brand {
 
         </div>
 
+      <div class="setting-card">
+          <div class="setting-title">Cor de destaque</div>
+          <div class="setting-description">Personalize os botões e os indicadores sem mudar a organização das telas.</div>
+          <div id="accent-picker" class="accent-picker"></div>
+        </div>
+
         <div class="settings-group-title">Agenda</div>
 
         <div class="setting-card">
           <div class="setting-title">Agenda semanal</div>
-          <div class="setting-description" style="margin-bottom:14px;">Defina qual treino aparece automaticamente em cada dia. Alterar o treino de hoje continua sendo possível na tela Treinar.</div>
+          <div class="setting-description" style="margin-bottom:14px;">Defina qual treino aparece automaticamente em cada dia. Alterar o treino de hoje continua sendo possível na tela Hoje.</div>
           <div id="weekly-schedule" class="schedule-grid"></div>
       </div>
-
-      <div class="setting-card">
-          <div class="setting-title">Cor de destaque</div>
-          <div class="setting-description">A interface continua majoritariamente preto e branco; a cor serve apenas para estados e destaques.</div>
-          <div id="accent-picker" class="accent-picker"></div>
-        </div>
 
         <div class="settings-group-title">Dados</div>
 
@@ -3865,7 +3278,7 @@ html.header-brand-visible .brand {
             </div>
           </div>
           <input
-            id="spotify-miniplayer-toggle"
+            id="spotify-miniplayer-toggle" aria-label="Exibir mini-player do Spotify"
             type="checkbox"
             checked
             onchange="setSpotifyMiniPlayer(this.checked)"
@@ -3878,11 +3291,11 @@ html.header-brand-visible .brand {
           <div>
             <div class="setting-title">Ocultar marca do cabeçalho</div>
             <div class="setting-description">
-              Mantém no topo apenas as abas, sua conta e o modo de tela.
+              Oculta a marca na navegação do computador. No celular, as abas ficam na parte inferior.
             </div>
           </div>
           <input
-            id="hide-header-toggle"
+            id="hide-header-toggle" aria-label="Ocultar marca na navegação"
             type="checkbox"
             checked
             onchange="setHeaderBrandHidden(this.checked)"
@@ -3918,6 +3331,8 @@ html.header-brand-visible .brand {
     </section>
 
     <section id="page-spotify" class="page">
+      <button id="spotify-back" class="fit-back" onclick="state.activeSession ? resumeActiveWorkout() : navigate('settings')">Voltar ao perfil</button>
+      <div class="page-header"><div><h1 class="page-title">Sua música</h1><p class="page-description">Controle o Spotify sem perder sua sessão.</p></div></div>
       <div class="spotify-dashboard">
         <div id="spotify-now-playing" class="spotify-now-playing" hidden></div>
 
@@ -3999,13 +3414,13 @@ html.header-brand-visible .brand {
             class="btn btn-ghost execution-exit-button"
             onclick="confirmLeaveWorkout()"
           >
-            ← Sair
+            Continuar depois
           </button>
 
           <div
             id="workout-elapsed"
             class="workout-elapsed"
-            aria-live="polite"
+            aria-live="off"
           >
             00:00
           </div>
@@ -4017,7 +3432,7 @@ html.header-brand-visible .brand {
             rel="noopener noreferrer"
             aria-label="Abrir Spotify"
           >
-            ♪ Spotify
+            Música
           </a>
 
           <button
@@ -4046,6 +3461,8 @@ html.header-brand-visible .brand {
 
     </section>
 
+<section id="page-detail" class="page"><div id="routine-detail"></div></section>
+<section id="page-progress" class="page"><div class="page-header"><div><h1 class="page-title">Seu progresso</h1><p class="page-description">Consulte suas sessões, cargas e melhores marcas.</p></div></div><div class="tabs" id="progress-tabs"></div><div id="progress-panels"></div><div id="workout-tab-records" class="hidden"><div class="section-head"><h2 class="section-title">Melhores marcas</h2><button class="btn btn-primary" onclick="openPRModal()">Adicionar marca</button></div><div id="progression-summary" class="progression-summary"></div><div id="progression-list" class="progression-list"></div></div></section>
   </main>
 
   <div id="spotify-player-bar" class="spotify-player-bar" hidden></div>
@@ -5182,132 +4599,7 @@ function renderAll() {
    HOME
    ========================================================= */
 
-function renderHome() {
-
-  const routine =
-    state.routines.find(
-      r => r.id === (state.activeSession?.routineId || state.todayWorkoutId)
-    );
-
-  const todayTitle =
-    document.getElementById(
-      "today-title"
-    );
-
-  const todayDescription =
-    document.getElementById(
-      "today-description"
-    );
-
-  const todayName =
-    document.getElementById(
-      "today-workout-name"
-    );
-
-  const todayMeta =
-    document.getElementById(
-      "today-workout-meta"
-    );
-
-  const todayStartButton =
-    document.getElementById(
-      "today-start-btn"
-    );
-
-  if (routine) {
-
-    todayTitle.textContent =
-      "Seu treino de hoje";
-
-    todayDescription.textContent =
-      routine.description ||
-      "Quando estiver pronto, comece.";
-
-    todayName.textContent =
-      routine.name;
-
-    todayMeta.textContent =
-      `${routine.exercises.length} exercícios · ${formatDuration(
-        estimateRoutineSeconds(routine)
-      )}`;
-
-  } else {
-
-    todayTitle.textContent =
-      "Nenhum treino definido";
-
-    todayDescription.textContent =
-      "Escolha um treino para começar.";
-
-    todayName.textContent =
-      "Nenhum treino";
-
-    todayMeta.textContent =
-      "—";
-  }
-
-  if (todayStartButton) {
-    todayStartButton.textContent = routine
-      ? (state.activeSession ? "Continuar treino" : "Começar treino")
-      : "Criar primeiro treino";
-    todayStartButton.setAttribute(
-      "onclick",
-      routine
-        ? "startTodayWorkout()"
-        : "navigate('workouts');openWorkoutModal()"
-    );
-  }
-
-
-  const detailButton = document.getElementById("today-details-btn");
-  if (detailButton) { detailButton.hidden = !routine; detailButton.onclick = () => openRoutineDetails(routine.id); }
-  renderTodayWeek();
-
-  const totalWorkouts =
-    state.workouts.length;
-
-  const durations =
-    state.workouts
-      .map(
-        workout =>
-          workout.durationSeconds
-      )
-      .filter(Boolean);
-
-  const avgDuration =
-    average(durations);
-
-  const prs =
-    countPRs();
-
-  document.getElementById(
-    "stat-workouts"
-  ).textContent =
-    totalWorkouts;
-
-  document.getElementById(
-    "stat-duration"
-  ).textContent =
-    durations.length
-      ? `${Math.round(avgDuration / 60)}m`
-      : "—";
-
-  document.getElementById(
-    "stat-prs"
-  ).textContent =
-    prs;
-
-  document.getElementById(
-    "stat-streak"
-  ).textContent =
-    calculateStreak();
-
-
-  renderQuickWorkouts();
-
-  renderHomeHistory();
-}
-
+function renderHome() { renderTodayExperience(); }
 
 /* =========================================================
    QUICK WORKOUTS
@@ -5359,7 +4651,7 @@ function renderQuickWorkouts() {
           <button
             class="card preset-card"
             style="text-align:left;"
-            onclick="startWorkout('${routine.id}')"
+            onclick="openRoutineDetails('${routine.id}')"
           >
 
             <div class="card-title">
@@ -5444,56 +4736,15 @@ function renderHomeHistory() {
    ========================================================= */
 
 function setWorkoutTab(tab) {
-
+  const isProgress = ["history","evolution","records"].includes(tab);
+  if (isProgress && currentPage !== "progress") { currentWorkoutTab=tab; navigate("progress"); return; }
   currentWorkoutTab = tab;
-
-  const tabIds = {
-    my: "tab-my-workouts",
-    presets: "tab-presets",
-    exercises: "tab-exercises",
-    history: "tab-history",
-    evolution: "tab-evolution"
-  };
-
-  Object
-    .values(tabIds)
-    .forEach(
-      id =>
-        document
-          .getElementById(id)
-          ?.classList.remove("active")
-    );
-
-  document
-    .getElementById(tabIds[tab])
-    ?.classList.add("active");
-
-  const panels = {
-    my: "workout-tab-my",
-    presets: "workout-tab-presets",
-    exercises: "workout-tab-exercises",
-    history: "workout-tab-history",
-    evolution: "workout-tab-evolution"
-  };
-
-  Object
-    .values(panels)
-    .forEach(
-      id =>
-        document
-          .getElementById(id)
-          ?.classList.add("hidden")
-    );
-
-  document
-    .getElementById(panels[tab])
-    ?.classList.remove("hidden");
-
-  renderWorkoutTabs();
-  const progress = document.getElementById("nav-progress");
-  const isProgress = currentPage === "workouts" && ["history", "evolution"].includes(tab);
-  progress?.classList.toggle("active", isProgress);
-  if (isProgress) document.getElementById("nav-workouts")?.classList.remove("active");
+  const keys={my:"my-workouts",presets:"presets",exercises:"exercises",history:"history",evolution:"evolution",records:"records"};
+  Object.entries(keys).forEach(([key,id])=>{
+    document.getElementById(`tab-${id}`)?.classList.toggle("active",key===tab);
+    document.getElementById(`workout-tab-${key}`)?.classList.toggle("hidden",key!==tab);
+  });
+  if(tab==="records") renderProgression(); else renderWorkoutTabs();
 }
 
 function renderWorkoutTabs() {
@@ -5654,190 +4905,7 @@ function renderPresets() {
    WORKOUT CARD
    ========================================================= */
 
-function renderWorkoutCard(
-  routine,
-  preset
-) {
-
-  const estimate =
-    estimateRoutineSeconds(
-      routine
-    );
-
-  const overLimit =
-    estimate >
-    state.settings.workoutLimitMinutes *
-    60;
-
-  const exerciseNames =
-    routine.exercises
-      .map(
-        id =>
-          state.exercises.find(
-            e => e.id === id
-          )
-      )
-      .filter(Boolean);
-
-  return `
-    <article class="card workout-card">
-
-      <div class="workout-top">
-
-        <div>
-
-          <div class="workout-name">
-            ${escapeHTML(routine.name)}
-          </div>
-
-          <div class="workout-meta">
-            ${escapeHTML(
-              routine.description || "Sem descrição"
-            )}
-          </div>
-
-        </div>
-
-        ${
-          preset
-            ? `
-              <span class="badge blue">
-                Pré-setado
-              </span>
-            `
-            : `
-              <span class="badge green">
-                Meu treino
-              </span>
-            `
-        }
-
-      </div>
-
-
-      <div class="badges">
-
-        ${
-          routine.groups?.map(
-            group =>
-              `<span class="badge">${escapeHTML(group)}</span>`
-          ).join("") ||
-          ""
-        }
-
-        <span class="badge">
-          ${exerciseNames.length} exercícios
-        </span>
-
-        <span
-          class="badge ${
-            overLimit ? "red" : "green"
-          }"
-        >
-          ≈ ${formatDuration(estimate)}
-        </span>
-
-      </div>
-
-
-      <ul class="workout-list">
-
-        ${
-          exerciseNames
-            .slice(0, 5)
-            .map(
-              exercise =>
-                `
-                  <li class="workout-exercise">
-
-                    <span>
-                      ${escapeHTML(
-                        exercise.name
-                      )}
-                    </span>
-
-                    <span>
-                      ${escapeHTML(
-                        exercise.muscleGroup
-                      )}
-                    </span>
-
-                  </li>
-                `
-            )
-            .join("")
-        }
-
-        ${
-          exerciseNames.length > 5
-            ? `
-              <li
-                class="workout-exercise"
-                style="color:var(--text-3);"
-              >
-                + ${exerciseNames.length - 5} exercícios
-              </li>
-            `
-            : ""
-        }
-
-      </ul>
-
-
-      <div class="card-actions">
-
-        <button class="btn btn-secondary btn-small" onclick="openRoutineDetails('${routine.id}')">Ver treino</button>
-        <button
-          class="btn btn-primary btn-small"
-          onclick="startWorkout('${routine.id}')"
-        >
-          Começar
-        </button>
-
-        ${
-          preset
-            ? `
-              <button
-                class="btn btn-secondary btn-small"
-                onclick="clonePreset('${routine.id}')"
-              >
-                Usar como base
-              </button>
-
-              <button
-                class="btn btn-secondary btn-small"
-                onclick="openMixModal('${routine.id}')"
-              >
-                Combinar
-              </button>
-            `
-            : `
-              <button
-                class="btn btn-secondary btn-small"
-                onclick="openWorkoutModal('${routine.id}')"
-              >
-                Editar
-              </button>
-
-              <button
-                class="btn btn-ghost btn-small"
-                onclick="deleteRoutine('${routine.id}')"
-              >
-                Excluir
-              </button>
-            `
-        }
-
-      </div>
-
-    </article>
-  `;
-}
-
-
-/* =========================================================
-   ESTIMATE
-   ========================================================= */
+/* Routine cards are rendered by assets/experience.js. */
 
 function estimateRoutineSeconds(
   routine
@@ -6846,13 +5914,13 @@ function openWorkoutBuilder(
       .sort();
 
   openModal(
-    "Montar treino",
+    "Organizar sequência",
     `
-      <div class="builder">
+      <p class="fit-builder-intro">Escolha os movimentos e organize a ordem do treino. A estimativa ajuda a ajustar a sequência ao seu tempo disponível.</p><div class="builder">
 
         <div class="builder-panel">
 
-          <div class="card-title">
+          <p class="fit-kicker">1 · SUA SEQUÊNCIA</p><div class="card-title">
             ${escapeHTML(
               routine.name
             )}
@@ -6882,7 +5950,7 @@ function openWorkoutBuilder(
         <div class="builder-panel">
 
           <div class="card-title">
-            Adicionar exercícios
+            2 · Adicionar exercícios
           </div>
 
           <div class="card-subtitle">
@@ -6892,14 +5960,14 @@ function openWorkoutBuilder(
           <div style="margin-top:12px;">
 
             <input
-              id="builder-search"
+              id="builder-search" aria-label="Buscar exercício para adicionar"
               placeholder="Buscar..."
               oninput="renderBuilderAvailable('${id}')"
             >
 
           </div>
 
-          <div
+          <select id="builder-group" aria-label="Filtrar exercícios por grupo" onchange="renderBuilderAvailable('${id}')"><option value="">Todos os grupos</option>${groups.map(group=>`<option value="${escapeHTML(group)}">${escapeHTML(group)}</option>`).join('')}</select><div
             id="builder-available"
             class="builder-list"
           >
@@ -7010,7 +6078,7 @@ function renderBuilderSelected(
 
                 <button
                   class="btn btn-ghost btn-small"
-                  onclick="moveBuilderItem(${index},-1)"
+                  aria-label="Mover ${escapeHTML(exercise.name)} para cima" onclick="moveBuilderItem(${index},-1)"
                   ${
                     index === 0
                       ? "disabled"
@@ -7022,7 +6090,7 @@ function renderBuilderSelected(
 
                 <button
                   class="btn btn-ghost btn-small"
-                  onclick="moveBuilderItem(${index},1)"
+                  aria-label="Mover ${escapeHTML(exercise.name)} para baixo" onclick="moveBuilderItem(${index},1)"
                   ${
                     index ===
                     window.builderSelected.length - 1
@@ -7035,7 +6103,7 @@ function renderBuilderSelected(
 
                 <button
                   class="btn btn-ghost btn-small"
-                  onclick="removeBuilderItem('${exerciseId}')"
+                  aria-label="Remover ${escapeHTML(exercise.name)} da sequência" onclick="removeBuilderItem('${exerciseId}')"
                 >
                   ×
                 </button>
@@ -7115,6 +6183,7 @@ function renderBuilderAvailable(
       ?.toLowerCase() ||
     "";
 
+  const group = document.getElementById("builder-group")?.value || "";
   const available =
     state.exercises
       .filter(
@@ -7133,6 +6202,7 @@ function renderBuilderAvailable(
             .toLowerCase()
             .includes(search)
       )
+      .filter(exercise => !group || exercise.muscleGroup === group)
       .slice(0, 80);
 
   if (!available.length) {
@@ -7353,6 +6423,7 @@ function finishWorkoutBuilder(
   closeModal();
 
   renderAll();
+  showRoutineExperience(id);
 
   showToast(
     "Treino salvo"
@@ -7792,487 +6863,7 @@ function getCurrentExercise() {
   );
 }
 
-function renderExecution() {
-
-  if (
-    currentPage !== "execution" ||
-    !currentExecution
-  ) {
-    return;
-  }
-
-  const routine =
-    getCurrentRoutine();
-
-  const exercise =
-    getCurrentExercise();
-
-  if (!routine || !exercise) {
-    return;
-  }
-
-  const total =
-    routine.exercises.length;
-
-  const current =
-    currentExecution.currentIndex;
-
-  const progress =
-    ((current + 1) / total) *
-    100;
-
-  document.getElementById(
-    "execution-progress-bar"
-  ).style.width =
-    `${progress}%`;
-
-  const sets =
-    currentExecution
-      .setsByExercise[
-        exercise.id
-      ] || [];
-
-  const suggestion =
-    getWeightSuggestion(
-      exercise
-    );
-
-  const last =
-    getLastPerformance(
-      exercise.id
-    );
-
-  const content =
-    document.getElementById(
-      "execution-content"
-    );
-
-  content.innerHTML = `
-
-    <div class="exercise-hero">
-
-      <div class="exercise-hero-top">
-
-        <div>
-
-          <div class="execution-counter">
-            ${current + 1} de ${total}
-          </div>
-
-          <h1 class="execution-title">
-            ${escapeHTML(
-              exercise.name
-            )}
-          </h1>
-
-          <div class="execution-group">
-            ${escapeHTML(
-              exercise.muscleGroup
-            )}
-            ·
-            ${typeLabel(
-              exercise.type
-            )}
-          </div>
-
-        </div>
-
-        ${
-          current === total - 1
-            ? `
-              <span class="badge green">
-                Último
-              </span>
-            `
-            : ""
-        }
-
-      </div>
-
-
-      ${
-        suggestion
-          ? `
-            <div class="suggestion">
-
-              <div class="suggestion-label">
-                Sugestão
-              </div>
-
-              <div class="suggestion-main">
-                ${escapeHTML(
-                  suggestion.text
-                )}
-              </div>
-
-              <div class="suggestion-copy">
-                ${
-                  suggestion.reason
-                }
-              </div>
-
-              ${
-                exercise.type === "weight"
-                  ? `
-                    <button
-                      class="btn btn-secondary btn-small"
-                      style="margin-top:10px;"
-                      onclick="applySuggestion('${exercise.id}')"
-                    >
-                      Usar sugestão
-                    </button>
-                  `
-                  : ""
-              }
-
-            </div>
-          `
-          : ""
-      }
-
-
-      ${
-        last
-          ? `
-            <div
-              class="execution-last"
-              style="
-                margin-top:16px;
-                color:var(--text-2);
-                font-size:13px;
-              "
-            >
-              Último registro:
-              <strong>
-                ${
-                  exercise.type === "weight"
-                    ? `${last.weight} kg × ${last.reps}`
-                    : exercise.type === "reps"
-                      ? `${last.reps} reps`
-                      : `${last.time}s`
-                }
-              </strong>
-            </div>
-          `
-          : ""
-      }
-
-
-      ${
-        exercise.type === "weight"
-          ? `
-            <div class="input-grid">
-
-              <div>
-                <div class="input-label">
-                  Peso (kg)
-                </div>
-
-                <input
-                  id="execution-weight"
-                  class="input-big"
-                  type="number"
-                  inputmode="decimal"
-                  step="0.5"
-                  value="${
-                    currentExecution.draftInputs?.[exercise.id]?.weight ??
-                    suggestion?.weight ??
-                    exercise.lastWeight ??
-                    ""
-                  }"
-                >
-              </div>
-
-              <div>
-                <div class="input-label">
-                  Repetições
-                </div>
-
-                <input
-                  id="execution-reps"
-                  class="input-big"
-                  type="number"
-                  inputmode="numeric"
-                  step="1"
-                  value="${
-                    currentExecution.draftInputs?.[exercise.id]?.reps ??
-                    exercise.lastReps ??
-                    ""
-                  }"
-                >
-              </div>
-
-            </div>
-          `
-          : exercise.type === "reps"
-            ? `
-              <div style="margin-top:22px;">
-
-                <div class="input-label">
-                  Repetições
-                </div>
-
-                <input
-                  id="execution-reps"
-                  class="input-big"
-                  type="number"
-                  inputmode="numeric"
-                  step="1"
-                  value="${
-                    currentExecution.draftInputs?.[exercise.id]?.reps ??
-                    exercise.lastReps ??
-                    ""
-                  }"
-                >
-
-              </div>
-            `
-            : `
-              <div style="margin-top:22px;">
-
-                <div class="input-label">
-                  Tempo (segundos)
-                </div>
-
-                <input
-                  id="execution-time"
-                  class="input-big"
-                  type="number"
-                  inputmode="numeric"
-                  step="5"
-                  value="${
-                    currentExecution.draftInputs?.[exercise.id]?.time ??
-                    exercise.lastTime ??
-                    ""
-                  }"
-                >
-
-              </div>
-            `
-      }
-
-
-      <button
-        id="complete-set-btn"
-        class="complete-btn"
-        onclick="completeCurrentSet()"
-      >
-        Série completa
-      </button>
-
-
-      <div class="series-list">
-
-        ${
-          sets.length
-            ? sets.map(
-                (set,index) =>
-                  `
-                    <div class="series-row">
-
-                      <div class="series-index">
-                        ${index + 1}
-                      </div>
-
-                      ${
-                        exercise.type === "weight"
-                          ? `
-                            <div class="series-value">
-                              ${set.weight} kg
-                            </div>
-
-                            <div class="series-value">
-                              ${set.reps}
-                              <small>reps</small>
-                            </div>
-                          `
-                          : exercise.type === "reps"
-                            ? `
-                              <div class="series-value">
-                                ${set.reps}
-                                <small>reps</small>
-                              </div>
-
-                              <div></div>
-                            `
-                            : `
-                              <div class="series-value">
-                                ${set.time}s
-                              </div>
-
-                              <div></div>
-                            `
-                      }
-
-                      <button
-                        class="btn btn-ghost btn-small"
-                        onclick="editCurrentSet(${index})"
-                        title="Editar série"
-                      >
-                        ✎
-                      </button>
-
-                      <button
-                        class="btn btn-ghost btn-small"
-                        onclick="removeCurrentSet(${index})"
-                        title="Excluir série"
-                      >
-                        ×
-                      </button>
-
-                    </div>
-                  `
-              ).join("")
-            : `
-              <div
-                style="
-                  padding:18px 0;
-                  color:var(--text-3);
-                  font-size:14px;
-                  text-align:center;
-                "
-              >
-                Nenhuma série registrada ainda.
-              </div>
-            `
-        }
-
-      </div>
-
-    </div>
-
-
-    <div class="rest-panel">
-
-      <div class="rest-top">
-
-        <div>
-          <div class="rest-label">
-            Descanso
-          </div>
-          <div
-            id="rest-timer"
-            class="timer"
-          >
-            ${formatClock(
-              restTimer.seconds
-            )}
-          </div>
-        </div>
-
-        <div>
-          <button
-            class="btn btn-secondary btn-small"
-            onclick="startRestTimer()"
-          >
-            Iniciar
-          </button>
-        </div>
-
-      </div>
-
-
-      <div class="timer-controls">
-
-        <button
-          class="timer-btn"
-          onclick="toggleRestTimer()"
-        >
-          ${
-            restTimer.running
-              ? "Pausar"
-              : "Continuar"
-          }
-        </button>
-
-        <button
-          class="timer-btn"
-          onclick="resetRestTimer()"
-        >
-          Resetar
-        </button>
-
-        <button
-          class="timer-btn"
-          onclick="setRestTimerFromSettings()"
-        >
-          ${formatClock(
-            state.settings.restSeconds
-          )}
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="execution-controls">
-
-      <button
-        class="btn btn-secondary btn-large"
-        type="button"
-        onclick="previousExercise()"
-        ${
-          current === 0
-            ? "disabled"
-            : ""
-        }
-      >
-        ← Anterior
-      </button>
-
-      <button
-        class="btn btn-secondary btn-large execution-pause-button"
-        type="button"
-        onclick="toggleRestTimer()"
-        aria-label="${restTimer.running ? "Pausar descanso" : "Iniciar ou retomar descanso"}"
-        title="${restTimer.running ? "Pausar descanso" : "Iniciar ou retomar descanso"}"
-      >
-        ${restTimer.running ? "⏸" : "▶"}
-      </button>
-
-      <button
-        class="btn btn-primary btn-large"
-        type="button"
-        onclick="nextExercise()"
-        ${
-          current === total - 1
-            ? ""
-            : ""
-        }
-      >
-        ${
-          current === total - 1
-            ? "Finalizar"
-            : "Próximo →"
-        }
-      </button>
-
-    </div>
-
-
-    <div class="execution-bottom">
-
-      <button
-        class="btn btn-secondary"
-        onclick="skipCurrentExercise()"
-      >
-        Pular exercício
-      </button>
-
-      <button
-        class="btn btn-secondary"
-        onclick="replaceWorkoutToday()"
-      >
-        Trocar treino
-      </button>
-
-    </div>
-
-  `;
-
-  updateRestTimerDisplay();
-}
+function renderExecution() { renderTrainingExperience(); }
 
 function completeCurrentSet() {
 
@@ -8435,32 +7026,11 @@ function completeCurrentSet() {
    ========================================================= */
 function editCurrentSet(index) {
   const exercise = getCurrentExercise();
-  if (!exercise) return;
-  const set = currentExecution?.setsByExercise?.[exercise.id]?.[index];
-  if (!set) return;
-  openModal(
-    "Corrigir série",
-    `
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Peso (kg)</label>
-          <input id="edit-current-weight" type="number" step="0.5" value="${set.weight ?? ""}">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Repetições</label>
-          <input id="edit-current-reps" type="number" step="1" value="${set.reps ?? ""}">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Tempo (segundos)</label>
-        <input id="edit-current-time" type="number" step="1" value="${set.time ?? ""}">
-      </div>
-    `,
-    `
-      <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveCurrentSetEdit(${index})">Salvar</button>
-    `
-  );
+  const set = currentExecution?.setsByExercise?.[exercise?.id]?.[index];
+  if (!exercise || !set) return;
+  const field = (key, label, min, step) => `<div class="form-group"><label class="form-label" for="edit-current-${key}">${label}</label><input id="edit-current-${key}" type="number" min="${min}" step="${step}" value="${set[key] ?? ""}"></div>`;
+  openModal("Corrigir série", `<p class="form-help">${escapeHTML(exercise.name)} · Série ${index + 1}</p><div class="form-row">${exercise.type === "weight" ? field("weight", "Carga (kg)", 0, 0.5) : ""}${exercise.type === "timed" ? field("time", "Tempo (segundos)", 1, 1) : field("reps", "Repetições", 1, 1)}</div>`,
+    `<button class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveCurrentSetEdit(${index})">Salvar</button>`);
 }
 
 function saveCurrentSetEdit(index) {
@@ -8527,6 +7097,7 @@ function removeCurrentSet(
    ========================================================= */
 
 function nextExercise() {
+  captureTrainingDraft();
 
   const routine =
     getCurrentRoutine();
@@ -8538,7 +7109,7 @@ function nextExercise() {
     routine.exercises.length - 1
   ) {
 
-    finishWorkout();
+    reviewWorkoutFinish();
 
     return;
   }
@@ -8556,6 +7127,7 @@ function nextExercise() {
 }
 
 function previousExercise() {
+  captureTrainingDraft();
 
   if (
     currentExecution.currentIndex <= 0
@@ -8593,7 +7165,7 @@ function skipCurrentExercise() {
     routine.exercises.length - 1
   ) {
 
-    finishWorkout();
+    reviewWorkoutFinish();
 
     return;
   }
@@ -8672,34 +7244,17 @@ function replaceWorkoutToday() {
   );
 }
 
-function replaceCurrentWorkout(
-  routineId
-) {
-
-  const routine =
-    state.routines.find(
-      r => r.id === routineId
-    );
-
-  if (!routine) return;
-
-  if (
-    !confirm(
-      "Substituir o treino atual? O progresso não registrado será perdido."
-    )
-  ) {
-    return;
-  }
-
+function replaceCurrentWorkout(routineId) {
+  const routine = state.routines.find(r => r.id === routineId);
+  if (!routine || !routine.exercises.length) { showToast("Este treino não tem exercícios"); return; }
+  if (state.activeSession?.routineId === routineId) { closeModal(); restoreActiveSession(); return; }
+  if (!confirm("Substituir o treino atual? As séries desta sessão ainda não concluída serão descartadas.")) return;
   closeModal();
-
   stopWorkoutTimer();
-
   currentExecution = null;
-
-  startWorkout(
-    routineId
-  );
+  state.activeSession = null;
+  resetRestTimer();
+  startWorkout(routineId);
 }
 
 
@@ -8994,13 +7549,13 @@ function openExecutionMenu() {
 
         <button
           class="btn btn-secondary btn-large btn-block"
-          onclick="skipCurrentExercise();closeModal();"
+          onclick="closeModal();skipCurrentExercise();"
         >
           Pular exercício atual
         </button>
 
         <button
-          class="btn btn-danger btn-large btn-block"
+          class="btn btn-secondary btn-large btn-block"
           onclick="closeModal();confirmLeaveWorkout();"
         >
           Sair e continuar depois
@@ -9136,21 +7691,15 @@ function setRestTimerFromSettings() {
 }
 
 function updateRestTimerDisplay() {
-
-  const element =
-    document.getElementById(
-      "rest-timer"
-    );
-
-  if (element) {
-
-    element.textContent =
-      formatClock(
-        restTimer.seconds
-      );
-  }
+  const element = document.getElementById("rest-timer");
+  if (element) element.textContent = formatClock(restTimer.seconds);
+  const toggle = document.getElementById("fit-rest-toggle");
+  if (toggle) toggle.textContent = restTimer.running ? "Pausar" : "Iniciar";
+  const status = document.getElementById("fit-rest-state");
+  if (status) status.textContent = restTimer.running
+    ? "Recupere antes da próxima série."
+    : restTimer.seconds > 0 ? "Descanso pausado. Continue quando quiser." : "Registre uma série para iniciar o descanso.";
 }
-
 
 /* =========================================================
    WORKOUT TIMER
@@ -9388,7 +7937,7 @@ function getExercisePR(exercise) {
 
 function formatExercisePR(exercise, record) {
   if (!record) return "Sem PR registrado";
-  if (exercise.type === "weight") return `${record.value} kg${record.reps ? ` × ${record.reps} reps` : ""}`;
+  if (exercise.type === "weight") return `${fitNumber(record.value)} kg${record.reps ? ` × ${record.reps} reps` : ""}`;
   if (exercise.type === "reps") return `${record.value} reps`;
   return `${record.value} segundos`;
 }
@@ -9555,7 +8104,7 @@ function getWeightSuggestion(
       );
 
     reason =
-      `Você fez ${last.reps} reps com ${last.weight} kg no último registro.`;
+      `Você fez ${last.reps} reps com ${fitNumber(last.weight)} kg no último registro.`;
 
   } else if (
     last.reps >= 8
@@ -9567,7 +8116,7 @@ function getWeightSuggestion(
       );
 
     reason =
-      `Você fez ${last.reps} reps com ${last.weight} kg.`;
+      `Você fez ${last.reps} reps com ${fitNumber(last.weight)} kg.`;
 
   } else {
 
@@ -9577,7 +8126,7 @@ function getWeightSuggestion(
       );
 
     reason =
-      `O último registro foi ${last.reps} reps com ${last.weight} kg.`;
+      `O último registro foi ${last.reps} reps com ${fitNumber(last.weight)} kg.`;
 
   }
 
@@ -9586,7 +8135,7 @@ function getWeightSuggestion(
     reps:
       last.reps,
     text:
-      `${weight} kg × ${Math.max(8, Math.min(12, last.reps || 8))} reps`,
+      `${fitNumber(weight)} kg × ${Math.max(8, Math.min(12, last.reps || 8))} reps`,
     reason
   };
 }
@@ -9906,12 +8455,13 @@ function renderHistoryCard(
   return `
     <div
       class="history-item"
-      id="history-${workout.id}"
+      id="history-${detailed ? "full" : "recent"}-${workout.id}"
     >
 
       <button
         class="history-main"
-        onclick="toggleHistoryItem('${workout.id}')"
+        aria-expanded="false"
+        onclick="toggleHistoryItem('${detailed ? "full" : "recent"}-${workout.id}')"
       >
 
         <div class="history-info">
@@ -9926,7 +8476,7 @@ function renderHistoryCard(
           <div class="history-meta">
             ${formatTime(date)}
             ·
-            ${sets.length} séries
+            ${sets.length} ${sets.length === 1 ? "série" : "séries"}
           </div>
 
         </div>
@@ -9991,7 +8541,7 @@ function renderHistoryCard(
                                 <strong>
                                   ${
                                     set.weight != null
-                                      ? `${set.weight} kg × ${set.reps}`
+                                      ? `${fitNumber(set.weight)} kg × ${set.reps}`
                                       : set.reps != null
                                         ? `${set.reps} reps`
                                         : `${set.time}s`
@@ -10036,15 +8586,11 @@ function renderHistoryCard(
   `;
 }
 
-function toggleHistoryItem(
-  id
-) {
-
-  document
-    .getElementById(
-      `history-${id}`
-    )
-    ?.classList.toggle("open");
+function toggleHistoryItem(id) {
+  const card = document.getElementById(`history-${id}`);
+  if (!card) return;
+  const open = card.classList.toggle("open");
+  card.querySelector(".history-main")?.setAttribute("aria-expanded", String(open));
 }
 
 function clearHistoryFilter() {
@@ -11135,7 +9681,7 @@ function renderEvolution() {
           <div class="chart-value">
             ${
               last != null
-                ? `${last} kg`
+                ? `${fitNumber(last)} kg`
                 : "—"
             }
           </div>
@@ -11168,7 +9714,7 @@ function renderEvolution() {
           >
             ${
               pr != null
-                ? `${pr} kg`
+                ? `${fitNumber(pr)} kg`
                 : "—"
             }
           </div>
@@ -11189,15 +9735,15 @@ function renderEvolution() {
             points.length
               ? (
                   delta > 0
-                    ? `+${delta} kg`
-                    : `${delta} kg`
+                    ? `+${fitNumber(delta)} kg`
+                    : `${fitNumber(delta)} kg`
                 )
               : "Sem dados"
           }
         </span>
 
         <span class="badge">
-          ${points.length} registros
+          ${points.length} ${points.length===1?"registro":"registros"}
         </span>
 
       </div>
@@ -11252,7 +9798,7 @@ function renderEvolution() {
                         </span>
 
                         <strong>
-                          ${point.weight} kg
+                          ${fitNumber(point.weight)} kg
                         </strong>
 
                       </div>
@@ -11743,6 +10289,7 @@ function resetAllData() {
    MODAL SYSTEM
    ========================================================= */
 
+let modalReturnFocus = null;
 function openModal(
   title,
   body,
@@ -11754,10 +10301,14 @@ function openModal(
       "modal"
     );
 
+  modalReturnFocus = document.activeElement;
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-labelledby", "modal-heading");
   modal.innerHTML = `
     <div class="modal-header">
 
-      <div class="modal-title">
+      <div class="modal-title" id="modal-heading">
         ${title}
       </div>
 
@@ -11796,6 +10347,14 @@ function openModal(
 
   document.body.style.overflow =
     "hidden";
+  requestAnimationFrame(() => {
+    modal.querySelectorAll(".form-group").forEach(group => {
+      const label = group.querySelector("label");
+      const input = group.querySelector("input[id], textarea[id], select[id]");
+      if (label && input) label.setAttribute("for", input.id);
+    });
+    modal.querySelector("input, select, textarea, button")?.focus();
+  });
 }
 
 function closeModal() {
@@ -11814,6 +10373,7 @@ function closeModal() {
   document.getElementById(
     "modal"
   ).innerHTML = "";
+  if (modalReturnFocus?.isConnected) modalReturnFocus.focus();
 }
 
 function closeModalOnBackdrop(
@@ -11941,7 +10501,7 @@ document.addEventListener(
 
     if (
       currentPage !== "execution" ||
-      event.target.closest("input, textarea, select, [contenteditable=true], [role=dialog]")
+      event.target.closest("input, textarea, select, button, a, [contenteditable=true], [role=dialog]")
     ) {
       return;
     }
@@ -12233,7 +10793,7 @@ function applyUserAccent() {
   const savedAccent = state.settings?.accent;
   const accent = DABLIU_ACCENTS.some(item => item.value === savedAccent)
     ? savedAccent
-    : "#4f7cff";
+    : "#c2f17b";
 
   document.documentElement.style.setProperty(
     "--accent-user",
@@ -12275,7 +10835,7 @@ function renderAccentPicker() {
   const savedAccent = state.settings?.accent;
   const current = DABLIU_ACCENTS.some(item => item.value === savedAccent)
     ? savedAccent
-    : "#4f7cff";
+    : "#c2f17b";
 
   container.innerHTML =
     DABLIU_ACCENTS
@@ -12511,6 +11071,7 @@ function syncRestTimer() {
     stopRestTimer();
 
     restTimer.seconds = 0;
+    updateRestTimerDisplay();
 
     if (
       currentExecution
@@ -12941,6 +11502,7 @@ const __devedeStartWorkout =
 startWorkout = function(
   routineId
 ) {
+  if (state.activeSession?.routineId === routineId) { restoreActiveSession(); return; }
   if (state.activeSession && state.activeSession.routineId !== routineId) {
     if (!confirm("Já existe um treino em andamento. Substituí-lo apagará o progresso não finalizado. Continuar?")) return;
   }
@@ -13038,22 +11600,19 @@ finishWorkout =
       !currentExecution
     ) {
       saveState();
+      renderHome();
     }
   };
 
 const __devedeConfirmLeaveWorkout = confirmLeaveWorkout;
 confirmLeaveWorkout = function() {
   if (!currentExecution) { navigate("home"); return; }
-  if (!confirm("Sair da tela de treino? O progresso ficará salvo e você poderá continuar depois.")) return;
+  captureTrainingDraft();
   saveState();
   stopWorkoutTimer();
   releaseWakeLock();
-  currentPage = "home";
-  document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
-  document.getElementById("page-home")?.classList.add("active");
-  document.querySelectorAll(".nav-btn").forEach(el => el.classList.remove("active"));
-  document.getElementById("nav-home")?.classList.add("active");
-  renderAll();
+  navigate("home");
+  showToast("Progresso salvo. Continue quando quiser.");
 };
 
 /* ---------- navigation without destroying active session ---------- */
@@ -13061,95 +11620,19 @@ confirmLeaveWorkout = function() {
 const __devedeNavigate =
   navigate;
 
-navigate = function(
-  page
-) {
-  /*
-    Durante um treino, sair da tela não significa
-    apagar a sessão. A sessão permanece persistida
-    e pode ser retomada automaticamente.
-  */
-  if (
-    currentPage === "execution" &&
-    page !== "execution" &&
-    currentExecution
-  ) {
-    saveState();
-
-    currentPage =
-      page;
-
-    document
-      .querySelectorAll(".page")
-      .forEach(
-        el =>
-          el.classList.remove(
-            "active"
-          )
-      );
-
-    document
-      .getElementById(
-        `page-${page}`
-      )
-      ?.classList.add(
-        "active"
-      );
-
-    document
-      .querySelectorAll(".nav-btn")
-      .forEach(
-        el =>
-          el.classList.remove(
-            "active"
-          )
-      );
-
-    const navMap = {
-      home: "nav-home",
-      workouts: "nav-workouts",
-      spotify: "nav-spotify",
-      settings: "nav-settings"
-    };
-
-    document
-      .getElementById(
-        navMap[page]
-      )
-      ?.classList.add(
-        "active"
-      );
-
-    if (
-      page === "settings"
-    ) {
-      populateSettings();
-    }
-
-    if (
-      page === "workouts"
-    ) {
-      setWorkoutTab(
-        currentWorkoutTab
-      );
-    }
-
-    if (
-      page === "spotify"
-    ) {
-      loadSpotifyData();
-    }
-
-    scheduleSpotifyPlaybackRefresh();
-
-    renderAll();
-
-    return;
-  }
-
-  __devedeNavigate(
-    page
-  );
+navigate = function(page) {
+  if (currentExecution) { captureTrainingDraft(); saveState(); }
+  if (page === "workouts" && ["history", "evolution", "records"].includes(currentWorkoutTab)) currentWorkoutTab = "my";
+  currentPage = page;
+  document.querySelectorAll(".page").forEach(el => el.classList.toggle("active", el.id === `page-${page}`));
+  document.querySelectorAll(".nav-btn").forEach(el => el.classList.remove("active"));
+  const navMap = {home:"nav-home",workouts:"nav-workouts",progress:"nav-progress",detail:"nav-workouts",settings:"nav-settings",spotify:"nav-settings"};
+  document.getElementById(navMap[page])?.classList.add("active");
+  if (page === "workouts") setWorkoutTab(currentWorkoutTab);
+  if (page === "progress") setWorkoutTab(["history","evolution","records"].includes(currentWorkoutTab)?currentWorkoutTab:"history");
+  if (page === "spotify") loadSpotifyData();
+  scheduleSpotifyPlaybackRefresh(); renderAll();
+  window.scrollTo({top:0,behavior:"instant"});
 };
 
 /* ---------- resume entry point ---------- */
@@ -13186,82 +11669,7 @@ startTodayWorkout =
 /* ---------- home resume banner ---------- */
 
 function renderResumeBanner() {
-  const home =
-    document.getElementById(
-      "page-home"
-    );
-
-  if (!home) return;
-
-  const existing =
-    document.getElementById(
-      "resume-active-workout"
-    );
-
-  if (
-    existing
-  ) {
-    existing.remove();
-  }
-
-  if (
-    !state.activeSession
-  ) {
-    return;
-  }
-
-  const routine =
-    state.routines.find(
-      item =>
-        item.id ===
-        state.activeSession.routineId
-    );
-
-  if (!routine) {
-    return;
-  }
-
-  const header =
-    home.querySelector(
-      ".page-header"
-    );
-
-  if (!header) return;
-
-  const banner =
-    document.createElement(
-      "div"
-    );
-
-  banner.id =
-    "resume-active-workout";
-
-  banner.className =
-    "resume-banner";
-
-  banner.innerHTML = `
-    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:850;color:var(--text-3);">
-      Treino em andamento
-    </div>
-    <div style="font-size:19px;font-weight:820;margin-top:4px;">
-      ${escapeHTML(routine.name)}
-    </div>
-    <div style="color:var(--text-2);font-size:13px;margin-top:4px;">
-      O estado está salvo. Você pode continuar exatamente de onde parou.
-    </div>
-    <button
-      class="btn btn-primary btn-small"
-      style="margin-top:12px;"
-      onclick="resumeActiveWorkout()"
-    >
-      Continuar treino
-    </button>
-  `;
-
-  header.insertAdjacentElement(
-    "afterend",
-    banner
-  );
+  document.getElementById("resume-active-workout")?.remove();
 }
 
 const __devedeRenderHome =
@@ -13680,7 +12088,7 @@ function migrateDabliuState() {
     !state.settings.accent
   ) {
     state.settings.accent =
-      "#4f7cff";
+      "#c2f17b";
   }
 
   if (
@@ -13830,6 +12238,9 @@ renderAll = function() {
   renderWeeklySchedule();
   renderAccentPicker();
   renderResumeBanner();
+  renderProgression();
+  const musicBack = document.getElementById("spotify-back");
+  if (musicBack) musicBack.textContent = state.activeSession ? "Voltar ao treino" : "Voltar ao perfil";
 };
 
 /* =========================================================
@@ -13956,6 +12367,10 @@ function renderAuthButton() {
   const profileStatus = document.getElementById("profile-account-status");
   if (profileStatus) profileStatus.textContent = cloudUser ? (cloudUser.email || "Conta Google conectada") : "Entre com sua conta Google.";
 
+  const profileAuth = document.getElementById("profile-auth-action");
+  if (profileAuth) profileAuth.textContent = cloudUser ? "Sair da conta" : "Entrar com Google";
+  const switchButton = document.getElementById("profile-switch-account");
+  if (switchButton) switchButton.hidden = !cloudUser;
   copy.append(name, status);
 
   const chevron = document.createElement("span");
@@ -13967,7 +12382,7 @@ function renderAuthButton() {
   button.classList.toggle("is-authenticated", Boolean(cloudUser));
   button.setAttribute(
     "aria-label",
-    cloudUser ? `Sair da conta de ${displayName}` : "Entrar com Google"
+    cloudUser ? `Abrir opções da conta de ${displayName}` : "Entrar com Google"
   );
 
   renderAccountMenu();
@@ -14938,14 +13353,9 @@ function renderTodayWeek() {
   }));
   const count = dates.filter(d => completed.has(d.key) && d.key <= todayISO()).length;
   const target = Number(state.profile?.trainingDays) || 0;
-  container.innerHTML = `<div class="week-title"><h2>Sua semana</h2><span>${dates[0].day.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})} – ${dates[6].day.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})}</span></div><div class="week-count">${count}${target ? `<span> / ${target}</span>` : ""}</div><p>dias com treino</p><div class="week-days">${dates.map((d,i) => `<div><span>${["S","T","Q","Q","S","S","D"][i]}</span><strong class="${d.key===todayISO()?"is-today ":""}${completed.has(d.key)&&d.key<=todayISO()?"is-done":""}">${completed.has(d.key)&&d.key<=todayISO()?"✓":d.day.getDate()}</strong></div>`).join("")}</div><p class="week-note">${count ? "Cada treino conta para sua evolução." : "Sua semana começa com o primeiro treino."}</p>`;
+  container.innerHTML = `<div class="week-title"><h2>Sua semana</h2><span>${dates[0].day.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})} – ${dates[6].day.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})}</span></div><div class="week-count">${count}${target ? `<span> / ${target}</span>` : ""}</div><p>${count === 1 ? "dia com treino" : "dias com treino"}</p><div class="week-days">${dates.map((d,i) => `<div><span>${["S","T","Q","Q","S","S","D"][i]}</span><strong class="${d.key===todayISO()?"is-today ":""}${completed.has(d.key)&&d.key<=todayISO()?"is-done":""}">${completed.has(d.key)&&d.key<=todayISO()?"✓":d.day.getDate()}</strong></div>`).join("")}</div><p class="week-note">${count ? "Cada treino conta para sua evolução." : "Sua semana começa com o primeiro treino."}</p>`;
 }
-function openRoutineDetails(id) {
-  const routine = state.routines.find(r => r.id === id);
-  if (!routine) { showToast("Escolha um treino para ver os detalhes"); return; }
-  const items = routine.exercises.map(id => state.exercises.find(e => e.id === id)).filter(Boolean);
-  openModal(escapeHTML(routine.name), `<p class="detail-description">${escapeHTML(routine.description || "Seu treino, no seu ritmo.")}</p><div class="detail-meta">${items.length} exercícios · aproximadamente ${formatDuration(estimateRoutineSeconds(routine))}</div>${routine.notes ? `<p class="detail-note">${escapeHTML(routine.notes)}</p>` : ""}<div class="detail-list">${items.map((e,i)=>`<div class="detail-row"><span class="detail-number">${i+1}</span><div><strong>${escapeHTML(e.name)}</strong><small>${escapeHTML(e.muscleGroup)} · ${typeLabel(e.type)}</small></div></div>`).join("") || '<p>Nenhum exercício neste treino.</p>'}</div>`, `<button class="btn btn-secondary" onclick="closeModal()">Fechar</button><button class="btn btn-primary" onclick="closeModal(); ${state.activeSession?.routineId === routine.id ? "resumeActiveWorkout()" : `startWorkout('${routine.id}')`}">${state.activeSession?.routineId === routine.id ? "Continuar treino" : "Começar treino"}</button>`);
-}
+function openRoutineDetails(id) { showRoutineExperience(id); }
 
 /* =========================================================
    START
@@ -14970,5 +13380,6 @@ seedDemoHistoryIfEmpty();
 
 </script>
 
+<script src="assets/experience.js"></script>
 </body>
 </html>

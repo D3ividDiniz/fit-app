@@ -1,11 +1,14 @@
-# Integração do redesign — em andamento
+# Redesign e validação
 
-Branch: `feat/approved-dabliu-redesign`. Referência: `/workspace/dabliu-fit-handoff/IMPLEMENTATION_PROMPT_EN.md` e `FEATURE_PARITY_CHECKLIST.md`.
+A revisão substitui o fluxo anterior por preparação do treino, registro de séries, descanso, sequência e conclusão explícita. A biblioteca mostra cartões resumidos; histórico, evolução e marcas ficam em Progresso. O construtor ganhou busca, filtro por grupo e organização da sequência. O código continua usando o estado, os IDs e os mecanismos de persistência existentes.
 
-Feito nesta etapa: tokens e layout inicial, navegação, cartão de hoje, semana calculada a partir dos treinos, detalhes de rotina, acesso ao Spotify em Perfil, correção de sobreposição na execução e validação de campos vazios. As mudanças usam o estado e as rotinas existentes.
+## Evidências de paridade
 
-Verificado em navegador isolado, sem Supabase: abertura, escolha de preset, registro de uma série e restauração dessa série e do descanso após recarregar. Sintaxe JavaScript e `git diff --check` passaram.
+- PASS: navegação e preparação; criação e organização de rotina; histórico expansível; execução com carga, repetições e tempo, edição e exclusão de séries, mais de três séries e confirmação de conclusão, em navegador com dados isolados.
+- PASS: retomada após recarregar, descanso pausado, rascunhos, carga zero e gravação única; teste automatizado `node tests/domain-regression.cjs` verifica também estado desconhecido e exportação/restauração JSON.
+- PASS: páginas inicial e execução inspecionadas em desktop e celular simulado; larguras de 360, 390, 430, 768, 1280 e 1440 verificadas sem overflow horizontal na página inicial. Tema claro e escuro inspecionados.
+- PASS: sintaxe JavaScript, IDs estáticos únicos e `git diff --check`.
+- NÃO VERIFICADO: login Google real, sincronização e resolução de conflitos no Supabase, reprodução e autenticação Spotify, teclado virtual do Safari no iPhone, tamanhos e estados não exercitados. As integrações foram preservadas, mas não foram conectadas a contas reais durante os testes.
+- NÃO VERIFICADO: todos os casos da lista de paridade original, incluindo cada combinação de importação, edição e exclusão de histórico e cada preferência visual. Uma inspeção visual não confirma por si só todos os comportamentos.
 
-Pendente: terminar a adaptação de biblioteca, construtor, progresso e execução ao protótipo; validar todos os tipos de exercício, histórico, importação/exportação, conta, sincronização e Spotify; validar tamanhos de tela e acessibilidade. Não foi testado OAuth real nem iPhone Safari. Não publicar esta etapa parcial.
-
-O Render informou um workspace disponível, mas a identidade do serviço não foi confirmada pelo usuário. A skill render-deploy exige confirmação do workspace quando não há seleção. Além disso, um push para main pode disparar deploy automático: resolver o destino antes de publicar.
+A lista detalhada de referência está em `/workspace/dabliu-fit-handoff/FEATURE_PARITY_CHECKLIST.md`. A publicação na main foi solicitada posteriormente pelo usuário.
