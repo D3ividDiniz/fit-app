@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta
   name="viewport"
-  content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
+  content="width=device-width,initial-scale=1,viewport-fit=cover"
 >
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,6 +16,9 @@
 </script>
 
 <title>Dabliu.fit — Seu treino, sem complicação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 /* =========================================================
@@ -3138,6 +3141,7 @@ html.header-brand-visible .brand {
 }
 
 </style>
+<link rel="stylesheet" href="assets/redesign.css">
 </head>
 
 <body>
@@ -3152,7 +3156,7 @@ html.header-brand-visible .brand {
     <button class="btn btn-primary login-button" onclick="handleAuthAction()">
       Continuar com Google
     </button>
-    <p class="login-note">Seus dados ficam protegidos na sua conta. Atualização de teste publicada pelo Codex.</p>
+    <p class="login-note">Seus dados ficam protegidos na sua conta.</p>
   </div>
 </section>
 
@@ -3185,16 +3189,18 @@ html.header-brand-visible .brand {
           class="nav-btn active"
           onclick="navigate('home')"
         >
-          Treinar
+          Hoje
         </button>
 
         <button
           id="nav-workouts"
           class="nav-btn"
-          onclick="navigate('workouts')"
+          onclick="navigate('workouts'); setWorkoutTab('my')"
         >
           Treinos
         </button>
+
+        <button id="nav-progress" class="nav-btn" onclick="openHistory()">Progresso</button>
 
         <button
           id="nav-spotify"
@@ -3208,14 +3214,14 @@ html.header-brand-visible .brand {
           id="nav-settings"
           class="nav-btn"
           onclick="navigate('settings')"
-          aria-label="Configurações"
+          aria-label="Perfil e configurações"
         >
           <span class="nav-settings-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" focusable="false">
               <path d="M19.43 12.98c.04-.32.07-.65.07-.98s-.02-.66-.07-.98l2.11-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1a7.2 7.2 0 0 0-1.69-.98L14.5 2.42A.49.49 0 0 0 14 2h-4a.49.49 0 0 0-.49.42L9.13 5.07c-.6.25-1.16.58-1.69.98l-2.49-1a.49.49 0 0 0-.61.22l-2 3.46a.5.5 0 0 0 .12.64l2.11 1.65c-.04.32-.08.65-.08.98s.03.66.08.98l-2.11 1.65a.5.5 0 0 0-.12.64l2 3.46c.12.21.37.3.61.22l2.49-1c.53.4 1.09.73 1.69.98l.38 2.65c.04.24.25.42.49.42h4c.24 0 .45-.18.49-.42l.38-2.65c.6-.25 1.16-.58 1.69-.98l2.49 1c.23.08.49-.01.61-.22l2-3.46a.5.5 0 0 0-.12-.64l-2.11-1.65ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z" fill="currentColor"/>
             </svg>
           </span>
-          <span class="nav-settings-label">Config.</span>
+          <span class="nav-settings-label">Perfil</span>
         </button>
 
       </nav>
@@ -3259,9 +3265,9 @@ html.header-brand-visible .brand {
       <div class="page-header">
 
         <div>
-          <h1 class="page-title">Treinar</h1>
+          <h1 class="page-title">Encontre seu ritmo.</h1>
           <p class="page-description">
-            Abra, escolha o treino e comece. O resto é registrar.
+            Seu treino, no seu ritmo.
           </p>
         </div>
 
@@ -3272,7 +3278,7 @@ html.header-brand-visible .brand {
 
         <div class="hero-card">
 
-          <div class="eyebrow">Hoje</div>
+          <div class="eyebrow">Seu treino de hoje</div>
 
           <h2 class="hero-title" id="today-title">
             Nenhum treino definido
@@ -3285,7 +3291,7 @@ html.header-brand-visible .brand {
           <div class="today-workout">
 
             <div class="today-label">
-              Próximo treino
+              Treino selecionado
             </div>
 
             <div class="today-name" id="today-workout-name">
@@ -3297,6 +3303,7 @@ html.header-brand-visible .brand {
             </div>
 
             <div class="today-actions">
+              <button class="btn btn-secondary" id="today-details-btn" onclick="openRoutineDetails(state.todayWorkoutId)" hidden>Ver treino</button>
 
               <button
                 class="btn btn-primary btn-large"
@@ -3326,6 +3333,8 @@ html.header-brand-visible .brand {
 
         </div>
 
+
+        <div class="today-week-card" id="today-week-card"></div>
 
         <div class="quick-stats">
 
@@ -3637,7 +3646,7 @@ html.header-brand-visible .brand {
       <div class="page-header">
 
         <div>
-          <h1 class="page-title">Configurações</h1>
+          <h1 class="page-title">Perfil e configurações</h1>
           <p class="page-description">
             Poucas opções. Só o que muda a forma como você usa o app.
           </p>
@@ -3647,6 +3656,8 @@ html.header-brand-visible .brand {
 
 
       <div class="settings-list">
+        <div class="settings-group-title">Conta</div>
+        <div class="setting-card"><div class="setting-row"><div><div class="setting-title">Sua conta</div><div class="setting-description" id="profile-account-status">Gerencie sua conta Google.</div></div><button class="btn btn-secondary btn-small" onclick="handleAuthAction()">Entrar ou sair</button></div></div>
 
         <div class="settings-group-title">Treino</div>
 
@@ -3841,6 +3852,8 @@ html.header-brand-visible .brand {
 
         </div>
 
+      <div class="settings-group-title">Integrações</div>
+      <div class="setting-card"><div class="setting-row"><div><div class="setting-title">Spotify</div><div class="setting-description">Playlists e reprodução</div></div><button class="btn btn-secondary btn-small" onclick="navigate('spotify')">Abrir Spotify</button></div></div>
       <div class="settings-group-title">Preferências</div>
 
       <div class="setting-card">
@@ -3889,7 +3902,7 @@ html.header-brand-visible .brand {
         </div>
 
         <div class="setting-description">
-          Apaga todos os dados deste navegador. Esta ação não pode ser desfeita.
+          Apaga os dados atuais e pode sincronizar essa alteração com sua conta. Esta ação não pode ser desfeita.
         </div>
 
         <button
@@ -4139,7 +4152,7 @@ const DEFAULT_SETTINGS = {
   restSeconds: 90,
   workoutLimitMinutes: 45,
   theme: "light",
-  accent: "#4f7cff"
+  accent: "#c2f17b"
 };
 
 const SPOTIFY_PLAYBACK_REFRESH_ACTIVE_MS = 1000;
@@ -5173,7 +5186,7 @@ function renderHome() {
 
   const routine =
     state.routines.find(
-      r => r.id === state.todayWorkoutId
+      r => r.id === (state.activeSession?.routineId || state.todayWorkoutId)
     );
 
   const todayTitle =
@@ -5235,7 +5248,7 @@ function renderHome() {
 
   if (todayStartButton) {
     todayStartButton.textContent = routine
-      ? "Começar treino"
+      ? (state.activeSession ? "Continuar treino" : "Começar treino")
       : "Criar primeiro treino";
     todayStartButton.setAttribute(
       "onclick",
@@ -5245,6 +5258,10 @@ function renderHome() {
     );
   }
 
+
+  const detailButton = document.getElementById("today-details-btn");
+  if (detailButton) { detailButton.hidden = !routine; detailButton.onclick = () => openRoutineDetails(routine.id); }
+  renderTodayWeek();
 
   const totalWorkouts =
     state.workouts.length;
@@ -5473,6 +5490,10 @@ function setWorkoutTab(tab) {
     ?.classList.remove("hidden");
 
   renderWorkoutTabs();
+  const progress = document.getElementById("nav-progress");
+  const isProgress = currentPage === "workouts" && ["history", "evolution"].includes(tab);
+  progress?.classList.toggle("active", isProgress);
+  if (isProgress) document.getElementById("nav-workouts")?.classList.remove("active");
 }
 
 function renderWorkoutTabs() {
@@ -5765,6 +5786,7 @@ function renderWorkoutCard(
 
       <div class="card-actions">
 
+        <button class="btn btn-secondary btn-small" onclick="openRoutineDetails('${routine.id}')">Ver treino</button>
         <button
           class="btn btn-primary btn-small"
           onclick="startWorkout('${routine.id}')"
@@ -8280,6 +8302,8 @@ function completeCurrentSet() {
       );
 
     if (
+      document.getElementById("execution-weight").value.trim() === "" ||
+      document.getElementById("execution-reps").value.trim() === "" ||
       !Number.isFinite(weight) ||
       !Number.isFinite(reps) ||
       weight < 0 ||
@@ -11916,7 +11940,8 @@ document.addEventListener(
     }
 
     if (
-      currentPage !== "execution"
+      currentPage !== "execution" ||
+      event.target.closest("input, textarea, select, [contenteditable=true], [role=dialog]")
     ) {
       return;
     }
@@ -12096,6 +12121,7 @@ moveBuilderItem =
    ========================================================= */
 
 const DABLIU_ACCENTS = [
+  { name:"Verde Dabliu", value:"#c2f17b" },
   { name:"Azul", value:"#4f7cff" },
   { name:"Laranja", value:"#d98b45" },
   { name:"Amarelo", value:"#d1b34f" },
@@ -12215,7 +12241,7 @@ function applyUserAccent() {
   );
   document.documentElement.style.setProperty(
     "--accent-contrast",
-    accent === "#f5f5f5" ? "#111" : "#fff"
+    ["#f5f5f5", "#c2f17b", "#d1b34f", "#a8e637", "#57ff66", "#00d9ff"].includes(accent) ? "#172719" : "#fff"
   );
   document.documentElement.classList.add("accent-led");
 }
@@ -12915,7 +12941,7 @@ const __devedeStartWorkout =
 startWorkout = function(
   routineId
 ) {
-  if (state.activeSession && currentExecution && currentExecution.routineId !== routineId) {
+  if (state.activeSession && state.activeSession.routineId !== routineId) {
     if (!confirm("Já existe um treino em andamento. Substituí-lo apagará o progresso não finalizado. Continuar?")) return;
   }
   __devedeStartWorkout(routineId);
@@ -13926,7 +13952,9 @@ function renderAuthButton() {
 
   const status = document.createElement("span");
   status.className = "account-status";
-  status.textContent = cloudUser ? "Conta sincronizada" : "com Google";
+  status.textContent = cloudUser ? "Conta conectada" : "com Google";
+  const profileStatus = document.getElementById("profile-account-status");
+  if (profileStatus) profileStatus.textContent = cloudUser ? (cloudUser.email || "Conta Google conectada") : "Entre com sua conta Google.";
 
   copy.append(name, status);
 
@@ -13960,7 +13988,7 @@ function renderAccountMenu() {
 
   const status = document.createElement("div");
   status.className = "account-menu-status";
-  status.textContent = "Dados sincronizados";
+  status.textContent = "Conta conectada";
 
   const logout = document.createElement("button");
   logout.className = "account-menu-logout";
@@ -14891,6 +14919,33 @@ async function initializeSpotify() {
 document.addEventListener("DOMContentLoaded", initializeSpotify);
 document.addEventListener("DOMContentLoaded", applyHeaderBrandPreference);
 
+
+/* Shared redesign views use the existing workout state. */
+function renderTodayWeek() {
+  const container = document.getElementById("today-week-card");
+  if (!container) return;
+  const now = new Date();
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+  const dates = Array.from({length: 7}, (_, i) => {
+    const day = new Date(monday); day.setDate(day.getDate() + i);
+    const key = [day.getFullYear(), String(day.getMonth()+1).padStart(2,"0"), String(day.getDate()).padStart(2,"0")].join("-");
+    return { day, key };
+  });
+  const completed = new Set((state.workouts || []).map(w => {
+    const d = new Date(w.startedAt);
+    return Number.isNaN(d.getTime()) ? "" : [d.getFullYear(), String(d.getMonth()+1).padStart(2,"0"), String(d.getDate()).padStart(2,"0")].join("-");
+  }));
+  const count = dates.filter(d => completed.has(d.key) && d.key <= todayISO()).length;
+  const target = Number(state.profile?.trainingDays) || 0;
+  container.innerHTML = `<div class="week-title"><h2>Sua semana</h2><span>${dates[0].day.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})} – ${dates[6].day.toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})}</span></div><div class="week-count">${count}${target ? `<span> / ${target}</span>` : ""}</div><p>dias com treino</p><div class="week-days">${dates.map((d,i) => `<div><span>${["S","T","Q","Q","S","S","D"][i]}</span><strong class="${d.key===todayISO()?"is-today ":""}${completed.has(d.key)&&d.key<=todayISO()?"is-done":""}">${completed.has(d.key)&&d.key<=todayISO()?"✓":d.day.getDate()}</strong></div>`).join("")}</div><p class="week-note">${count ? "Cada treino conta para sua evolução." : "Sua semana começa com o primeiro treino."}</p>`;
+}
+function openRoutineDetails(id) {
+  const routine = state.routines.find(r => r.id === id);
+  if (!routine) { showToast("Escolha um treino para ver os detalhes"); return; }
+  const items = routine.exercises.map(id => state.exercises.find(e => e.id === id)).filter(Boolean);
+  openModal(escapeHTML(routine.name), `<p class="detail-description">${escapeHTML(routine.description || "Seu treino, no seu ritmo.")}</p><div class="detail-meta">${items.length} exercícios · aproximadamente ${formatDuration(estimateRoutineSeconds(routine))}</div>${routine.notes ? `<p class="detail-note">${escapeHTML(routine.notes)}</p>` : ""}<div class="detail-list">${items.map((e,i)=>`<div class="detail-row"><span class="detail-number">${i+1}</span><div><strong>${escapeHTML(e.name)}</strong><small>${escapeHTML(e.muscleGroup)} · ${typeLabel(e.type)}</small></div></div>`).join("") || '<p>Nenhum exercício neste treino.</p>'}</div>`, `<button class="btn btn-secondary" onclick="closeModal()">Fechar</button><button class="btn btn-primary" onclick="closeModal(); ${state.activeSession?.routineId === routine.id ? "resumeActiveWorkout()" : `startWorkout('${routine.id}')`}">${state.activeSession?.routineId === routine.id ? "Continuar treino" : "Começar treino"}</button>`);
+}
 
 /* =========================================================
    START
